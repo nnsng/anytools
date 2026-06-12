@@ -1,15 +1,33 @@
 import { Link } from '@tanstack/react-router'
-import { Cpu, Menu, Search, Terminal } from 'lucide-react'
+import { Clock, Menu, Search, Terminal } from 'lucide-react'
+import { useEffect, useState } from 'react'
 
 type HeaderProps = {
 	sidebarOpen: boolean
 	setSidebarOpen: (open: boolean) => void
-	systemStatus: string
 	onOpenCommandPalette: () => void
 }
 
 export function Header(props: HeaderProps) {
-	const { sidebarOpen, setSidebarOpen, systemStatus, onOpenCommandPalette } = props
+	const { sidebarOpen, setSidebarOpen, onOpenCommandPalette } = props
+	const [timeStr, setTimeStr] = useState('')
+
+	useEffect(() => {
+		const updateTime = () => {
+			const now = new Date()
+			const yyyy = now.getFullYear()
+			const mm = String(now.getMonth() + 1).padStart(2, '0')
+			const dd = String(now.getDate()).padStart(2, '0')
+			const hh = String(now.getHours()).padStart(2, '0')
+			const min = String(now.getMinutes()).padStart(2, '0')
+			const ss = String(now.getSeconds()).padStart(2, '0')
+			setTimeStr(`${yyyy}-${mm}-${dd} ${hh}:${min}:${ss}`)
+		}
+
+		updateTime()
+		const timer = setInterval(updateTime, 1000)
+		return () => clearInterval(timer)
+	}, [])
 
 	return (
 		<header className="sticky top-0 z-40 flex items-center justify-between border-terminal-border border-b bg-terminal-card/80 px-4 py-3 backdrop-blur">
@@ -33,13 +51,11 @@ export function Header(props: HeaderProps) {
 				</Link>
 			</div>
 
-			{/* System status bar & Quick search trigger */}
+			{/* System clock & Quick search trigger */}
 			<div className="flex items-center gap-4">
-				<div className="hidden select-none items-center gap-2 rounded border border-terminal-border bg-terminal-bg/50 px-3 py-1 font-mono text-[10px] text-slate-500 md:flex">
-					<Cpu className="h-3 w-3 animate-pulse text-matrix" />
-					<span>
-						STATUS: <span className="font-bold text-matrix-glow">{systemStatus}</span>
-					</span>
+				<div className="hidden select-none items-center gap-2 rounded border border-terminal-border bg-terminal-bg/50 px-3 py-1.5 font-mono text-[10px] text-slate-500 md:flex">
+					<Clock className="h-3 w-3 animate-pulse text-matrix" />
+					<span className="font-bold text-matrix-glow tabular-nums">{timeStr}</span>
 				</div>
 
 				<button

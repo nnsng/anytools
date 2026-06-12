@@ -22,7 +22,6 @@ const CATEGORIES = {
 function RootComponent() {
 	const [commandPaletteOpen, setCommandPaletteOpen] = useState(false)
 	const [sidebarOpen, setSidebarOpen] = useState(false)
-	const [systemStatus, _setSystemStatus] = useState('NOMINAL')
 
 	// Listen for Cmd+K or Ctrl+K to open search command palette
 	useEffect(() => {
@@ -45,7 +44,6 @@ function RootComponent() {
 				<Header
 					sidebarOpen={sidebarOpen}
 					setSidebarOpen={setSidebarOpen}
-					systemStatus={systemStatus}
 					onOpenCommandPalette={() => setCommandPaletteOpen(true)}
 				/>
 
