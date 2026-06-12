@@ -1,11 +1,11 @@
 import { faker } from '@faker-js/faker'
 import { Play, Plus, Trash2 } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
-import { Button } from '../../ui/button'
-import { Input } from '../../ui/input'
-import { Select } from '../../ui/select'
-import { EditorPane } from '../shared/editor-pane'
-import { PrismHighlighter } from '../shared/prism-highlighter'
+import { EditorPane } from '@/components/tools/shared/editor-pane'
+import { PrismHighlighter } from '@/components/tools/shared/prism-highlighter'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Select } from '@/components/ui/select'
 
 interface MockField {
 	name: string

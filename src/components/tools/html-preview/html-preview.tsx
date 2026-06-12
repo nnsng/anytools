@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { EditorPane } from '../shared/editor-pane'
+import { EditorPane } from '@/components/tools/shared/editor-pane'
 
 export default function HtmlPreview() {
 	const [input, setInput] = useState<string>(`<!DOCTYPE html>

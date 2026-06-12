@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { Select } from '../../ui/select'
-import { EditorPane } from '../shared/editor-pane'
-import { PrismHighlighter } from '../shared/prism-highlighter'
+import { EditorPane } from '@/components/tools/shared/editor-pane'
+import { PrismHighlighter } from '@/components/tools/shared/prism-highlighter'
+import { Select } from '@/components/ui/select'
 
 export default function JsonFormatter() {
 	const [input, setInput] = useState<string>(

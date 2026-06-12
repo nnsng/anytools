@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { Tabs } from '../../ui/tabs'
-import { EditorPane } from '../shared/editor-pane'
+import { EditorPane } from '@/components/tools/shared/editor-pane'
+import { Tabs } from '@/components/ui/tabs'
 
 const encodeHtml = (str: string): string => {
 	return str.replace(/[\u00A0-\u9999<>&"']/g, (c) => {

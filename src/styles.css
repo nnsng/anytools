@@ -9,7 +9,7 @@
   --color-matrix: #22c55e;
   --color-matrix-glow: #00ff66;
   --color-matrix-dim: #15803d;
-  
+
   --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
 }
 
@@ -51,7 +51,7 @@ body {
 /* Cyber Matrix Background Overlays */
 .bg-grid-pattern {
   background-size: 40px 40px;
-  background-image: 
+  background-image:
     linear-gradient(to right, rgba(34, 197, 94, 0.03) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(34, 197, 94, 0.03) 1px, transparent 1px);
 }
@@ -64,7 +64,7 @@ body {
   width: 100%;
   height: 100%;
   background: linear-gradient(
-    rgba(18, 16, 16, 0) 50%, 
+    rgba(18, 16, 16, 0) 50%,
     rgba(0, 0, 0, 0.25) 50%
   ), linear-gradient(
     90deg,

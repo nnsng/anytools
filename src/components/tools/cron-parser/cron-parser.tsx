@@ -1,7 +1,7 @@
 import { CronExpressionParser } from 'cron-parser'
 import { useCallback, useEffect, useState } from 'react'
-import { Button } from '../../ui/button'
-import { Input } from '../../ui/input'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 
 const describeCronPart = (part: string, unit: string): string => {
 	if (part === '*') return `Every ${unit}`

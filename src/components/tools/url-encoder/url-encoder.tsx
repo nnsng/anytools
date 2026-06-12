@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { Select } from '../../ui/select'
-import { Tabs } from '../../ui/tabs'
-import { EditorPane } from '../shared/editor-pane'
+import { EditorPane } from '@/components/tools/shared/editor-pane'
+import { Select } from '@/components/ui/select'
+import { Tabs } from '@/components/ui/tabs'
 
 export default function UrlEncoder() {
 	const [input, setInput] = useState<string>(

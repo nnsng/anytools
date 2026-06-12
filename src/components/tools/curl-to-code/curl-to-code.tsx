@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { Tabs } from '../../ui/tabs'
-import { EditorPane } from '../shared/editor-pane'
-import { PrismHighlighter } from '../shared/prism-highlighter'
+import { EditorPane } from '@/components/tools/shared/editor-pane'
+import { PrismHighlighter } from '@/components/tools/shared/prism-highlighter'
+import { Tabs } from '@/components/ui/tabs'
 
 interface ParsedCurl {
 	url: string

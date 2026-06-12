@@ -1,8 +1,8 @@
 import { diff_match_patch } from 'diff-match-patch'
 import type React from 'react'
 import { useEffect, useState } from 'react'
-import { Tabs } from '../../ui/tabs'
-import { EditorPane } from '../shared/editor-pane'
+import { EditorPane } from '@/components/tools/shared/editor-pane'
+import { Tabs } from '@/components/ui/tabs'
 
 export default function DiffChecker() {
 	const [textA, setTextA] = useState<string>(

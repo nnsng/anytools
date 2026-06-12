@@ -1,6 +1,6 @@
 import { marked } from 'marked'
 import { useEffect, useState } from 'react'
-import { EditorPane } from '../shared/editor-pane'
+import { EditorPane } from '@/components/tools/shared/editor-pane'
 
 export default function MarkdownPreview() {
 	const [input, setInput] = useState<string>(`# AnyTools Markdown Previewer

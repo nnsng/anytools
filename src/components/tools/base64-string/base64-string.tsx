@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { Tabs } from '../../ui/tabs'
-import { EditorPane } from '../shared/editor-pane'
+import { EditorPane } from '@/components/tools/shared/editor-pane'
+import { Tabs } from '@/components/ui/tabs'
 
 const utf8Btoa = (str: string): string => {
 	return btoa(

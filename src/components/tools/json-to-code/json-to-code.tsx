@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { EditorPane } from '../shared/editor-pane'
-import { PrismHighlighter } from '../shared/prism-highlighter'
+import { EditorPane } from '@/components/tools/shared/editor-pane'
+import { PrismHighlighter } from '@/components/tools/shared/prism-highlighter'
 
 const generateTsInterfaces = (jsonStr: string, rootName: string): string => {
 	const parsed = JSON.parse(jsonStr)

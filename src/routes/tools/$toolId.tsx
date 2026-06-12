@@ -1,23 +1,23 @@
 import { createFileRoute } from '@tanstack/react-router'
 import React from 'react'
-import Base64Image from '../../components/tools/base64-image/base64-image-client'
-import Base64String from '../../components/tools/base64-string/base64-string-client'
-import ColorConverter from '../../components/tools/color-converter/color-converter-client'
-import CronParser from '../../components/tools/cron-parser/cron-parser-client'
-import CurlToCode from '../../components/tools/curl-to-code/curl-to-code-client'
-import DiffChecker from '../../components/tools/diff-checker/diff-checker-client'
-import HtmlEncoder from '../../components/tools/html-encoder/html-encoder-client'
-import HtmlPreview from '../../components/tools/html-preview/html-preview-client'
-import JsonFormatter from '../../components/tools/json-formatter/json-formatter-client'
-import JsonToCode from '../../components/tools/json-to-code/json-to-code-client'
-import MarkdownPreview from '../../components/tools/markdown-preview/markdown-preview-client'
-import MockGenerator from '../../components/tools/mock-generator/mock-generator-client'
-import RegexTester from '../../components/tools/regex-tester/regex-tester-client'
-import ToolStub from '../../components/tools/stub'
-// Imports of implemented tools will go here:
-import UnixConverter from '../../components/tools/unix-converter/unix-converter-client'
-import UrlEncoder from '../../components/tools/url-encoder/url-encoder-client'
-import { TOOLS } from '../../utils/tools-registry'
+import { TOOLS } from '@/utils/tools-registry'
+
+const Base64Image = React.lazy(() => import('@/components/tools/base64-image'))
+const Base64String = React.lazy(() => import('@/components/tools/base64-string'),)
+const ColorConverter = React.lazy(() => import('@/components/tools/color-converter'),)
+const CronParser = React.lazy(() => import('@/components/tools/cron-parser'))
+const CurlToCode = React.lazy(() => import('@/components/tools/curl-to-code'))
+const DiffChecker = React.lazy(() => import('@/components/tools/diff-checker'))
+const HtmlEncoder = React.lazy(() => import('@/components/tools/html-encoder'))
+const HtmlPreview = React.lazy(() => import('@/components/tools/html-preview'))
+const JsonFormatter = React.lazy(() => import('@/components/tools/json-formatter'),)
+const JsonToCode = React.lazy(() => import('@/components/tools/json-to-code'))
+const MarkdownPreview = React.lazy(() => import('@/components/tools/markdown-preview'),)
+const MockGenerator = React.lazy(() => import('@/components/tools/mock-generator'),)
+const RegexTester = React.lazy(() => import('@/components/tools/regex-tester'))
+const ToolStub = React.lazy(() => import('@/components/tools/stub'))
+const UnixConverter = React.lazy(() => import('@/components/tools/unix-converter'),)
+const UrlEncoder = React.lazy(() => import('@/components/tools/url-encoder'))
 
 const TOOL_COMPONENTS: Record<string, React.ComponentType<any>> = {
 	'unix-converter': UnixConverter,

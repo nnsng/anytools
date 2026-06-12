@@ -1,7 +1,7 @@
 import { Pause, Play, RefreshCw } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
-import { Button } from '../../ui/button'
-import { Input } from '../../ui/input'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 
 export default function UnixConverter() {
 	// Live Clock

@@ -1,7 +1,7 @@
 import { Check, Copy } from 'lucide-react'
 import { useState } from 'react'
-import { Button } from '../../ui/button'
-import { Input } from '../../ui/input'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 
 export default function ColorConverter() {
 	const [hex, setHex] = useState<string>('#22c55e')

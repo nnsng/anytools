@@ -1,7 +1,7 @@
 import { Check, Copy, Download, Trash2, Upload } from 'lucide-react'
 import React, { useRef } from 'react'
-import { cn } from '../../../utils/cn'
-import { Button } from '../../ui/button'
+import { Button } from '@/components/ui/button'
+import { cn } from '@/utils/cn'
 
 interface EditorPaneProps {
 	title: string

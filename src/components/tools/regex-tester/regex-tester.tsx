@@ -1,6 +1,6 @@
 import type React from 'react'
 import { useEffect, useState } from 'react'
-import { Textarea } from '../../ui/textarea'
+import { Textarea } from '@/components/ui/textarea'
 
 interface MatchGroup {
 	index: number

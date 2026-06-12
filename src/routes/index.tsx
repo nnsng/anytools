@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { ChevronRight, Search, Sparkles } from 'lucide-react'
 import React, { useState } from 'react'
-import { TOOLS } from '../utils/tools-registry'
+import { TOOLS } from '@/utils/tools-registry'
 
 export const Route = createFileRoute('/')({ component: Home })
 
@@ -37,7 +37,8 @@ function Home() {
 					{list.map((tool) => (
 						<Link
 							key={tool.id}
-							to={`/tools/${tool.id}`}
+							to="/tools/$toolId"
+							params={{ toolId: tool.id }}
 							className="group relative flex flex-col justify-between overflow-hidden rounded border border-terminal-border bg-terminal-card/40 p-5 transition-all duration-200 hover:border-matrix/40 hover:bg-terminal-card/90 hover:shadow-[0_0_15px_rgba(34,197,94,0.08)]"
 						>
 							{/* Subtle top indicator bar */}
@@ -96,18 +97,6 @@ function Home() {
 						server calls, no trackers, zero data leakage.
 					</p>
 				</div>
-
-				<div className="hidden flex-col items-end space-y-1 text-right text-[10px] text-slate-500 lg:flex">
-					<div>
-						KERNEL: <span className="text-white">v1.0.0-react19</span>
-					</div>
-					<div>
-						PLATFORM: <span className="text-white">Client-Sandbox</span>
-					</div>
-					<div>
-						COMPILER: <span className="text-white">Vite/TanStack</span>
-					</div>
-				</div>
 			</div>
 
 			{/* Instant Search Bar */}
@@ -132,6 +121,7 @@ function Home() {
 							No matching modules found.
 						</div>
 						<button
+							type="button"
 							onClick={() => setSearchQuery('')}
 							className="border-matrix/30 border-b font-bold text-matrix text-xs hover:border-matrix hover:text-matrix-glow"
 						>
