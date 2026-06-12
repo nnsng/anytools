@@ -1,7 +1,5 @@
 import { Link } from '@tanstack/react-router'
-import dayjs from 'dayjs'
-import { Clock, Menu, Search, Terminal } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { Menu, Search, Terminal } from 'lucide-react'
 
 type HeaderProps = {
 	sidebarOpen: boolean
@@ -11,17 +9,6 @@ type HeaderProps = {
 
 export function Header(props: HeaderProps) {
 	const { sidebarOpen, setSidebarOpen, onOpenCommandPalette } = props
-	const [timeStr, setTimeStr] = useState('')
-
-	useEffect(() => {
-		const updateTime = () => {
-			setTimeStr(dayjs().format('YYYY-MM-DD HH:mm:ss'))
-		}
-
-		updateTime()
-		const timer = setInterval(updateTime, 1000)
-		return () => clearInterval(timer)
-	}, [])
 
 	return (
 		<header className="sticky top-0 z-40 flex items-center justify-between border-terminal-border border-b bg-terminal-card/80 px-4 py-3 backdrop-blur">
@@ -45,13 +32,8 @@ export function Header(props: HeaderProps) {
 				</Link>
 			</div>
 
-			{/* System clock & Quick search trigger */}
+			{/* Quick search trigger */}
 			<div className="flex items-center gap-4">
-				<div className="hidden select-none items-center gap-2 rounded border border-terminal-border bg-terminal-bg/50 px-3 py-1.5 font-mono text-[10px] text-slate-500 md:flex">
-					<Clock className="h-3 w-3 animate-pulse text-matrix" />
-					<span className="font-bold text-matrix-glow tabular-nums">{timeStr}</span>
-				</div>
-
 				<button
 					type="button"
 					onClick={onOpenCommandPalette}
