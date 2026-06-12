@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import React from 'react'
-import { cn } from '@/utils/cn'
+import { cn } from '@/lib/utils'
 import type { ToolMetadata } from '@/utils/tools-registry'
 
 type SidebarProps = {
@@ -16,11 +16,11 @@ export function Sidebar(props: SidebarProps) {
 		<>
 			<aside
 				className={cn(
-					'fixed inset-y-0 top-13.25 left-0 z-30 w-64 transform border-terminal-border border-r bg-terminal-card p-4 transition-transform duration-200 ease-in-out lg:static lg:block lg:translate-x-0',
+					'fixed inset-y-0 top-13.25 left-0 z-30 w-67 transform border-terminal-border border-r bg-terminal-card p-4 transition-transform duration-200 ease-in-out lg:static lg:flex lg:h-full lg:min-h-0 lg:translate-x-0 lg:flex-col',
 					sidebarOpen ? 'translate-x-0' : '-translate-x-full',
 				)}
 			>
-				<nav className="scrollbar-thin h-[calc(100vh-80px)] select-none space-y-6 overflow-y-auto pr-1">
+				<nav className="scrollbar-thin h-[calc(100vh-80px)] select-none space-y-6 overflow-y-auto pr-1 lg:h-auto lg:flex-1">
 					{Object.entries(categories).map(([categoryName, toolList]) => (
 						<div key={categoryName} className="space-y-2">
 							<h4 className="px-2 font-bold text-[10px] text-slate-600 uppercase tracking-widest">
@@ -45,7 +45,7 @@ export function Sidebar(props: SidebarProps) {
 										{React.createElement(tool.icon, {
 											className: 'w-4 h-4 flex-shrink-0',
 										})}
-										<span className="truncate">{tool.name}</span>
+										<span className="flex-1 truncate">{tool.name}</span>
 									</Link>
 								))}
 							</div>

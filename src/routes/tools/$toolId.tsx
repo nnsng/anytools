@@ -66,7 +66,7 @@ function ToolContainer() {
 		TOOL_COMPONENTS[tool.id] || (() => <ToolStub toolId={tool.id} name={tool.name} />)
 
 	return (
-		<div className="animate-fade-in space-y-6">
+		<div className="flex h-full animate-fade-in flex-col gap-4">
 			<div className="flex flex-col justify-between gap-4 border-terminal-border border-b pb-4 md:flex-row md:items-center">
 				<div>
 					<div className="mb-1 flex items-center gap-2 font-mono text-matrix text-xs">
@@ -84,10 +84,10 @@ function ToolContainer() {
 				</div>
 			</div>
 
-			<div className="min-h-[500px]">
+			<div className="flex min-h-0 flex-1 overflow-hidden [&>div]:w-full">
 				<React.Suspense
 					fallback={
-						<div className="flex min-h-[500px] flex-col items-center justify-center gap-3 font-mono text-matrix">
+						<div className="flex h-full flex-col items-center justify-center gap-3 font-mono text-matrix">
 							<Loader2 className="h-8 w-8 animate-spin" />
 							<span className="text-xs tracking-widest opacity-60">LOADING MODULE...</span>
 						</div>

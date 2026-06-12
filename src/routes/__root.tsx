@@ -20,7 +20,6 @@ const CATEGORIES = {
 }
 
 function RootComponent() {
-	const [searchQuery, setSearchQuery] = useState('')
 	const [commandPaletteOpen, setCommandPaletteOpen] = useState(false)
 	const [sidebarOpen, setSidebarOpen] = useState(false)
 	const [systemStatus, _setSystemStatus] = useState('NOMINAL')
@@ -40,20 +39,9 @@ function RootComponent() {
 		return () => window.removeEventListener('keydown', handleKeyDown)
 	}, [])
 
-	const filteredTools = TOOLS.filter((tool) => {
-		const query = searchQuery.toLowerCase().trim()
-		if (!query) return true
-		return (
-			tool.name.toLowerCase().includes(query) ||
-			tool.description.toLowerCase().includes(query) ||
-			tool.tags.some((tag) => tag.includes(query)) ||
-			tool.category.toLowerCase().includes(query)
-		)
-	})
-
 	return (
 		<>
-			<div className="flex h-full min-h-screen grow flex-col">
+			<div className="flex h-screen w-screen flex-col overflow-hidden">
 				<Header
 					sidebarOpen={sidebarOpen}
 					setSidebarOpen={setSidebarOpen}
@@ -61,7 +49,7 @@ function RootComponent() {
 					onOpenCommandPalette={() => setCommandPaletteOpen(true)}
 				/>
 
-				<div className="relative flex flex-1">
+				<div className="relative flex min-h-0 flex-1 overflow-hidden">
 					<Sidebar
 						sidebarOpen={sidebarOpen}
 						setSidebarOpen={setSidebarOpen}
@@ -69,21 +57,15 @@ function RootComponent() {
 					/>
 
 					{/* Main Panel Content Workspace */}
-					<main className="scrollbar-thin h-[calc(100vh-53px)] min-w-0 grow overflow-y-auto bg-terminal-bg/10 p-4 md:p-6 lg:p-8">
-						<div className="mx-auto max-w-7xl space-y-6 pb-12">
+					<main className="flex min-w-0 flex-1 flex-col overflow-hidden bg-terminal-bg/10">
+						<div className="mx-auto flex h-full min-h-0 w-full max-w-7xl flex-1 flex-col overflow-hidden p-4 md:p-6 lg:p-8">
 							<Outlet />
 						</div>
 					</main>
 				</div>
 			</div>
 
-			<CommandPalette
-				open={commandPaletteOpen}
-				onClose={() => setCommandPaletteOpen(false)}
-				searchQuery={searchQuery}
-				setSearchQuery={setSearchQuery}
-				filteredTools={filteredTools}
-			/>
+			<CommandPalette open={commandPaletteOpen} onClose={() => setCommandPaletteOpen(false)} />
 
 			<TanStackDevtools
 				config={{
