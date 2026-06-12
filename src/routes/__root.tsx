@@ -15,9 +15,7 @@ export const Route = createRootRoute({
 
 const CATEGORIES = {
 	Converters: TOOLS.filter((t) => t.category === 'Converters'),
-	'Formatters & Parsers': TOOLS.filter(
-		(t) => t.category === 'Formatters & Parsers',
-	),
+	'Formatters & Parsers': TOOLS.filter((t) => t.category === 'Formatters & Parsers'),
 	'Dev Utilities': TOOLS.filter((t) => t.category === 'Dev Utilities'),
 }
 

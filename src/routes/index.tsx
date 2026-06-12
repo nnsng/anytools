@@ -20,9 +20,7 @@ function Home() {
 
 	// Group filtered tools
 	const converters = filteredTools.filter((t) => t.category === 'Converters')
-	const formatters = filteredTools.filter(
-		(t) => t.category === 'Formatters & Parsers',
-	)
+	const formatters = filteredTools.filter((t) => t.category === 'Formatters & Parsers')
 	const utilities = filteredTools.filter((t) => t.category === 'Dev Utilities')
 
 	const renderSection = (title: string, list: typeof TOOLS) => {
@@ -62,9 +60,7 @@ function Home() {
 							</div>
 
 							<div className="mt-5 flex items-center justify-between border-terminal-border/40 border-t pt-3 font-mono text-[10px] text-slate-500 group-hover:text-slate-300">
-								<span className="uppercase tracking-wider">
-									{tool.category}
-								</span>
+								<span className="uppercase tracking-wider">{tool.category}</span>
 								<span className="flex items-center gap-0.5 font-bold text-matrix/80 group-hover:text-matrix-glow">
 									LAUNCH{' '}
 									<ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
@@ -92,9 +88,9 @@ function Home() {
 					</h1>
 
 					<p className="text-slate-400 text-xs leading-relaxed md:text-sm">
-						Welcome to the local system utilities suite. All transformations,
-						encodings, and calculations process natively within your browser. No
-						server calls, no trackers, zero data leakage.
+						Welcome to the local system utilities suite. All transformations, encodings, and
+						calculations process natively within your browser. No server calls, no trackers, zero
+						data leakage.
 					</p>
 				</div>
 			</div>
@@ -117,9 +113,7 @@ function Home() {
 			<div className="space-y-10">
 				{filteredTools.length === 0 ? (
 					<div className="rounded border border-terminal-border border-dashed py-12 text-center">
-						<div className="mb-2 text-slate-500 text-sm">
-							No matching modules found.
-						</div>
+						<div className="mb-2 text-slate-500 text-sm">No matching modules found.</div>
 						<button
 							type="button"
 							onClick={() => setSearchQuery('')}

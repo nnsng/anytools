@@ -70,11 +70,7 @@ export default function HtmlEncoder() {
 
 			<div className="grid h-[calc(100vh-270px)] min-h-[450px] grid-cols-1 gap-6 lg:grid-cols-2">
 				<EditorPane
-					title={
-						activeTab === 'encode'
-							? 'Raw HTML / Text Input'
-							: 'HTML Entities Input'
-					}
+					title={activeTab === 'encode' ? 'Raw HTML / Text Input' : 'HTML Entities Input'}
 					value={input}
 					onChange={setInput}
 					placeholder={
@@ -86,17 +82,11 @@ export default function HtmlEncoder() {
 				/>
 
 				<EditorPane
-					title={
-						activeTab === 'encode'
-							? 'Encoded Output Entities'
-							: 'Decoded Output HTML / Text'
-					}
+					title={activeTab === 'encode' ? 'Encoded Output Entities' : 'Decoded Output HTML / Text'}
 					value={output}
 					readOnly={true}
 					allowDownload={true}
-					downloadFileName={
-						activeTab === 'encode' ? 'html-encoded.txt' : 'html-decoded.txt'
-					}
+					downloadFileName={activeTab === 'encode' ? 'html-encoded.txt' : 'html-decoded.txt'}
 				/>
 			</div>
 		</div>

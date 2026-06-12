@@ -21,21 +21,14 @@ export default function JsonFormatter() {
 
 			try {
 				const parsed = JSON.parse(rawInput)
-				const spaces =
-					indentVal === 'minify'
-						? 0
-						: indentVal === 'tab'
-							? '\t'
-							: Number(indentVal)
+				const spaces = indentVal === 'minify' ? 0 : indentVal === 'tab' ? '\t' : Number(indentVal)
 				const formatted =
-					indentVal === 'minify'
-						? JSON.stringify(parsed)
-						: JSON.stringify(parsed, null, spaces)
+					indentVal === 'minify' ? JSON.stringify(parsed) : JSON.stringify(parsed, null, spaces)
 
 				setOutput(formatted)
 				setError(null)
-			} catch (err: any) {
-				setError(err.message || 'Invalid JSON format')
+			} catch (err) {
+				setError(err instanceof Error ? err.message : 'Invalid JSON format')
 				setOutput('')
 			}
 		}
@@ -44,7 +37,7 @@ export default function JsonFormatter() {
 	}, [input, indent])
 
 	return (
-		<div className="grid h-[calc(100vh-220px)] min-h-[500px] grid-cols-1 gap-6 lg:grid-cols-2">
+		<div className="grid h-[calc(100vh-220px)] min-h-125 grid-cols-1 gap-6 lg:grid-cols-2">
 			<EditorPane
 				title="Raw Input JSON"
 				value={input}
@@ -79,7 +72,7 @@ export default function JsonFormatter() {
 				{output ? (
 					<PrismHighlighter code={output} language="json" className="flex-1" />
 				) : (
-					<div className="flex flex-grow select-none items-center justify-center font-mono text-slate-600 text-xs">
+					<div className="flex grow select-none items-center justify-center font-mono text-slate-600 text-xs">
 						Waiting for valid JSON input...
 					</div>
 				)}

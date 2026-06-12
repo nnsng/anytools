@@ -1,8 +1,7 @@
 import React from 'react'
 import { cn } from '@/utils/cn'
 
-export interface ButtonProps
-	extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 	variant?: 'primary' | 'outline' | 'ghost' | 'danger'
 	size?: 'sm' | 'md' | 'lg'
 }

@@ -64,8 +64,7 @@ export function CommandPalette(props: CommandPaletteProps) {
 					<div className="space-y-1">
 						{filteredTools.length === 0 ? (
 							<div className="py-8 text-center text-slate-600 text-xs">
-								No tools matching '
-								<span className="font-bold text-red-400">{searchQuery}</span>'
+								No tools matching '<span className="font-bold text-red-400">{searchQuery}</span>'
 								found.
 							</div>
 						) : (
@@ -80,8 +79,7 @@ export function CommandPalette(props: CommandPaletteProps) {
 									<div className="flex min-w-0 items-center gap-3">
 										<div className="rounded border border-terminal-border bg-terminal-bg p-1.5 group-hover:border-matrix/20">
 											{React.createElement(tool.icon, {
-												className:
-													'w-4 h-4 text-slate-400 group-hover:text-matrix',
+												className: 'w-4 h-4 text-slate-400 group-hover:text-matrix',
 											})}
 										</div>
 										<div className="min-w-0">

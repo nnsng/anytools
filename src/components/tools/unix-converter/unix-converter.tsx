@@ -1,13 +1,15 @@
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
 import { Pause, Play, RefreshCw } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
+dayjs.extend(relativeTime)
+
 export default function UnixConverter() {
 	// Live Clock
-	const [liveEpoch, setLiveEpoch] = useState<number>(
-		Math.floor(Date.now() / 1000),
-	)
+	const [liveEpoch, setLiveEpoch] = useState<number>(Math.floor(Date.now() / 1000))
 	const [isLiveActive, setIsLiveActive] = useState<boolean>(true)
 
 	useEffect(() => {
@@ -19,9 +21,7 @@ export default function UnixConverter() {
 	}, [isLiveActive])
 
 	// Conversion: Epoch to Date
-	const [inputEpoch, setInputEpoch] = useState<string>(
-		Math.floor(Date.now() / 1000).toString(),
-	)
+	const [inputEpoch, setInputEpoch] = useState<string>(Math.floor(Date.now() / 1000).toString())
 	const [epochError, setEpochError] = useState<string | null>(null)
 	const [epochResults, setEpochResults] = useState<{
 		local: string
@@ -60,7 +60,7 @@ export default function UnixConverter() {
 				local: date.toString(),
 				utc: date.toUTCString(),
 				iso: date.toISOString(),
-				relative: getRelativeTimeString(date),
+				relative: dayjs(date).fromNow(),
 			})
 		} catch {
 			setEpochError('Date conversion failed. Out of range?')
@@ -69,9 +69,7 @@ export default function UnixConverter() {
 	}, [])
 
 	// Conversion: Date to Epoch
-	const [inputDate, setInputDate] = useState<string>(
-		new Date().toISOString().substring(0, 16),
-	) // YYYY-MM-DDTHH:MM
+	const [inputDate, setInputDate] = useState<string>(new Date().toISOString().substring(0, 16)) // YYYY-MM-DDTHH:MM
 	const [dateError, setDateError] = useState<string | null>(null)
 	const [dateResults, setDateResults] = useState<{
 		seconds: number
@@ -105,34 +103,11 @@ export default function UnixConverter() {
 	}, [])
 
 	// Run initial conversions on load
+	// biome-ignore lint/correctness/useExhaustiveDependencies: intentionally runs only on mount with initial values
 	useEffect(() => {
 		handleConvertEpoch(inputEpoch)
 		handleConvertDate(inputDate)
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
-
-	const getRelativeTimeString = (date: Date): string => {
-		const diff = date.getTime() - Date.now()
-		const diffSecs = Math.round(diff / 1000)
-		const absSecs = Math.abs(diffSecs)
-
-		if (absSecs < 60) {
-			return diffSecs >= 0 ? `in ${absSecs} seconds` : `${absSecs} seconds ago`
-		}
-		const diffMins = Math.round(diffSecs / 60)
-		const absMins = Math.abs(diffMins)
-		if (absMins < 60) {
-			return diffSecs >= 0 ? `in ${absMins} minutes` : `${absMins} minutes ago`
-		}
-		const diffHours = Math.round(diffMins / 60)
-		const absHours = Math.abs(diffHours)
-		if (absHours < 24) {
-			return diffSecs >= 0 ? `in ${absHours} hours` : `${absHours} hours ago`
-		}
-		const diffDays = Math.round(diffHours / 24)
-		const absDays = Math.abs(diffDays)
-		return diffSecs >= 0 ? `in ${absDays} days` : `${absDays} days ago`
-	}
 
 	const setInputToCurrent = () => {
 		const current = Math.floor(Date.now() / 1000).toString()
@@ -144,12 +119,8 @@ export default function UnixConverter() {
 			{/* Live Clock Widget */}
 			<div className="flex items-center justify-between rounded-sm border border-terminal-border bg-terminal-card/40 p-4 lg:col-span-12">
 				<div className="flex items-center gap-4">
-					<div className="text-slate-500 text-xs uppercase tracking-wider">
-						LIVE EPOCH CLOCK:
-					</div>
-					<div className="font-bold text-glow text-matrix text-xl tabular-nums">
-						{liveEpoch}
-					</div>
+					<div className="text-slate-500 text-xs uppercase tracking-wider">LIVE EPOCH CLOCK:</div>
+					<div className="font-bold text-glow text-matrix text-xl tabular-nums">{liveEpoch}</div>
 				</div>
 				<div className="flex items-center gap-2">
 					<Button
@@ -186,11 +157,12 @@ export default function UnixConverter() {
 				</h3>
 
 				<div className="space-y-2">
-					<label className="text-slate-400 text-xs uppercase">
+					<label htmlFor="input-epoch" className="text-slate-400 text-xs uppercase">
 						Input Timestamp (Seconds / Millis)
 					</label>
 					<div className="flex gap-2">
 						<Input
+							id="input-epoch"
 							value={inputEpoch}
 							onChange={(e) => handleConvertEpoch(e.target.value)}
 							placeholder="e.g. 1718211092"
@@ -206,36 +178,26 @@ export default function UnixConverter() {
 					<div className="space-y-4 pt-2">
 						<div className="grid grid-cols-1 gap-3 text-sm">
 							<div className="rounded-xs border border-terminal-border bg-terminal-bg p-3">
-								<span className="block text-[10px] text-slate-500">
-									ISO 8601
-								</span>
+								<span className="block text-[10px] text-slate-500">ISO 8601</span>
 								<span className="select-all break-all font-mono text-slate-200">
 									{epochResults.iso}
 								</span>
 							</div>
 							<div className="rounded-xs border border-terminal-border bg-terminal-bg p-3">
-								<span className="block text-[10px] text-slate-500">
-									UTC Date-Time
-								</span>
+								<span className="block text-[10px] text-slate-500">UTC Date-Time</span>
 								<span className="select-all break-all font-mono text-slate-200">
 									{epochResults.utc}
 								</span>
 							</div>
 							<div className="rounded-xs border border-terminal-border bg-terminal-bg p-3">
-								<span className="block text-[10px] text-slate-500">
-									Local Date-Time
-								</span>
+								<span className="block text-[10px] text-slate-500">Local Date-Time</span>
 								<span className="select-all break-all font-mono text-slate-200">
 									{epochResults.local}
 								</span>
 							</div>
 							<div className="rounded-xs border border-terminal-border bg-terminal-bg p-3">
-								<span className="block text-[10px] text-slate-500">
-									Relative Time
-								</span>
-								<span className="font-mono font-semibold text-matrix">
-									{epochResults.relative}
-								</span>
+								<span className="block text-[10px] text-slate-500">Relative Time</span>
+								<span className="font-mono font-semibold text-matrix">{epochResults.relative}</span>
 							</div>
 						</div>
 					</div>
@@ -249,10 +211,11 @@ export default function UnixConverter() {
 				</h3>
 
 				<div className="space-y-2">
-					<label className="text-slate-400 text-xs uppercase">
+					<label htmlFor="input-date" className="text-slate-400 text-xs uppercase">
 						Input Date/Time
 					</label>
 					<Input
+						id="input-date"
 						type="datetime-local"
 						value={inputDate}
 						onChange={(e) => handleConvertDate(e.target.value)}
@@ -265,9 +228,7 @@ export default function UnixConverter() {
 						<div className="grid grid-cols-1 gap-3 text-sm">
 							<div className="flex items-center justify-between rounded-xs border border-terminal-border bg-terminal-bg p-3">
 								<div>
-									<span className="block text-[10px] text-slate-500">
-										Seconds (Epoch)
-									</span>
+									<span className="block text-[10px] text-slate-500">Seconds (Epoch)</span>
 									<span className="select-all font-bold font-mono text-slate-200">
 										{dateResults.seconds}
 									</span>
@@ -275,9 +236,7 @@ export default function UnixConverter() {
 								<Button
 									variant="ghost"
 									size="sm"
-									onClick={() =>
-										handleConvertEpoch(dateResults.seconds.toString())
-									}
+									onClick={() => handleConvertEpoch(dateResults.seconds.toString())}
 								>
 									Load
 								</Button>
@@ -285,9 +244,7 @@ export default function UnixConverter() {
 
 							<div className="flex items-center justify-between rounded-xs border border-terminal-border bg-terminal-bg p-3">
 								<div>
-									<span className="block text-[10px] text-slate-500">
-										Milliseconds (Epoch)
-									</span>
+									<span className="block text-[10px] text-slate-500">Milliseconds (Epoch)</span>
 									<span className="select-all font-bold font-mono text-slate-200">
 										{dateResults.millis}
 									</span>
@@ -295,9 +252,7 @@ export default function UnixConverter() {
 								<Button
 									variant="ghost"
 									size="sm"
-									onClick={() =>
-										handleConvertEpoch(dateResults.millis.toString())
-									}
+									onClick={() => handleConvertEpoch(dateResults.millis.toString())}
 								>
 									Load
 								</Button>

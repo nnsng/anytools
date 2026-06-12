@@ -2,22 +2,7 @@ import { CronExpressionParser } from 'cron-parser'
 import { useCallback, useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-
-const describeCronPart = (part: string, unit: string): string => {
-	if (part === '*') return `Every ${unit}`
-	if (part.startsWith('*/')) {
-		const step = part.split('/')[1]
-		return `Every ${step} ${unit}s`
-	}
-	if (part.includes(',')) {
-		return `Specific ${unit}s: ${part.split(',').join(', ')}`
-	}
-	if (part.includes('-')) {
-		const [start, end] = part.split('-')
-		return `From ${unit} ${start} to ${end}`
-	}
-	return `At ${unit} ${part}`
-}
+import { describeCronPart } from './cron-utils'
 
 export default function CronParser() {
 	const [cronString, setCronString] = useState<string>('*/15 9-17 * * 1-5')
@@ -65,8 +50,8 @@ export default function CronParser() {
 			} else {
 				setExplanation(null)
 			}
-		} catch (err: any) {
-			setError(err.message || 'Invalid cron expression')
+		} catch (err) {
+			setError(err instanceof Error ? err.message : 'Invalid cron expression')
 			setNextRuns([])
 			setExplanation(null)
 		}
@@ -94,7 +79,7 @@ export default function CronParser() {
 				</span>
 
 				<div className="flex flex-col items-stretch gap-4 md:flex-row">
-					<div className="flex-grow">
+					<div className="grow">
 						<Input
 							value={cronString}
 							onChange={(e) => setCronString(e.target.value)}
@@ -104,9 +89,9 @@ export default function CronParser() {
 					</div>
 
 					<div className="flex flex-wrap items-center gap-2">
-						{presets.map((preset, idx) => (
+						{presets.map((preset) => (
 							<Button
-								key={idx}
+								key={preset.val}
 								variant="outline"
 								size="sm"
 								className="text-xs"
@@ -136,44 +121,24 @@ export default function CronParser() {
 				{explanation ? (
 					<div className="grid grid-cols-1 gap-2.5 text-xs">
 						<div className="flex justify-between rounded-xs border border-terminal-border/60 bg-terminal-bg/50 p-2">
-							<span className="font-bold text-slate-500 uppercase">
-								Minutes (col 1):
-							</span>
-							<span className="font-semibold text-matrix">
-								{explanation.minute}
-							</span>
+							<span className="font-bold text-slate-500 uppercase">Minutes (col 1):</span>
+							<span className="font-semibold text-matrix">{explanation.minute}</span>
 						</div>
 						<div className="flex justify-between rounded-xs border border-terminal-border/60 bg-terminal-bg/50 p-2">
-							<span className="font-bold text-slate-500 uppercase">
-								Hours (col 2):
-							</span>
-							<span className="font-semibold text-matrix">
-								{explanation.hour}
-							</span>
+							<span className="font-bold text-slate-500 uppercase">Hours (col 2):</span>
+							<span className="font-semibold text-matrix">{explanation.hour}</span>
 						</div>
 						<div className="flex justify-between rounded-xs border border-terminal-border/60 bg-terminal-bg/50 p-2">
-							<span className="font-bold text-slate-500 uppercase">
-								Day of Month (col 3):
-							</span>
-							<span className="font-semibold text-matrix">
-								{explanation.dayOfMonth}
-							</span>
+							<span className="font-bold text-slate-500 uppercase">Day of Month (col 3):</span>
+							<span className="font-semibold text-matrix">{explanation.dayOfMonth}</span>
 						</div>
 						<div className="flex justify-between rounded-xs border border-terminal-border/60 bg-terminal-bg/50 p-2">
-							<span className="font-bold text-slate-500 uppercase">
-								Month (col 4):
-							</span>
-							<span className="font-semibold text-matrix">
-								{explanation.month}
-							</span>
+							<span className="font-bold text-slate-500 uppercase">Month (col 4):</span>
+							<span className="font-semibold text-matrix">{explanation.month}</span>
 						</div>
 						<div className="flex justify-between rounded-xs border border-terminal-border/60 bg-terminal-bg/50 p-2">
-							<span className="font-bold text-slate-500 uppercase">
-								Day of Week (col 5):
-							</span>
-							<span className="font-semibold text-matrix">
-								{explanation.dayOfWeek}
-							</span>
+							<span className="font-bold text-slate-500 uppercase">Day of Week (col 5):</span>
+							<span className="font-semibold text-matrix">{explanation.dayOfWeek}</span>
 						</div>
 					</div>
 				) : (
@@ -195,13 +160,11 @@ export default function CronParser() {
 					<div className="space-y-2">
 						{nextRuns.map((run, idx) => (
 							<div
-								key={idx}
+								key={run}
 								className="flex items-center justify-between rounded-xs border border-terminal-border bg-slate-900/60 p-2.5 text-xs"
 							>
 								<span className="font-bold text-slate-500">RUN #{idx + 1}</span>
-								<span className="select-all font-mono font-semibold text-slate-200">
-									{run}
-								</span>
+								<span className="select-all font-mono font-semibold text-slate-200">{run}</span>
 							</div>
 						))}
 					</div>

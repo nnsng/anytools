@@ -22,18 +22,16 @@ export default function UrlEncoder() {
 
 			try {
 				if (mode === 'encode') {
-					const encoded =
-						type === 'component' ? encodeURIComponent(val) : encodeURI(val)
+					const encoded = type === 'component' ? encodeURIComponent(val) : encodeURI(val)
 					setOutput(encoded)
 					setError(null)
 				} else {
-					const decoded =
-						type === 'component' ? decodeURIComponent(val) : decodeURI(val)
+					const decoded = type === 'component' ? decodeURIComponent(val) : decodeURI(val)
 					setOutput(decoded)
 					setError(null)
 				}
-			} catch (err: any) {
-				setError(err.message || 'URL conversion failed. Verify input syntax.')
+			} catch (err) {
+				setError(err instanceof Error ? err.message : 'URL conversion failed. Verify input syntax.')
 				setOutput('')
 			}
 		}
@@ -60,7 +58,7 @@ export default function UrlEncoder() {
 					activeTab={activeTab}
 					onChange={handleTabChange}
 				/>
-				<div className="w-[180px]">
+				<div className="w-45">
 					<Select
 						label="Encode/Decode Mode"
 						options={[
@@ -75,9 +73,7 @@ export default function UrlEncoder() {
 
 			<div className="grid h-[calc(100vh-270px)] min-h-[450px] grid-cols-1 gap-6 lg:grid-cols-2">
 				<EditorPane
-					title={
-						activeTab === 'encode' ? 'Raw Input String' : 'Encoded Input URL'
-					}
+					title={activeTab === 'encode' ? 'Raw Input String' : 'Encoded Input URL'}
 					value={input}
 					onChange={setInput}
 					placeholder={
@@ -90,17 +86,11 @@ export default function UrlEncoder() {
 				/>
 
 				<EditorPane
-					title={
-						activeTab === 'encode'
-							? 'Encoded Output URL'
-							: 'Decoded Output String'
-					}
+					title={activeTab === 'encode' ? 'Encoded Output URL' : 'Decoded Output String'}
 					value={output}
 					readOnly={true}
 					allowDownload={true}
-					downloadFileName={
-						activeTab === 'encode' ? 'url-encoded.txt' : 'url-decoded.txt'
-					}
+					downloadFileName={activeTab === 'encode' ? 'url-encoded.txt' : 'url-decoded.txt'}
 					error={activeTab === 'encode' ? error : null}
 				/>
 			</div>

@@ -1,33 +1,18 @@
 import type React from 'react'
 
-interface PrismHighlighterProps {
+type PrismHighlighterProps = {
 	code: string
-	language:
-		| 'json'
-		| 'html'
-		| 'javascript'
-		| 'typescript'
-		| 'css'
-		| 'text'
-		| 'sql'
-		| 'yaml'
+	language: 'json' | 'html' | 'javascript' | 'typescript' | 'css' | 'text' | 'sql' | 'yaml'
 	className?: string
 }
 
-export function PrismHighlighter({
-	code,
-	language,
-	className,
-}: PrismHighlighterProps) {
+export function PrismHighlighter({ code, language, className }: PrismHighlighterProps) {
 	const highlight = (txt: string, lang: string): React.ReactNode => {
 		if (!txt) return ''
 
 		if (lang === 'json') {
 			// Escape HTML characters to prevent XSS
-			const safeTxt = txt
-				.replace(/&/g, '&amp;')
-				.replace(/</g, '&lt;')
-				.replace(/>/g, '&gt;')
+			const safeTxt = txt.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 
 			// Color-coding regex for JSON
 			const jsonRegex =
@@ -35,10 +20,9 @@ export function PrismHighlighter({
 
 			const parts: React.ReactNode[] = []
 			let lastIndex = 0
-			let match
 
 			// We do a manual tokenization to build React elements, avoiding dangerous dangerouslySetInnerHTML
-			while ((match = jsonRegex.exec(safeTxt)) !== null) {
+			for (let match = jsonRegex.exec(safeTxt); match !== null; match = jsonRegex.exec(safeTxt)) {
 				const matchStr = match[0]
 				const matchIndex = match.index
 
@@ -86,20 +70,15 @@ export function PrismHighlighter({
 
 		if (lang === 'html') {
 			// Basic HTML tag/attribute highlighting
-			const safeTxt = txt
-				.replace(/&/g, '&amp;')
-				.replace(/</g, '&lt;')
-				.replace(/>/g, '&gt;')
+			const safeTxt = txt.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 
 			// Regex to match tags, attributes, strings
-			const htmlRegex =
-				/(&lt;\/?[a-zA-Z0-9:-]+(\s|&gt;)|"([^"]*)"|'([^']*)'|(&lt;!--.*?--&gt;))/g
+			const htmlRegex = /(&lt;\/?[a-zA-Z0-9:-]+(\s|&gt;)|"([^"]*)"|'([^']*)'|(&lt;!--.*?--&gt;))/g
 
 			const parts: React.ReactNode[] = []
 			let lastIndex = 0
-			let match
 
-			while ((match = htmlRegex.exec(safeTxt)) !== null) {
+			for (let match = htmlRegex.exec(safeTxt); match !== null; match = htmlRegex.exec(safeTxt)) {
 				const matchStr = match[0]
 				const matchIndex = match.index
 
@@ -140,19 +119,15 @@ export function PrismHighlighter({
 		}
 
 		// Fallback: simple highlighting for other code types (curly brackets, keywords, comments)
-		const safeTxt = txt
-			.replace(/&/g, '&amp;')
-			.replace(/</g, '&lt;')
-			.replace(/>/g, '&gt;')
+		const safeTxt = txt.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 
 		const codeRegex =
 			/(\b(const|let|var|function|return|import|export|from|default|class|interface|type|extends|implements|if|else|for|while|do|switch|case|break|continue|try|catch|finally|throw|new|this|typeof|instanceof|async|await|as|null|undefined|true|false)\b|(".*?"|'.*?'|`.*?`)|(\/\/.*|\/\*[\s\S]*?\*\/))/g
 
 		const parts: React.ReactNode[] = []
 		let lastIndex = 0
-		let match
 
-		while ((match = codeRegex.exec(safeTxt)) !== null) {
+		for (let match = codeRegex.exec(safeTxt); match !== null; match = codeRegex.exec(safeTxt)) {
 			const matchStr = match[0]
 			const matchIndex = match.index
 
@@ -193,10 +168,7 @@ export function PrismHighlighter({
 	}
 
 	const unescapeHtml = (str: string): string => {
-		return str
-			.replace(/&lt;/g, '<')
-			.replace(/&gt;/g, '>')
-			.replace(/&amp;/g, '&')
+		return str.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&')
 	}
 
 	return (

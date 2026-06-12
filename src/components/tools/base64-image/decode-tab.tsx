@@ -32,9 +32,7 @@ export function DecodeTab() {
 			setDecodeError(null)
 		}
 		img.onerror = () => {
-			setDecodeError(
-				'Failed to parse image from Base64 string. Ensure it is a valid format.',
-			)
+			setDecodeError('Failed to parse image from Base64 string. Ensure it is a valid format.')
 			setDecodedSrc('')
 		}
 		img.src = src
@@ -85,18 +83,12 @@ export function DecodeTab() {
 				<div className="flex min-h-50 flex-1 items-center justify-center rounded border border-terminal-border bg-terminal-bg/40 p-4">
 					{decodedSrc ? (
 						<div className="relative max-h-75 max-w-full overflow-hidden rounded border border-terminal-border bg-checkered bg-size-[16px_16px]">
-							<img
-								src={decodedSrc}
-								alt="Decoded preview"
-								className="max-h-70 object-contain"
-							/>
+							<img src={decodedSrc} alt="Decoded preview" className="max-h-70 object-contain" />
 						</div>
 					) : (
 						<div className="space-y-2 text-center text-slate-600">
 							<FileImage className="mx-auto h-8 w-8" />
-							<span className="text-xs">
-								Waiting for valid Base64 string input...
-							</span>
+							<span className="text-xs">Waiting for valid Base64 string input...</span>
 						</div>
 					)}
 				</div>

@@ -50,10 +50,11 @@ export default function Base64String() {
 					setOutput(decoded)
 					setError(null)
 				}
-			} catch (err: any) {
+			} catch (err) {
 				setError(
-					err.message ||
-						'Decryption/decoding failed. Make sure the input is a valid Base64 string.',
+					err instanceof Error
+						? err.message
+						: 'Decryption/decoding failed. Make sure the input is a valid Base64 string.',
 				)
 				setOutput('')
 			}
@@ -84,7 +85,7 @@ export default function Base64String() {
 				/>
 			</div>
 
-			<div className="grid h-[calc(100vh-270px)] min-h-[450px] grid-cols-1 gap-6 lg:grid-cols-2">
+			<div className="grid h-[calc(100vh-270px)] min-h-112.5 grid-cols-1 gap-6 lg:grid-cols-2">
 				<EditorPane
 					title={activeTab === 'encode' ? 'Plain Text Input' : 'Base64 Input'}
 					value={input}
@@ -103,9 +104,7 @@ export default function Base64String() {
 					value={output}
 					readOnly={true}
 					allowDownload={true}
-					downloadFileName={
-						activeTab === 'encode' ? 'encoded.txt' : 'decoded.txt'
-					}
+					downloadFileName={activeTab === 'encode' ? 'encoded.txt' : 'decoded.txt'}
 					error={activeTab === 'encode' ? error : null}
 				/>
 			</div>

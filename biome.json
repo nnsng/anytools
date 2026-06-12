@@ -20,7 +20,13 @@
 		"enabled": true,
 		"indentStyle": "tab"
 	},
-	"assist": { "actions": { "source": { "organizeImports": "on" } } },
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": "on"
+			}
+		}
+	},
 	"linter": {
 		"enabled": true,
 		"rules": {
@@ -33,13 +39,19 @@
 						"functions": ["clsx", "cn"]
 					}
 				}
+			},
+			"suspicious": {
+				"noArrayIndexKey": {
+					"level": "off"
+				}
 			}
 		}
 	},
 	"javascript": {
 		"formatter": {
 			"quoteStyle": "single",
-			"semicolons": "asNeeded"
+			"semicolons": "asNeeded",
+			"lineWidth": 100
 		}
 	}
 }

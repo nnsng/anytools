@@ -17,11 +17,7 @@ export default function Base64Image() {
 				onChange={setActiveTab}
 			/>
 
-			{activeTab === 'encode' ? (
-				<EncodeTab onFileChange={() => {}} />
-			) : (
-				<DecodeTab />
-			)}
+			{activeTab === 'encode' ? <EncodeTab onFileChange={() => {}} /> : <DecodeTab />}
 		</div>
 	)
 }

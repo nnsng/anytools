@@ -3,7 +3,7 @@ import React, { useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/utils/cn'
 
-interface EditorPaneProps {
+type EditorPaneProps = {
 	title: string
 	value: string
 	onChange?: (value: string) => void
@@ -80,10 +80,7 @@ export function EditorPane({
 			<div className="flex items-center justify-between border-terminal-border border-b bg-terminal-bg/40 px-4 py-2">
 				<span className="flex items-center gap-2 font-bold font-mono text-slate-300 text-xs uppercase tracking-wider">
 					<span
-						className={cn(
-							'h-1.5 w-1.5 rounded-full',
-							readOnly ? 'bg-blue-500' : 'bg-matrix',
-						)}
+						className={cn('h-1.5 w-1.5 rounded-full', readOnly ? 'bg-blue-500' : 'bg-matrix')}
 					/>
 					{title}
 				</span>
@@ -157,9 +154,7 @@ export function EditorPane({
 			{/* Pane Content */}
 			<div className="relative flex min-h-[220px] flex-1 flex-col">
 				{children ? (
-					<div className="flex flex-1 flex-col overflow-auto font-mono text-sm">
-						{children}
-					</div>
+					<div className="flex flex-1 flex-col overflow-auto font-mono text-sm">{children}</div>
 				) : (
 					<textarea
 						value={value}

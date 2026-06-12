@@ -2,7 +2,7 @@ import { Upload } from 'lucide-react'
 import { useRef, useState } from 'react'
 import { EditorPane } from '@/components/tools/shared/editor-pane'
 
-interface EncodeTabProps {
+type EncodeTabProps = {
 	onFileChange: (file: File) => void
 }
 
@@ -73,11 +73,7 @@ export function EncodeTab({ onFileChange }: EncodeTabProps) {
 
 					{imagePreview ? (
 						<div className="relative max-h-50 max-w-full overflow-hidden rounded border border-terminal-border">
-							<img
-								src={imagePreview}
-								alt="Preview"
-								className="max-h-45 w-auto object-contain"
-							/>
+							<img src={imagePreview} alt="Preview" className="max-h-45 w-auto object-contain" />
 						</div>
 					) : (
 						<div className="space-y-3 text-center">
@@ -92,18 +88,14 @@ export function EncodeTab({ onFileChange }: EncodeTabProps) {
 				{imageFile && (
 					<div className="space-y-1 rounded border border-terminal-border bg-terminal-bg p-3 text-[11px] text-slate-400">
 						<div>
-							FILENAME:{' '}
-							<span className="font-bold text-white">{imageFile.name}</span>
+							FILENAME: <span className="font-bold text-white">{imageFile.name}</span>
 						</div>
 						<div>
 							FILESIZE:{' '}
-							<span className="font-bold text-white">
-								{(imageFile.size / 1024).toFixed(2)} KB
-							</span>
+							<span className="font-bold text-white">{(imageFile.size / 1024).toFixed(2)} KB</span>
 						</div>
 						<div>
-							TYPE:{' '}
-							<span className="font-bold text-white">{imageFile.type}</span>
+							TYPE: <span className="font-bold text-white">{imageFile.type}</span>
 						</div>
 					</div>
 				)}

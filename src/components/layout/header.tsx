@@ -9,8 +9,7 @@ type HeaderProps = {
 }
 
 export function Header(props: HeaderProps) {
-	const { sidebarOpen, setSidebarOpen, systemStatus, onOpenCommandPalette } =
-		props
+	const { sidebarOpen, setSidebarOpen, systemStatus, onOpenCommandPalette } = props
 
 	return (
 		<header className="sticky top-0 z-40 flex items-center justify-between border-terminal-border border-b bg-terminal-card/80 px-4 py-3 backdrop-blur">
@@ -39,8 +38,7 @@ export function Header(props: HeaderProps) {
 				<div className="hidden select-none items-center gap-2 rounded border border-terminal-border bg-terminal-bg/50 px-3 py-1 font-mono text-[10px] text-slate-500 md:flex">
 					<Cpu className="h-3 w-3 animate-pulse text-matrix" />
 					<span>
-						STATUS:{' '}
-						<span className="font-bold text-matrix-glow">{systemStatus}</span>
+						STATUS: <span className="font-bold text-matrix-glow">{systemStatus}</span>
 					</span>
 				</div>
 
