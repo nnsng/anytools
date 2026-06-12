@@ -1,7 +1,8 @@
 import { Check, Copy, Download, Trash2, Upload } from 'lucide-react'
 import React, { useRef } from 'react'
 import { Button } from '@/components/ui/button'
-import { cn } from '@/utils/cn'
+import { Input } from '@/components/ui/input'
+import { cn } from '@/lib/utils'
 
 type EditorPaneProps = {
 	title: string
@@ -33,6 +34,17 @@ export function EditorPane({
 	const [copied, setCopied] = React.useState(false)
 	const fileInputRef = useRef<HTMLInputElement>(null)
 
+	const handleDownload = () => {
+		if (!value) return
+		const blob = new Blob([value], { type: 'text/plain;charset=utf-8' })
+		const url = URL.createObjectURL(blob)
+		const link = document.createElement('a')
+		link.href = url
+		link.download = downloadFileName
+		link.click()
+		URL.revokeObjectURL(url)
+	}
+
 	const handleCopy = async () => {
 		if (!value) return
 		try {
@@ -46,17 +58,6 @@ export function EditorPane({
 
 	const handleClear = () => {
 		if (onChange) onChange('')
-	}
-
-	const handleDownload = () => {
-		if (!value) return
-		const blob = new Blob([value], { type: 'text/plain;charset=utf-8' })
-		const url = URL.createObjectURL(blob)
-		const link = document.createElement('a')
-		link.href = url
-		link.download = downloadFileName
-		link.click()
-		URL.revokeObjectURL(url)
 	}
 
 	const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,7 +78,7 @@ export function EditorPane({
 	return (
 		<div className="flex h-full flex-col rounded-sm border border-terminal-border bg-terminal-card/60">
 			{/* Pane Header */}
-			<div className="flex items-center justify-between border-terminal-border border-b bg-terminal-bg/40 px-4 py-2">
+			<div className="flex h-12.5 items-center justify-between border-terminal-border border-b bg-terminal-bg/40 px-4">
 				<span className="flex items-center gap-2 font-bold font-mono text-slate-300 text-xs uppercase tracking-wider">
 					<span
 						className={cn('h-1.5 w-1.5 rounded-full', readOnly ? 'bg-blue-500' : 'bg-matrix')}
@@ -90,7 +91,7 @@ export function EditorPane({
 
 					{allowUpload && onChange && (
 						<>
-							<input
+							<Input
 								type="file"
 								ref={fileInputRef}
 								onChange={handleFileUpload}
@@ -152,7 +153,7 @@ export function EditorPane({
 			</div>
 
 			{/* Pane Content */}
-			<div className="relative flex min-h-[220px] flex-1 flex-col">
+			<div className="relative flex min-h-55 flex-1 flex-col">
 				{children ? (
 					<div className="flex flex-1 flex-col overflow-auto font-mono text-sm">{children}</div>
 				) : (
@@ -169,7 +170,7 @@ export function EditorPane({
 				)}
 
 				{error && (
-					<div className="absolute right-0 bottom-0 left-0 max-h-[100px] overflow-y-auto border-red-500/20 border-t bg-red-950/40 p-3 font-mono text-red-400 text-xs">
+					<div className="absolute right-0 bottom-0 left-0 max-h-25 overflow-y-auto border-red-500/20 border-t bg-red-950/40 p-3 font-mono text-red-400 text-xs">
 						{error}
 					</div>
 				)}
