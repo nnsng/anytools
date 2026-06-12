@@ -1,7 +1,13 @@
 import { useEffect, useState } from 'react'
 import { EditorPane } from '@/components/tools/shared/editor-pane'
-import { Select } from '@/components/ui/select'
-import { Tabs } from '@/components/ui/tabs'
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from '@/components/ui/select'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 export default function UrlEncoder() {
 	const [input, setInput] = useState<string>(
@@ -48,30 +54,28 @@ export default function UrlEncoder() {
 	}
 
 	return (
-		<div className="space-y-4">
+		<div className="flex h-full flex-col gap-4">
 			<div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
-				<Tabs
-					tabs={[
-						{ id: 'encode', label: 'URL Encode' },
-						{ id: 'decode', label: 'URL Decode' },
-					]}
-					activeTab={activeTab}
-					onChange={handleTabChange}
-				/>
-				<div className="w-45">
-					<Select
-						label="Encode/Decode Mode"
-						options={[
-							{ value: 'component', label: 'All Characters (Component)' },
-							{ value: 'full', label: 'Keep URL Structure (URI)' },
-						]}
-						value={encodeMode}
-						onChange={(e) => setEncodeMode(e.target.value)}
-					/>
+				<Tabs value={activeTab} onValueChange={handleTabChange}>
+					<TabsList>
+						<TabsTrigger value="encode">URL Encode</TabsTrigger>
+						<TabsTrigger value="decode">URL Decode</TabsTrigger>
+					</TabsList>
+				</Tabs>
+				<div>
+					<Select value={encodeMode} onValueChange={setEncodeMode}>
+						<SelectTrigger>
+							<SelectValue />
+						</SelectTrigger>
+						<SelectContent>
+							<SelectItem value="component">All Characters (Component)</SelectItem>
+							<SelectItem value="full">Keep URL Structure (URI)</SelectItem>
+						</SelectContent>
+					</Select>
 				</div>
 			</div>
 
-			<div className="grid h-[calc(100vh-270px)] min-h-[450px] grid-cols-1 gap-6 lg:grid-cols-2">
+			<div className="grid min-h-0 flex-1 grid-cols-1 gap-6 lg:grid-cols-2">
 				<EditorPane
 					title={activeTab === 'encode' ? 'Raw Input String' : 'Encoded Input URL'}
 					value={input}
@@ -81,7 +85,7 @@ export default function UrlEncoder() {
 							? 'Enter raw text to URL-encode...'
 							: 'Enter URL-encoded string to decode...'
 					}
-					allowUpload={true}
+					allowUpload={false}
 					error={activeTab === 'decode' ? error : null}
 				/>
 

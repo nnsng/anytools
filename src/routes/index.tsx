@@ -74,7 +74,7 @@ function Home() {
 	}
 
 	return (
-		<div className="animate-fade-in space-y-8 font-mono">
+		<div className="scrollbar-thin h-full animate-fade-in space-y-8 overflow-y-auto font-mono">
 			{/* Hero Welcome Console */}
 			<div className="relative flex flex-col items-start justify-between gap-6 overflow-hidden rounded border border-terminal-border bg-terminal-card/50 p-6 md:flex-row md:items-center md:p-8">
 				<div className="relative z-10 max-w-2xl space-y-3">

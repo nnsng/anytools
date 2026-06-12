@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { EditorPane } from '@/components/tools/shared/editor-pane'
-import { Tabs } from '@/components/ui/tabs'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 const encodeHtml = (str: string): string => {
 	return str.replace(/[\u00A0-\u9999<>&"']/g, (c) => {
@@ -58,17 +58,15 @@ export default function HtmlEncoder() {
 	}
 
 	return (
-		<div className="space-y-4">
-			<Tabs
-				tabs={[
-					{ id: 'encode', label: 'HTML Entity Encode' },
-					{ id: 'decode', label: 'HTML Entity Decode' },
-				]}
-				activeTab={activeTab}
-				onChange={handleTabChange}
-			/>
+		<div className="flex h-full flex-col gap-4">
+			<Tabs value={activeTab} onValueChange={handleTabChange}>
+				<TabsList>
+					<TabsTrigger value="encode">HTML Entity Encode</TabsTrigger>
+					<TabsTrigger value="decode">HTML Entity Decode</TabsTrigger>
+				</TabsList>
+			</Tabs>
 
-			<div className="grid h-[calc(100vh-270px)] min-h-[450px] grid-cols-1 gap-6 lg:grid-cols-2">
+			<div className="grid min-h-0 flex-1 grid-cols-1 gap-6 lg:grid-cols-2">
 				<EditorPane
 					title={activeTab === 'encode' ? 'Raw HTML / Text Input' : 'HTML Entities Input'}
 					value={input}

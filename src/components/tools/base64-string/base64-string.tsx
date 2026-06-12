@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { EditorPane } from '@/components/tools/shared/editor-pane'
-import { Tabs } from '@/components/ui/tabs'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 const utf8Btoa = (str: string): string => {
 	return btoa(
@@ -73,19 +73,17 @@ export default function Base64String() {
 	}
 
 	return (
-		<div className="space-y-4">
+		<div className="flex h-full flex-col gap-4">
 			<div className="flex items-center justify-between">
-				<Tabs
-					tabs={[
-						{ id: 'encode', label: 'Encode Text' },
-						{ id: 'decode', label: 'Decode Base64' },
-					]}
-					activeTab={activeTab}
-					onChange={handleTabChange}
-				/>
+				<Tabs value={activeTab} onValueChange={handleTabChange}>
+					<TabsList>
+						<TabsTrigger value="encode">Encode Text</TabsTrigger>
+						<TabsTrigger value="decode">Decode Base64</TabsTrigger>
+					</TabsList>
+				</Tabs>
 			</div>
 
-			<div className="grid h-[calc(100vh-270px)] min-h-112.5 grid-cols-1 gap-6 lg:grid-cols-2">
+			<div className="grid min-h-0 flex-1 grid-cols-1 gap-6 lg:grid-cols-2">
 				<EditorPane
 					title={activeTab === 'encode' ? 'Plain Text Input' : 'Base64 Input'}
 					value={input}

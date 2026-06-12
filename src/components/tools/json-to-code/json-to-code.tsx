@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { EditorPane } from '@/components/tools/shared/editor-pane'
 import { PrismHighlighter } from '@/components/tools/shared/prism-highlighter'
+import { Input } from '@/components/ui/input'
 import { generateTsInterfaces } from './ts-generator'
 
 export default function JsonToCode() {
@@ -32,7 +33,7 @@ export default function JsonToCode() {
 	}, [jsonInput, interfaceName])
 
 	return (
-		<div className="grid h-[calc(100vh-220px)] min-h-125 grid-cols-1 gap-6 lg:grid-cols-2">
+		<div className="grid h-full grid-cols-1 gap-6 lg:grid-cols-2">
 			<EditorPane
 				title="Source JSON"
 				value={jsonInput}
@@ -43,11 +44,11 @@ export default function JsonToCode() {
 				actions={
 					<div className="flex items-center gap-2">
 						<span className="font-bold font-mono text-[10px] text-slate-500">ROOT NAME:</span>
-						<input
+						<Input
 							type="text"
 							value={interfaceName}
 							onChange={(e) => setInterfaceName(e.target.value)}
-							className="w-35 rounded border border-terminal-border bg-terminal-bg px-2 py-1 font-mono text-white text-xs focus:border-matrix focus:outline-none"
+							className="w-35 font-mono text-xs"
 						/>
 					</div>
 				}

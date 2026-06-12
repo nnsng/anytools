@@ -1,7 +1,13 @@
 import { useEffect, useState } from 'react'
 import { EditorPane } from '@/components/tools/shared/editor-pane'
 import { PrismHighlighter } from '@/components/tools/shared/prism-highlighter'
-import { Select } from '@/components/ui/select'
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from '@/components/ui/select'
 
 export default function JsonFormatter() {
 	const [input, setInput] = useState<string>(
@@ -37,7 +43,7 @@ export default function JsonFormatter() {
 	}, [input, indent])
 
 	return (
-		<div className="grid h-[calc(100vh-220px)] min-h-125 grid-cols-1 gap-6 lg:grid-cols-2">
+		<div className="grid h-full grid-cols-1 gap-6 lg:grid-cols-2">
 			<EditorPane
 				title="Raw Input JSON"
 				value={input}
@@ -55,17 +61,17 @@ export default function JsonFormatter() {
 				downloadFileName="formatted.json"
 				actions={
 					<div className="flex items-center gap-2">
-						<Select
-							className="h-8 px-2 py-1 text-xs"
-							options={[
-								{ value: '2', label: '2 Spaces' },
-								{ value: '4', label: '4 Spaces' },
-								{ value: 'tab', label: 'Tabs' },
-								{ value: 'minify', label: 'Minify' },
-							]}
-							value={indent}
-							onChange={(e) => setIndent(e.target.value)}
-						/>
+						<Select value={indent} onValueChange={setIndent}>
+							<SelectTrigger className="h-8 text-xs">
+								<SelectValue />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectItem value="2">2 Spaces</SelectItem>
+								<SelectItem value="4">4 Spaces</SelectItem>
+								<SelectItem value="tab">Tabs</SelectItem>
+								<SelectItem value="minify">Minify</SelectItem>
+							</SelectContent>
+						</Select>
 					</div>
 				}
 			>

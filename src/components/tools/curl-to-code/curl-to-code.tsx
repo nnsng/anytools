@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { EditorPane } from '@/components/tools/shared/editor-pane'
 import { PrismHighlighter } from '@/components/tools/shared/prism-highlighter'
-import { Tabs } from '@/components/ui/tabs'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { generateGo, generateJavascript, generatePython, parseCurl } from './curl-parsers'
 
 export default function CurlToCode() {
@@ -37,7 +37,7 @@ export default function CurlToCode() {
 	}, [curlInput, activeTab])
 
 	return (
-		<div className="grid h-[calc(100vh-220px)] min-h-125 grid-cols-1 gap-6 lg:grid-cols-2">
+		<div className="grid h-full grid-cols-1 gap-6 lg:grid-cols-2">
 			<EditorPane
 				title="cURL Command Input"
 				value={curlInput}
@@ -54,16 +54,13 @@ export default function CurlToCode() {
 				allowDownload={true}
 				downloadFileName={`request.${activeTab === 'js' ? 'js' : activeTab === 'python' ? 'py' : 'go'}`}
 				actions={
-					<Tabs
-						tabs={[
-							{ id: 'js', label: 'JavaScript' },
-							{ id: 'python', label: 'Python' },
-							{ id: 'go', label: 'Go Lang' },
-						]}
-						activeTab={activeTab}
-						onChange={setActiveTab}
-						className="border-none"
-					/>
+					<Tabs value={activeTab} onValueChange={setActiveTab}>
+						<TabsList>
+							<TabsTrigger value="js">JavaScript</TabsTrigger>
+							<TabsTrigger value="python">Python</TabsTrigger>
+							<TabsTrigger value="go">Go Lang</TabsTrigger>
+						</TabsList>
+					</Tabs>
 				}
 			>
 				{codeOutput ? (

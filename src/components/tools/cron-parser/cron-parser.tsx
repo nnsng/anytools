@@ -70,7 +70,7 @@ export default function CronParser() {
 	]
 
 	return (
-		<div className="grid grid-cols-1 gap-6 font-mono lg:grid-cols-12">
+		<div className="grid grid-cols-1 grid-rows-[auto_1fr] items-start gap-6 font-mono lg:grid-cols-12">
 			{/* Input panel */}
 			<div className="space-y-4 rounded-sm border border-terminal-border bg-terminal-card/60 p-6 lg:col-span-12">
 				<span className="flex items-center gap-2 font-bold text-slate-300 text-xs uppercase tracking-wider">

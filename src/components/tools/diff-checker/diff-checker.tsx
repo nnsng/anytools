@@ -1,7 +1,7 @@
 import { diff_match_patch } from 'diff-match-patch'
 import { useEffect, useState } from 'react'
 import { EditorPane } from '@/components/tools/shared/editor-pane'
-import { Tabs } from '@/components/ui/tabs'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { InlineDiffView, SideBySideView } from './diff-views'
 
 export default function DiffChecker() {
@@ -23,8 +23,8 @@ export default function DiffChecker() {
 	}, [textA, textB])
 
 	return (
-		<div className="space-y-6 font-mono">
-			<div className="grid min-h-55 grid-cols-1 gap-6 lg:grid-cols-2">
+		<div className="flex h-full flex-col gap-6 font-mono">
+			<div className="grid min-h-0 flex-1 grid-cols-1 gap-6 lg:grid-cols-2">
 				<EditorPane
 					title="Original Text (A)"
 					value={textA}
@@ -48,14 +48,12 @@ export default function DiffChecker() {
 						Comparison Results
 					</span>
 
-					<Tabs
-						tabs={[
-							{ id: 'inline', label: 'Inline View' },
-							{ id: 'side-by-side', label: 'Split View' },
-						]}
-						activeTab={diffMode}
-						onChange={setDiffMode}
-					/>
+					<Tabs value={diffMode} onValueChange={setDiffMode}>
+						<TabsList>
+							<TabsTrigger value="inline">Inline View</TabsTrigger>
+							<TabsTrigger value="side-by-side">Split View</TabsTrigger>
+						</TabsList>
+					</Tabs>
 				</div>
 
 				<div>

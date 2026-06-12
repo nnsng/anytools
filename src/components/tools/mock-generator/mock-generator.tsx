@@ -79,7 +79,7 @@ export default function MockGenerator() {
 	}, [generateData])
 
 	return (
-		<div className="grid h-[calc(100vh-220px)] min-h-125 grid-cols-1 gap-6 font-mono lg:grid-cols-12">
+		<div className="grid h-full grid-cols-1 gap-6 font-mono lg:grid-cols-12">
 			<SchemaBuilder
 				fields={fields}
 				count={count}
