@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import dayjs from 'dayjs'
 import { Clock, Menu, Search, Terminal } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
@@ -14,14 +15,7 @@ export function Header(props: HeaderProps) {
 
 	useEffect(() => {
 		const updateTime = () => {
-			const now = new Date()
-			const yyyy = now.getFullYear()
-			const mm = String(now.getMonth() + 1).padStart(2, '0')
-			const dd = String(now.getDate()).padStart(2, '0')
-			const hh = String(now.getHours()).padStart(2, '0')
-			const min = String(now.getMinutes()).padStart(2, '0')
-			const ss = String(now.getSeconds()).padStart(2, '0')
-			setTimeStr(`${yyyy}-${mm}-${dd} ${hh}:${min}:${ss}`)
+			setTimeStr(dayjs().format('YYYY-MM-DD HH:mm:ss'))
 		}
 
 		updateTime()
