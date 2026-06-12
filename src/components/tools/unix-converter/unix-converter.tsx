@@ -3,6 +3,7 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import { Pause, Play, RefreshCw } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
+import { DateTimePicker } from '@/components/ui/date-time-picker'
 import { Input } from '@/components/ui/input'
 
 dayjs.extend(relativeTime)
@@ -115,9 +116,9 @@ export default function UnixConverter() {
 	}
 
 	return (
-		<div className="grid grid-cols-1 gap-6 font-mono lg:grid-cols-12">
+		<div className="grid grid-cols-1 grid-rows-[auto_1fr] items-start gap-6 font-mono lg:grid-cols-12">
 			{/* Live Clock Widget */}
-			<div className="flex items-center justify-between rounded-sm border border-terminal-border bg-terminal-card/40 p-4 lg:col-span-12">
+			<div className="flex flex-col items-center justify-between gap-2 rounded-sm border border-terminal-border bg-terminal-card/40 p-4 lg:col-span-12 lg:flex-row">
 				<div className="flex items-center gap-4">
 					<div className="text-slate-500 text-xs uppercase tracking-wider">LIVE EPOCH CLOCK:</div>
 					<div className="font-bold text-glow text-matrix text-xl tabular-nums">{liveEpoch}</div>
@@ -167,7 +168,7 @@ export default function UnixConverter() {
 							onChange={(e) => handleConvertEpoch(e.target.value)}
 							placeholder="e.g. 1718211092"
 						/>
-						<Button variant="outline" size="sm" onClick={setInputToCurrent}>
+						<Button variant="outline" onClick={setInputToCurrent}>
 							Now
 						</Button>
 					</div>
@@ -214,12 +215,7 @@ export default function UnixConverter() {
 					<label htmlFor="input-date" className="text-slate-400 text-xs uppercase">
 						Input Date/Time
 					</label>
-					<Input
-						id="input-date"
-						type="datetime-local"
-						value={inputDate}
-						onChange={(e) => handleConvertDate(e.target.value)}
-					/>
+					<DateTimePicker value={inputDate} onChange={(value) => handleConvertDate(value)} />
 					{dateError && <p className="text-red-400 text-xs">{dateError}</p>}
 				</div>
 

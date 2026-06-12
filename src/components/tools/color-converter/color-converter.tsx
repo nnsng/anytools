@@ -73,9 +73,9 @@ export default function ColorConverter() {
 	}
 
 	return (
-		<div className="grid grid-cols-1 gap-6 font-mono lg:grid-cols-12">
+		<div className="grid grid-cols-1 grid-rows-[auto_1fr] gap-6 font-mono lg:grid-cols-12">
 			{/* Color Preview Block */}
-			<div className="flex min-h-75 flex-col items-center justify-between gap-6 rounded-sm border border-terminal-border bg-terminal-card/60 p-6 lg:col-span-4">
+			<div className="flex flex-col items-center justify-between gap-6 rounded-sm border border-terminal-border bg-terminal-card/60 p-6 lg:col-span-4">
 				<span className="flex items-center gap-2 self-start font-bold text-slate-300 text-xs uppercase tracking-wider">
 					<span className="h-1.5 w-1.5 rounded-full bg-matrix" />
 					Color Canvas
@@ -94,7 +94,7 @@ export default function ColorConverter() {
 						Pick Color
 					</label>
 					<div className="relative h-10 w-full cursor-pointer overflow-hidden rounded border border-terminal-border bg-terminal-bg/50 transition-colors hover:border-matrix/40">
-						<input
+						<Input
 							type="color"
 							value={hex}
 							onChange={(e) => {
@@ -111,7 +111,7 @@ export default function ColorConverter() {
 			</div>
 
 			{/* Conversion Fields */}
-			<div className="flex flex-col justify-between space-y-6 rounded-sm border border-terminal-border bg-terminal-card/60 p-6 lg:col-span-8">
+			<div className="flex flex-col gap-6 rounded-sm border border-terminal-border bg-terminal-card/60 p-6 lg:col-span-8">
 				<span className="flex items-center gap-2 font-bold text-slate-300 text-xs uppercase tracking-wider">
 					<span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
 					Color Format Translations
@@ -134,8 +134,7 @@ export default function ColorConverter() {
 						<div className="md:col-span-2">
 							<Button
 								variant="outline"
-								size="sm"
-								className="flex w-full items-center gap-1.5 py-2 text-xs"
+								className="flex w-full items-center justify-center gap-1.5 text-xs"
 								onClick={() => handleCopy('hex', hex)}
 							>
 								{copiedField === 'hex' ? (
@@ -164,8 +163,7 @@ export default function ColorConverter() {
 						<div className="md:col-span-2">
 							<Button
 								variant="outline"
-								size="sm"
-								className="flex w-full items-center gap-1.5 py-2 text-xs"
+								className="flex w-full items-center justify-center gap-1.5 text-xs"
 								onClick={() => handleCopy('rgb', rgb)}
 							>
 								{copiedField === 'rgb' ? (
@@ -194,8 +192,7 @@ export default function ColorConverter() {
 						<div className="md:col-span-2">
 							<Button
 								variant="outline"
-								size="sm"
-								className="flex w-full items-center gap-1.5 py-2 text-xs"
+								className="flex w-full items-center justify-center gap-1.5 text-xs"
 								onClick={() => handleCopy('hsl', hsl)}
 							>
 								{copiedField === 'hsl' ? (
@@ -224,8 +221,7 @@ export default function ColorConverter() {
 						<div className="md:col-span-2">
 							<Button
 								variant="outline"
-								size="sm"
-								className="flex w-full items-center gap-1.5 py-2 text-xs"
+								className="flex w-full items-center justify-center gap-1.5 text-xs"
 								onClick={() => handleCopy('cmyk', cmyk)}
 							>
 								{copiedField === 'cmyk' ? (

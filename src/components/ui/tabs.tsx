@@ -1,38 +1,80 @@
-import { cn } from '@/utils/cn'
+'use client'
 
-export type TabOption = {
-	id: string
-	label: string
-}
+import { cva, type VariantProps } from 'class-variance-authority'
+import { Tabs as TabsPrimitive } from 'radix-ui'
+import type * as React from 'react'
 
-export type TabsProps = {
-	tabs: TabOption[]
-	activeTab: string
-	onChange: (id: string) => void
-	className?: string
-}
+import { cn } from '@/lib/utils'
 
-export function Tabs({ tabs, activeTab, onChange, className }: TabsProps) {
+function Tabs({
+	className,
+	orientation = 'horizontal',
+	...props
+}: React.ComponentProps<typeof TabsPrimitive.Root>) {
 	return (
-		<div className={cn('flex border-terminal-border border-b', className)}>
-			{tabs.map((tab) => {
-				const isActive = tab.id === activeTab
-				return (
-					<button
-						type="button"
-						key={tab.id}
-						onClick={() => onChange(tab.id)}
-						className={cn(
-							'-mb-px border-transparent border-t-2 px-4 py-2 font-bold font-mono text-xs uppercase tracking-wider transition-all duration-150',
-							isActive
-								? 'border-x border-x-terminal-border border-t-matrix bg-terminal-card text-matrix'
-								: 'text-slate-500 hover:bg-terminal-card/30 hover:text-slate-300',
-						)}
-					>
-						{tab.label}
-					</button>
-				)
-			})}
-		</div>
+		<TabsPrimitive.Root
+			data-slot="tabs"
+			data-orientation={orientation}
+			className={cn('group/tabs flex gap-2 data-horizontal:flex-col', className)}
+			{...props}
+		/>
 	)
 }
+
+const tabsListVariants = cva(
+	'group/tabs-list inline-flex w-fit items-center justify-center rounded-xs p-[2px] text-muted-foreground border border-terminal-border group-data-horizontal/tabs:h-8 group-data-vertical/tabs:h-fit group-data-vertical/tabs:flex-col data-[variant=line]:rounded-none',
+	{
+		variants: {
+			variant: {
+				default: 'bg-terminal-bg/80',
+				line: 'gap-1 bg-transparent',
+			},
+		},
+		defaultVariants: {
+			variant: 'default',
+		},
+	},
+)
+
+function TabsList({
+	className,
+	variant = 'default',
+	...props
+}: React.ComponentProps<typeof TabsPrimitive.List> & VariantProps<typeof tabsListVariants>) {
+	return (
+		<TabsPrimitive.List
+			data-slot="tabs-list"
+			data-variant={variant}
+			className={cn(tabsListVariants({ variant }), className)}
+			{...props}
+		/>
+	)
+}
+
+function TabsTrigger({ className, ...props }: React.ComponentProps<typeof TabsPrimitive.Trigger>) {
+	return (
+		<TabsPrimitive.Trigger
+			data-slot="tabs-trigger"
+			className={cn(
+				"relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-xs border border-transparent px-2.5 py-0.5 font-bold font-mono text-slate-400 text-xs transition-colors hover:text-slate-200 focus-visible:border-ring focus-visible:outline-none focus-visible:ring-0 disabled:pointer-events-none disabled:opacity-50 has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start group-data-[variant=default]/tabs-list:data-active:shadow-none group-data-[variant=line]/tabs-list:data-active:shadow-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+				'group-data-[variant=line]/tabs-list:bg-transparent group-data-[variant=line]/tabs-list:data-active:bg-transparent dark:group-data-[variant=line]/tabs-list:data-active:border-transparent dark:group-data-[variant=line]/tabs-list:data-active:bg-transparent',
+				'data-active:border data-active:border-terminal-border/40 data-active:bg-matrix/10 data-active:text-matrix-glow',
+				'after:absolute after:bg-matrix after:opacity-0 after:transition-opacity group-data-horizontal/tabs:after:inset-x-0 group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-right-1 group-data-horizontal/tabs:after:-bottom-1.25 group-data-horizontal/tabs:after:h-0.5 group-data-vertical/tabs:after:w-0.5 group-data-[variant=line]/tabs-list:data-active:after:opacity-100',
+				className,
+			)}
+			{...props}
+		/>
+	)
+}
+
+function TabsContent({ className, ...props }: React.ComponentProps<typeof TabsPrimitive.Content>) {
+	return (
+		<TabsPrimitive.Content
+			data-slot="tabs-content"
+			className={cn('flex-1 text-sm outline-none', className)}
+			{...props}
+		/>
+	)
+}
+
+export { Tabs, TabsContent, TabsList, tabsListVariants, TabsTrigger }

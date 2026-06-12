@@ -1,7 +1,13 @@
 import { Plus, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Select } from '@/components/ui/select'
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from '@/components/ui/select'
 
 export type MockField = {
 	name: string
@@ -39,9 +45,9 @@ export function SchemaBuilder({
 	onGenerate,
 }: SchemaBuilderProps) {
 	return (
-		<div className="flex flex-col rounded-sm border border-terminal-border bg-terminal-card/60 lg:col-span-5">
+		<div className="flex h-full min-h-0 flex-col rounded-sm border border-terminal-border bg-terminal-card/60 lg:col-span-5">
 			{/* Pane Header */}
-			<div className="flex items-center justify-between border-terminal-border border-b bg-terminal-bg/40 px-4 py-2">
+			<div className="flex h-12.5 items-center justify-between border-terminal-border border-b bg-terminal-bg/40 px-4">
 				<span className="flex items-center gap-2 font-bold font-mono text-slate-300 text-xs uppercase tracking-wider">
 					<span className="h-1.5 w-1.5 rounded-full bg-matrix" />
 					Schema Definition
@@ -56,8 +62,7 @@ export function SchemaBuilder({
 				</Button>
 			</div>
 
-			{/* Builder Area */}
-			<div className="scrollbar-thin max-h-87.5 flex-1 space-y-3 overflow-y-auto p-4 lg:max-h-none">
+			<div className="scrollbar-thin flex-1 space-y-3 overflow-y-auto p-4">
 				{fields.length === 0 ? (
 					<div className="py-8 text-center text-slate-600 text-xs">
 						No fields defined. Add one above.
@@ -78,12 +83,18 @@ export function SchemaBuilder({
 							</div>
 
 							<div className="w-[45%]">
-								<Select
-									options={MOCK_FIELD_TYPES}
-									value={field.type}
-									onChange={(e) => onFieldChange(idx, 'type', e.target.value)}
-									className="h-8 px-2 py-1 text-xs"
-								/>
+								<Select value={field.type} onValueChange={(v) => onFieldChange(idx, 'type', v)}>
+									<SelectTrigger className="h-8 text-xs">
+										<SelectValue />
+									</SelectTrigger>
+									<SelectContent>
+										{MOCK_FIELD_TYPES.map((opt) => (
+											<SelectItem key={opt.value} value={opt.value}>
+												{opt.label}
+											</SelectItem>
+										))}
+									</SelectContent>
+								</Select>
 							</div>
 
 							<div className="w-[10%] text-center">
@@ -106,7 +117,7 @@ export function SchemaBuilder({
 			<div className="flex items-center justify-between gap-4 border-terminal-border border-t bg-terminal-bg/30 p-4">
 				<div className="flex items-center gap-2">
 					<span className="font-bold text-slate-500 text-xs uppercase">ROWS:</span>
-					<input
+					<Input
 						type="number"
 						min="1"
 						max="500"
@@ -114,7 +125,7 @@ export function SchemaBuilder({
 						onChange={(e) =>
 							onCountChange(Math.min(500, Math.max(1, parseInt(e.target.value, 10) || 1)))
 						}
-						className="w-15 rounded border border-terminal-border bg-terminal-bg px-2 py-1 text-center font-mono text-white text-xs focus:border-matrix focus:outline-none"
+						className="w-15 text-center font-mono text-xs"
 					/>
 				</div>
 
