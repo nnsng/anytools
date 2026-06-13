@@ -40,14 +40,14 @@ function RootComponent() {
 
 	return (
 		<>
-			<div className="flex h-screen w-screen flex-col overflow-hidden">
+			<div className="flex h-screen w-screen flex-col">
 				<Header
 					sidebarOpen={sidebarOpen}
 					setSidebarOpen={setSidebarOpen}
 					onOpenCommandPalette={() => setCommandPaletteOpen(true)}
 				/>
 
-				<div className="relative flex min-h-0 flex-1 overflow-hidden">
+				<div className="relative flex min-h-0 flex-1">
 					<Sidebar
 						sidebarOpen={sidebarOpen}
 						setSidebarOpen={setSidebarOpen}
@@ -55,8 +55,8 @@ function RootComponent() {
 					/>
 
 					{/* Main Panel Content Workspace */}
-					<main className="flex min-w-0 flex-1 flex-col overflow-hidden bg-terminal-bg/10">
-						<div className="flex h-full min-h-0 w-full flex-col overflow-hidden">
+					<main className="flex min-w-0 flex-1 flex-col bg-terminal-bg/10">
+						<div className="flex h-full w-full flex-col overflow-y-auto">
 							<Outlet />
 						</div>
 					</main>

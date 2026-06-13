@@ -1,16 +1,24 @@
 import type React from 'react'
+import { BorderBox } from '@/components/tools/shared'
+import { cn } from '@/lib/utils'
 
 type Diff = [number, string]
 
-type InlineDiffViewProps = {
+type DiffViewProps = {
 	diffs: Diff[]
+	className?: string
 }
 
-export function InlineDiffView({ diffs }: InlineDiffViewProps) {
+export function InlineDiffView({ diffs, className }: DiffViewProps) {
 	if (diffs.length === 0) return <div className="text-slate-500 italic">No difference found.</div>
 
 	return (
-		<pre className="h-full min-h-75 w-full select-text whitespace-pre-wrap break-all rounded border border-terminal-border bg-slate-950 p-4 font-mono text-slate-300 text-sm">
+		<pre
+			className={cn(
+				'min-h-75 select-text whitespace-pre-wrap break-all rounded border border-terminal-border bg-slate-950 p-4 text-slate-300 text-sm',
+				className,
+			)}
+		>
 			{diffs.map(([op, text], idx) => {
 				if (op === 0) return <span key={`${idx}-equal`}>{text}</span>
 				if (op === -1) {
@@ -36,11 +44,7 @@ export function InlineDiffView({ diffs }: InlineDiffViewProps) {
 	)
 }
 
-type SideBySideViewProps = {
-	diffs: Diff[]
-}
-
-export function SideBySideView({ diffs }: SideBySideViewProps) {
+export function SideBySideView({ diffs, className }: DiffViewProps) {
 	const leftPane: React.ReactNode[] = []
 	const rightPane: React.ReactNode[] = []
 
@@ -70,8 +74,8 @@ export function SideBySideView({ diffs }: SideBySideViewProps) {
 	})
 
 	return (
-		<div className="grid h-full min-h-87.5 grid-cols-1 gap-6 lg:grid-cols-2">
-			<div className="flex flex-col rounded-sm border border-terminal-border bg-terminal-card/40">
+		<div className={cn('flex min-h-75 flex-col gap-6 lg:flex-row', className)}>
+			<BorderBox className="h flex flex-1 flex-col bg-terminal-card/40 p-0">
 				<div className="border-terminal-border border-b bg-terminal-bg/40 px-4 py-2">
 					<span className="font-bold font-mono text-slate-300 text-xs uppercase tracking-wider">
 						Original (Text A)
@@ -80,9 +84,9 @@ export function SideBySideView({ diffs }: SideBySideViewProps) {
 				<pre className="scrollbar-thin max-h-100 grow select-text overflow-y-auto whitespace-pre-wrap break-all bg-slate-950 p-4 font-mono text-slate-400 text-sm">
 					{leftPane}
 				</pre>
-			</div>
+			</BorderBox>
 
-			<div className="flex flex-col rounded-sm border border-terminal-border bg-terminal-card/40">
+			<BorderBox className="h flex flex-1 flex-col bg-terminal-card/40 p-0">
 				<div className="border-terminal-border border-b bg-terminal-bg/40 px-4 py-2">
 					<span className="font-bold font-mono text-slate-300 text-xs uppercase tracking-wider">
 						Modified (Text B)
@@ -91,7 +95,7 @@ export function SideBySideView({ diffs }: SideBySideViewProps) {
 				<pre className="scrollbar-thin max-h-100 grow select-text overflow-y-auto whitespace-pre-wrap break-all bg-slate-950 p-4 font-mono text-slate-200 text-sm">
 					{rightPane}
 				</pre>
-			</div>
+			</BorderBox>
 		</div>
 	)
 }

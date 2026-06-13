@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { Pane } from '@/components/tools/shared'
 import { EditorPane } from '@/components/tools/shared/editor-pane'
 
 export default function HtmlPreview() {
@@ -72,25 +73,17 @@ export default function HtmlPreview() {
 	}, [input])
 
 	return (
-		<div className="grid h-full grid-cols-1 gap-6 lg:grid-cols-2">
+		<div className="flex flex-col gap-6 lg:flex-row">
 			<EditorPane
 				title="HTML/CSS/JS Source"
 				value={input}
 				onChange={setInput}
 				placeholder="Enter HTML source code here..."
 				allowUpload={true}
+				className="flex-1"
 			/>
 
-			<div className="flex flex-col rounded-sm border border-terminal-border bg-terminal-card/60">
-				{/* Pane Header */}
-				<div className="flex items-center justify-between border-terminal-border border-b bg-terminal-bg/40 p-4">
-					<span className="flex items-center gap-2 font-bold font-mono text-slate-300 text-xs uppercase tracking-wider">
-						<span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
-						Live Preview (Sandboxed Frame)
-					</span>
-				</div>
-
-				{/* Frame Content */}
+			<Pane title="Live Preview (Sandboxed Frame)" type="output" className="flex-1">
 				<div className="relative min-h-50 flex-1 bg-white">
 					{blobUrl ? (
 						<iframe
@@ -106,7 +99,7 @@ export default function HtmlPreview() {
 						</div>
 					)}
 				</div>
-			</div>
+			</Pane>
 		</div>
 	)
 }

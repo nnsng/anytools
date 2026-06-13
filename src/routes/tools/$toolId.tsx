@@ -5,7 +5,7 @@ import { TOOLS } from '@/utils/tools-registry'
 
 const Base64Image = React.lazy(() => import('@/components/tools/base64-image'))
 const Base64String = React.lazy(() => import('@/components/tools/base64-string'))
-const ColorConverter = React.lazy(() => import('@/components/tools/color-converter'))
+const ColorStudio = React.lazy(() => import('@/components/tools/color-studio'))
 const CronParser = React.lazy(() => import('@/components/tools/cron-parser'))
 const CurlToCode = React.lazy(() => import('@/components/tools/curl-to-code'))
 const DiffChecker = React.lazy(() => import('@/components/tools/diff-checker'))
@@ -20,6 +20,15 @@ const ToolStub = React.lazy(() => import('@/components/tools/stub'))
 const UnixConverter = React.lazy(() => import('@/components/tools/unix-converter'))
 const UrlEncoder = React.lazy(() => import('@/components/tools/url-encoder'))
 
+// 9 New utilities
+const JavascriptFormatter = React.lazy(() => import('@/components/tools/javascript-formatter'))
+const UuidGenerator = React.lazy(() => import('@/components/tools/uuid-generator'))
+const PasswordGenerator = React.lazy(() => import('@/components/tools/password-generator'))
+const QrCodeTool = React.lazy(() => import('@/components/tools/qr-code'))
+const FaviconGenerator = React.lazy(() => import('@/components/tools/favicon-generator'))
+const JwtCodec = React.lazy(() => import('@/components/tools/jwt-codec'))
+const TextAnalyzer = React.lazy(() => import('@/components/tools/text-analyzer'))
+
 const TOOL_COMPONENTS: Record<string, React.ComponentType> = {
 	'unix-converter': UnixConverter,
 	'json-formatter': JsonFormatter,
@@ -32,10 +41,17 @@ const TOOL_COMPONENTS: Record<string, React.ComponentType> = {
 	'markdown-preview': MarkdownPreview,
 	'diff-checker': DiffChecker,
 	'cron-parser': CronParser,
-	'color-converter': ColorConverter,
+	'color-studio': ColorStudio,
 	'curl-to-code': CurlToCode,
 	'json-to-code': JsonToCode,
 	'mock-generator': MockGenerator,
+	'javascript-formatter': JavascriptFormatter,
+	'uuid-generator': UuidGenerator,
+	'password-generator': PasswordGenerator,
+	'qr-code': QrCodeTool,
+	'favicon-generator': FaviconGenerator,
+	'jwt-codec': JwtCodec,
+	'text-analyzer': TextAnalyzer,
 }
 
 export const Route = createFileRoute('/tools/$toolId')({
@@ -66,9 +82,9 @@ function ToolContainer() {
 		TOOL_COMPONENTS[tool.id] || (() => <ToolStub toolId={tool.id} name={tool.name} />)
 
 	return (
-		<div className="mx-auto flex h-full w-full max-w-7xl animate-fade-in flex-col gap-4 p-4 md:p-6 lg:p-8">
+		<div className="mx-auto flex w-full max-w-7xl flex-1 animate-fade-in flex-col gap-4 p-4 md:p-6 lg:h-full lg:min-h-0 lg:p-8">
 			<div className="flex flex-col justify-between gap-4 border-terminal-border border-b pb-4 md:flex-row md:items-center">
-				<div>
+				<div className="flex flex-col gap-2">
 					<div className="mb-1 flex items-center gap-2 font-mono text-matrix text-xs">
 						<span>[ SYSTEM_BIN ]</span>
 						<span>/</span>
@@ -80,11 +96,11 @@ function ToolContainer() {
 						})}
 						{tool.name}
 					</h1>
-					<p className="mt-1 max-w-3xl font-mono text-slate-400 text-sm">{tool.description}</p>
+					<p className="mt-1 font-mono text-slate-400 text-sm">{tool.description}</p>
 				</div>
 			</div>
 
-			<div className="flex min-h-0 flex-1 overflow-hidden [&>div]:w-full">
+			<div className="flex min-h-0 flex-1 [&>div]:w-full">
 				<React.Suspense
 					fallback={
 						<div className="flex h-full flex-col items-center justify-center gap-3 font-mono text-matrix">

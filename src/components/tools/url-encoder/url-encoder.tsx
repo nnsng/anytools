@@ -54,28 +54,23 @@ export default function UrlEncoder() {
 	}
 
 	return (
-		<div className="flex h-full flex-col gap-4">
-			<div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
-				<Tabs value={activeTab} onValueChange={handleTabChange}>
-					<TabsList>
-						<TabsTrigger value="encode">URL Encode</TabsTrigger>
-						<TabsTrigger value="decode">URL Decode</TabsTrigger>
-					</TabsList>
-				</Tabs>
-				<div>
-					<Select value={encodeMode} onValueChange={setEncodeMode}>
-						<SelectTrigger>
-							<SelectValue />
-						</SelectTrigger>
-						<SelectContent>
-							<SelectItem value="component">All Characters (Component)</SelectItem>
-							<SelectItem value="full">Keep URL Structure (URI)</SelectItem>
-						</SelectContent>
-					</Select>
-				</div>
-			</div>
+		<Tabs value={activeTab} onValueChange={handleTabChange} className="flex h-full flex-col gap-4">
+			<TabsList className="grid w-full grid-cols-2 border-terminal-border bg-terminal-bg/40 p-1">
+				<TabsTrigger
+					value="encode"
+					className="border-none font-bold text-xs uppercase data-[state=active]:bg-matrix data-[state=active]:text-black"
+				>
+					URL Encode
+				</TabsTrigger>
+				<TabsTrigger
+					value="decode"
+					className="border-none font-bold text-xs uppercase data-[state=active]:bg-matrix data-[state=active]:text-black"
+				>
+					URL Decode
+				</TabsTrigger>
+			</TabsList>
 
-			<div className="grid min-h-0 flex-1 grid-cols-1 gap-6 lg:grid-cols-2">
+			<div className="flex flex-1 flex-col gap-6 lg:flex-row">
 				<EditorPane
 					title={activeTab === 'encode' ? 'Raw Input String' : 'Encoded Input URL'}
 					value={input}
@@ -87,6 +82,7 @@ export default function UrlEncoder() {
 					}
 					allowUpload={false}
 					error={activeTab === 'decode' ? error : null}
+					className="lg:flex-1"
 				/>
 
 				<EditorPane
@@ -96,8 +92,22 @@ export default function UrlEncoder() {
 					allowDownload={true}
 					downloadFileName={activeTab === 'encode' ? 'url-encoded.txt' : 'url-decoded.txt'}
 					error={activeTab === 'encode' ? error : null}
+					actions={
+						<div className="min-w-48">
+							<Select value={encodeMode} onValueChange={setEncodeMode}>
+								<SelectTrigger className="h-8 border-terminal-border font-mono text-xs">
+									<SelectValue />
+								</SelectTrigger>
+								<SelectContent className="border-terminal-border bg-terminal-card font-mono text-xs">
+									<SelectItem value="component">Component (Encode All)</SelectItem>
+									<SelectItem value="full">URI (Keep Structure)</SelectItem>
+								</SelectContent>
+							</Select>
+						</div>
+					}
+					className="lg:flex-1"
 				/>
 			</div>
-		</div>
+		</Tabs>
 	)
 }

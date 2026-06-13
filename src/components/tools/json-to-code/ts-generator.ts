@@ -38,7 +38,7 @@ function parseValueType(
 // biome-ignore lint/suspicious/noExplicitAny: JSON values are dynamically typed
 function buildInterface(obj: any, name: string, interfaces: string[]) {
 	const keys = Object.keys(obj)
-	let interfaceStr = `interface ${name} {\n`
+	let interfaceStr = `type ${name} = {\n`
 
 	for (const key of keys) {
 		const typeStr = parseValueType(obj[key], key, interfaces)

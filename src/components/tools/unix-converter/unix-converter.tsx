@@ -115,7 +115,7 @@ export default function UnixConverter() {
 	}
 
 	return (
-		<div className="grid grid-cols-1 grid-rows-[auto_1fr] items-start gap-6 font-mono lg:grid-cols-12">
+		<div className="flex flex-col gap-6">
 			<LiveClock
 				liveEpoch={liveEpoch}
 				isLiveActive={isLiveActive}
@@ -123,21 +123,25 @@ export default function UnixConverter() {
 				setInputToCurrent={setInputToCurrent}
 			/>
 
-			<EpochToDate
-				inputEpoch={inputEpoch}
-				epochError={epochError}
-				epochResults={epochResults}
-				handleConvertEpoch={handleConvertEpoch}
-				setInputToCurrent={setInputToCurrent}
-			/>
+			<div className="flex flex-col items-start gap-6 lg:flex-row">
+				<EpochToDate
+					inputEpoch={inputEpoch}
+					epochError={epochError}
+					epochResults={epochResults}
+					handleConvertEpoch={handleConvertEpoch}
+					setInputToCurrent={setInputToCurrent}
+					className="lg:flex-1"
+				/>
 
-			<DateToEpoch
-				inputDate={inputDate}
-				dateError={dateError}
-				dateResults={dateResults}
-				handleConvertDate={handleConvertDate}
-				handleConvertEpoch={handleConvertEpoch}
-			/>
+				<DateToEpoch
+					inputDate={inputDate}
+					dateError={dateError}
+					dateResults={dateResults}
+					handleConvertDate={handleConvertDate}
+					handleConvertEpoch={handleConvertEpoch}
+					className="lg:flex-1"
+				/>
+			</div>
 		</div>
 	)
 }

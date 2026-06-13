@@ -7,15 +7,29 @@ export default function Base64Image() {
 	const [activeTab, setActiveTab] = useState<string>('encode')
 
 	return (
-		<div className="flex flex-col gap-4 font-mono">
+		<div className="flex flex-col gap-4">
 			<Tabs value={activeTab} onValueChange={setActiveTab}>
-				<TabsList>
-					<TabsTrigger value="encode">Image to Base64</TabsTrigger>
-					<TabsTrigger value="decode">Base64 to Image</TabsTrigger>
+				<TabsList className="grid w-full grid-cols-2 border-terminal-border bg-terminal-bg/40 p-1">
+					<TabsTrigger
+						value="encode"
+						className="border-none font-bold text-xs uppercase data-[state=active]:bg-matrix data-[state=active]:text-black"
+					>
+						Image to Base64
+					</TabsTrigger>
+					<TabsTrigger
+						value="decode"
+						className="border-none font-bold text-xs uppercase data-[state=active]:bg-matrix data-[state=active]:text-black"
+					>
+						Base64 to Image
+					</TabsTrigger>
 				</TabsList>
 			</Tabs>
 
-			{activeTab === 'encode' ? <EncodeTab onFileChange={() => {}} /> : <DecodeTab />}
+			{activeTab === 'encode' ? (
+				<EncodeTab onFileChange={() => {}} className="flex-1" />
+			) : (
+				<DecodeTab className="flex-1" />
+			)}
 		</div>
 	)
 }

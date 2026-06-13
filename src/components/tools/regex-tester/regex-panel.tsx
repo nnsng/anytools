@@ -1,40 +1,39 @@
 import type { ReactNode } from 'react'
+import { Pane } from '@/components/tools/shared/pane'
 import { Textarea } from '@/components/ui/textarea'
+import { cn } from '@/lib/utils'
 
 type RegexPanelProps = {
 	subjectText: string
 	setSubjectText: (val: string) => void
 	highlightedNode: ReactNode
+	className?: string
 }
 
-export function RegexPanel({ subjectText, setSubjectText, highlightedNode }: RegexPanelProps) {
+export function RegexPanel(props: RegexPanelProps) {
+	const { subjectText, setSubjectText, highlightedNode, className } = props
+
 	return (
-		<div className="flex flex-col gap-6 lg:col-span-8">
-			<div className="flex flex-col rounded-sm border border-terminal-border bg-terminal-card/60">
-				<div className="flex items-center justify-between border-terminal-border border-b bg-terminal-bg/40 px-4 py-2">
-					<span className="font-bold text-slate-300 text-xs uppercase tracking-wider">
-						Subject Text
-					</span>
+		<div className={cn('flex flex-col gap-6', className)}>
+			<Pane title="Subject Text">
+				<div className="flex flex-col">
+					<Textarea
+						value={subjectText}
+						onChange={(e) => setSubjectText(e.target.value)}
+						placeholder="Type subject text to match against here..."
+						className="min-h-37.5 border-none bg-transparent focus:ring-0"
+					/>
 				</div>
-				<Textarea
-					value={subjectText}
-					onChange={(e) => setSubjectText(e.target.value)}
-					placeholder="Type subject text to match against here..."
-					className="min-h-37.5 border-none bg-transparent focus:ring-0"
-				/>
-			</div>
+			</Pane>
 
 			{/* Live highlighting visualization */}
-			<div className="flex flex-col rounded-sm border border-terminal-border bg-terminal-card/60">
-				<div className="border-terminal-border border-b bg-terminal-bg/40 px-4 py-2">
-					<span className="font-bold text-slate-300 text-xs uppercase tracking-wider">
-						Live Highlighter Output
-					</span>
+			<Pane title="Live Highlighter Output" type="output">
+				<div className="flex flex-col">
+					<div className="max-h-75 min-h-37.5 overflow-y-auto whitespace-pre-wrap break-all bg-terminal-bg/50 p-4 font-mono text-slate-300 text-sm">
+						{highlightedNode}
+					</div>
 				</div>
-				<div className="max-h-75 min-h-37.5 overflow-y-auto whitespace-pre-wrap break-all bg-terminal-bg/50 p-4 font-mono text-slate-300 text-sm">
-					{highlightedNode}
-				</div>
-			</div>
+			</Pane>
 		</div>
 	)
 }

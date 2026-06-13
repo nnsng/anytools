@@ -3,6 +3,7 @@ import React, { useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
+import { Pane } from './pane'
 
 type EditorPaneProps = {
 	title: string
@@ -15,22 +16,26 @@ type EditorPaneProps = {
 	allowDownload?: boolean
 	downloadFileName?: string
 	actions?: React.ReactNode
+	className?: string
 	children?: React.ReactNode // For custom content (like syntax highlighters or preview blocks)
 }
 
-export function EditorPane({
-	title,
-	value,
-	onChange,
-	placeholder = 'Enter input here...',
-	readOnly = false,
-	error = null,
-	allowUpload = false,
-	allowDownload = false,
-	downloadFileName = 'output.txt',
-	actions,
-	children,
-}: EditorPaneProps) {
+export function EditorPane(props: EditorPaneProps) {
+	const {
+		title,
+		value,
+		onChange,
+		placeholder = 'Enter input here...',
+		readOnly = false,
+		error = null,
+		allowUpload = false,
+		allowDownload = false,
+		downloadFileName = 'output.txt',
+		actions,
+		className,
+		children,
+	} = props
+
 	const [copied, setCopied] = React.useState(false)
 	const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -75,85 +80,83 @@ export function EditorPane({
 	const characterCount = value.length
 	const lineCount = value ? value.split('\n').length : 0
 
-	return (
-		<div className="flex h-full flex-col rounded-sm border border-terminal-border bg-terminal-card/60">
-			{/* Pane Header */}
-			<div className="flex h-12.5 items-center justify-between border-terminal-border border-b bg-terminal-bg/40 px-4">
-				<span className="flex items-center gap-2 font-bold font-mono text-slate-300 text-xs uppercase tracking-wider">
-					<span
-						className={cn('h-1.5 w-1.5 rounded-full', readOnly ? 'bg-blue-500' : 'bg-matrix')}
+	const editorActions = (
+		<div className="flex items-center gap-1">
+			{actions}
+
+			{allowUpload && onChange && (
+				<>
+					<Input
+						type="file"
+						ref={fileInputRef}
+						onChange={handleFileUpload}
+						className="hidden"
+						accept=".txt,.json,.xml,.csv,.html,.js,.css,.md"
 					/>
-					{title}
-				</span>
+					<Button
+						variant="ghost"
+						size="sm"
+						className="h-8 w-8 p-0"
+						onClick={() => fileInputRef.current?.click()}
+						title="Upload file"
+					>
+						<Upload className="h-3.5 w-3.5" />
+					</Button>
+				</>
+			)}
 
-				<div className="flex items-center gap-1">
-					{actions}
-
-					{allowUpload && onChange && (
-						<>
-							<Input
-								type="file"
-								ref={fileInputRef}
-								onChange={handleFileUpload}
-								className="hidden"
-								accept=".txt,.json,.xml,.csv,.html,.js,.css,.md"
-							/>
-							<Button
-								variant="ghost"
-								size="sm"
-								className="h-8 w-8 p-0"
-								onClick={() => fileInputRef.current?.click()}
-								title="Upload file"
-							>
-								<Upload className="h-3.5 w-3.5" />
-							</Button>
-						</>
+			{value && (
+				<Button
+					variant="ghost"
+					size="sm"
+					className="h-8 w-8 p-0"
+					onClick={handleCopy}
+					title="Copy to clipboard"
+				>
+					{copied ? (
+						<Check className="h-3.5 w-3.5 text-matrix" />
+					) : (
+						<Copy className="h-3.5 w-3.5" />
 					)}
+				</Button>
+			)}
 
-					{value && (
-						<Button
-							variant="ghost"
-							size="sm"
-							className="h-8 w-8 p-0"
-							onClick={handleCopy}
-							title="Copy to clipboard"
-						>
-							{copied ? (
-								<Check className="h-3.5 w-3.5 text-matrix" />
-							) : (
-								<Copy className="h-3.5 w-3.5" />
-							)}
-						</Button>
-					)}
+			{allowDownload && value && (
+				<Button
+					variant="ghost"
+					size="sm"
+					className="h-8 w-8 p-0"
+					onClick={handleDownload}
+					title="Download as file"
+				>
+					<Download className="h-3.5 w-3.5" />
+				</Button>
+			)}
 
-					{allowDownload && value && (
-						<Button
-							variant="ghost"
-							size="sm"
-							className="h-8 w-8 p-0"
-							onClick={handleDownload}
-							title="Download as file"
-						>
-							<Download className="h-3.5 w-3.5" />
-						</Button>
-					)}
+			{!readOnly && onChange && value && (
+				<Button
+					variant="ghost"
+					size="sm"
+					className="h-8 w-8 p-0 hover:border-red-500/20 hover:text-red-500"
+					onClick={handleClear}
+					title="Clear input"
+				>
+					<Trash2 className="h-3.5 w-3.5" />
+				</Button>
+			)}
+		</div>
+	)
 
-					{!readOnly && onChange && value && (
-						<Button
-							variant="ghost"
-							size="sm"
-							className="h-8 w-8 p-0 hover:border-red-500/20 hover:text-red-500"
-							onClick={handleClear}
-							title="Clear input"
-						>
-							<Trash2 className="h-3.5 w-3.5" />
-						</Button>
-					)}
-				</div>
-			</div>
-
+	return (
+		<Pane
+			title={title}
+			type={readOnly ? 'output' : 'input'}
+			editor
+			actions={editorActions}
+			className={className}
+		>
 			{/* Pane Content */}
-			<div className="relative flex min-h-55 flex-1 flex-col">
+			<div className="relative flex min-h-55 flex-1 flex-col lg:min-h-0">
 				{children ? (
 					<div className="flex flex-1 flex-col overflow-auto font-mono text-sm">{children}</div>
 				) : (
@@ -181,6 +184,6 @@ export function EditorPane({
 				<span>LINES: {lineCount}</span>
 				<span>CHARS: {characterCount}</span>
 			</div>
-		</div>
+		</Pane>
 	)
 }

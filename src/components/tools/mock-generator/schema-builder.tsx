@@ -1,4 +1,5 @@
 import { Plus, Trash2 } from 'lucide-react'
+import { Pane } from '@/components/tools/shared'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
@@ -80,25 +81,27 @@ type SchemaBuilderProps = {
 	onFieldChange: (idx: number, key: keyof MockField, val: string) => void
 	onCountChange: (count: number) => void
 	onGenerate: () => void
+	className?: string
 }
 
-export function SchemaBuilder({
-	fields,
-	count,
-	onAddField,
-	onRemoveField,
-	onFieldChange,
-	onCountChange,
-	onGenerate,
-}: SchemaBuilderProps) {
+export function SchemaBuilder(props: SchemaBuilderProps) {
+	const {
+		fields,
+		count,
+		onAddField,
+		onRemoveField,
+		onFieldChange,
+		onCountChange,
+		onGenerate,
+		className,
+	} = props
+
 	return (
-		<div className="flex h-full min-h-0 flex-col rounded-sm border border-terminal-border bg-terminal-card/60 lg:col-span-5">
-			{/* Pane Header */}
-			<div className="flex h-12.5 items-center justify-between border-terminal-border border-b bg-terminal-bg/40 px-4">
-				<span className="flex items-center gap-2 font-bold font-mono text-slate-300 text-xs uppercase tracking-wider">
-					<span className="h-1.5 w-1.5 rounded-full bg-matrix" />
-					Schema Definition
-				</span>
+		<Pane
+			title="Schema Definition"
+			type="input"
+			editor
+			actions={
 				<Button
 					variant="ghost"
 					size="sm"
@@ -107,8 +110,9 @@ export function SchemaBuilder({
 				>
 					<Plus className="h-3.5 w-3.5" /> ADD
 				</Button>
-			</div>
-
+			}
+			className={className}
+		>
 			<div className="scrollbar-thin flex-1 space-y-3 overflow-y-auto p-4">
 				{fields.length === 0 ? (
 					<div className="py-8 text-center text-slate-600 text-xs">
@@ -168,25 +172,58 @@ export function SchemaBuilder({
 			</div>
 
 			{/* Action Panel */}
-			<div className="flex items-center justify-between gap-4 border-terminal-border border-t bg-terminal-bg/30 p-4">
-				<div className="flex items-center gap-2">
-					<span className="font-bold text-slate-500 text-xs uppercase">ROWS:</span>
-					<Input
-						type="number"
-						min="1"
-						max="500"
-						value={count}
-						onChange={(e) =>
-							onCountChange(Math.min(500, Math.max(1, parseInt(e.target.value, 10) || 1)))
-						}
-						className="w-15 text-center font-mono text-xs"
-					/>
+			<div className="flex flex-col gap-4 border-terminal-border border-t bg-terminal-bg/30 p-4 sm:flex-row sm:items-center sm:justify-between">
+				<div className="flex gap-3">
+					<div className="flex items-center gap-3">
+						<span className="font-bold text-slate-500 text-xs uppercase">Rows:</span>
+						<div className="flex items-center">
+							<Button
+								variant="outline"
+								size="sm"
+								className="h-8 rounded-r-none border-r-0 px-2.5 text-slate-400 hover:text-white"
+								onClick={() => onCountChange(Math.max(1, count - 1))}
+							>
+								-
+							</Button>
+							<Input
+								type="number"
+								min="1"
+								max="500"
+								value={count}
+								onChange={(e) =>
+									onCountChange(Math.min(500, Math.max(1, parseInt(e.target.value, 10) || 1)))
+								}
+								className="h-8 w-16 rounded-none border-terminal-border text-center font-mono text-xs [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+							/>
+							<Button
+								variant="outline"
+								size="sm"
+								className="h-8 rounded-l-none border-l-0 px-2.5 text-slate-400 hover:text-white"
+								onClick={() => onCountChange(Math.min(500, count + 1))}
+							>
+								+
+							</Button>
+						</div>
+					</div>
+					<div className="flex items-center gap-1.5">
+						{[10, 50, 100, 500].map((preset) => (
+							<Button
+								key={preset}
+								variant={count === preset ? 'default' : 'outline'}
+								size="sm"
+								className="h-7 px-2 text-[10px]"
+								onClick={() => onCountChange(preset)}
+							>
+								{preset}
+							</Button>
+						))}
+					</div>
 				</div>
 
-				<Button onClick={onGenerate} className="flex items-center gap-1.5 px-4 py-1.5">
+				<Button onClick={onGenerate} className="flex h-8 items-center gap-1.5 px-4">
 					<span>GENERATE</span>
 				</Button>
 			</div>
-		</div>
+		</Pane>
 	)
 }

@@ -73,17 +73,23 @@ export default function Base64String() {
 	}
 
 	return (
-		<div className="flex h-full flex-col gap-4">
-			<div className="flex items-center justify-between">
-				<Tabs value={activeTab} onValueChange={handleTabChange}>
-					<TabsList>
-						<TabsTrigger value="encode">Encode Text</TabsTrigger>
-						<TabsTrigger value="decode">Decode Base64</TabsTrigger>
-					</TabsList>
-				</Tabs>
-			</div>
+		<Tabs value={activeTab} onValueChange={handleTabChange} className="flex flex-col gap-4">
+			<TabsList className="grid w-full grid-cols-2 border-terminal-border bg-terminal-bg/40 p-1">
+				<TabsTrigger
+					value="encode"
+					className="border-none font-bold text-xs uppercase data-[state=active]:bg-matrix data-[state=active]:text-black"
+				>
+					Encode Text
+				</TabsTrigger>
+				<TabsTrigger
+					value="decode"
+					className="border-none font-bold text-xs uppercase data-[state=active]:bg-matrix data-[state=active]:text-black"
+				>
+					Decode Base64
+				</TabsTrigger>
+			</TabsList>
 
-			<div className="grid min-h-0 flex-1 grid-cols-1 gap-6 lg:grid-cols-2">
+			<div className="flex flex-1 flex-col gap-6 lg:flex-row">
 				<EditorPane
 					title={activeTab === 'encode' ? 'Plain Text Input' : 'Base64 Input'}
 					value={input}
@@ -95,6 +101,7 @@ export default function Base64String() {
 					}
 					allowUpload={true}
 					error={activeTab === 'decode' ? error : null}
+					className="lg:flex-1"
 				/>
 
 				<EditorPane
@@ -104,8 +111,9 @@ export default function Base64String() {
 					allowDownload={true}
 					downloadFileName={activeTab === 'encode' ? 'encoded.txt' : 'decoded.txt'}
 					error={activeTab === 'encode' ? error : null}
+					className="lg:flex-1"
 				/>
 			</div>
-		</div>
+		</Tabs>
 	)
 }

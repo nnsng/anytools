@@ -2,7 +2,7 @@ import type React from 'react'
 
 type PrismHighlighterProps = {
 	code: string
-	language: 'json' | 'html' | 'javascript' | 'typescript' | 'css' | 'text' | 'sql' | 'yaml'
+	language: 'json' | 'html' | 'javascript' | 'typescript' | 'css' | 'text' | 'sql' | 'yaml' | 'go'
 	className?: string
 }
 

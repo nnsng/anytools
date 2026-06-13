@@ -1,24 +1,26 @@
 import { Pause, Play, RefreshCw } from 'lucide-react'
+import { BorderBox } from '@/components/tools/shared'
 import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 
 type LiveClockProps = {
 	liveEpoch: number
 	isLiveActive: boolean
 	setIsLiveActive: (val: boolean) => void
 	setInputToCurrent: () => void
+	className?: string
 }
 
-export function LiveClock({
-	liveEpoch,
-	isLiveActive,
-	setIsLiveActive,
-	setInputToCurrent,
-}: LiveClockProps) {
+export function LiveClock(props: LiveClockProps) {
+	const { liveEpoch, isLiveActive, setIsLiveActive, setInputToCurrent, className } = props
+
 	return (
-		<div className="flex flex-col items-center justify-between gap-2 rounded-sm border border-terminal-border bg-terminal-card/40 p-4 lg:col-span-12 lg:flex-row">
+		<BorderBox
+			className={cn('flex flex-col items-center justify-between gap-2 lg:flex-row', className)}
+		>
 			<div className="flex items-center gap-4">
 				<div className="text-slate-500 text-xs uppercase tracking-wider">LIVE EPOCH CLOCK:</div>
-				<div className="font-bold text-glow text-matrix text-xl tabular-nums">{liveEpoch}</div>
+				<div className="font-bold text-matrix text-xl tabular-nums">{liveEpoch}</div>
 			</div>
 			<div className="flex items-center gap-2">
 				<Button
@@ -46,6 +48,6 @@ export function LiveClock({
 					<RefreshCw className="h-3.5 w-3.5" /> COPY TO INPUT
 				</Button>
 			</div>
-		</div>
+		</BorderBox>
 	)
 }

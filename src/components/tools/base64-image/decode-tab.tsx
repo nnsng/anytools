@@ -1,7 +1,13 @@
 import { Download, FileImage } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { EditorPane } from '@/components/tools/shared/editor-pane'
+import { Pane } from '@/components/tools/shared/pane'
 import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
+
+type DecodeTabProps = {
+	className?: string
+}
 
 function resolveBase64Src(val: string): string {
 	if (val.startsWith('data:image/')) return val
@@ -12,7 +18,7 @@ function resolveBase64Src(val: string): string {
 	return `data:image/png;base64,${val}`
 }
 
-export function DecodeTab() {
+export function DecodeTab({ className }: DecodeTabProps) {
 	const [base64Input, setBase64Input] = useState<string>('')
 	const [decodedSrc, setDecodedSrc] = useState<string>('')
 	const [decodeError, setDecodeError] = useState<string | null>(null)
@@ -49,7 +55,7 @@ export function DecodeTab() {
 	}
 
 	return (
-		<div className="grid min-h-112.5 grid-cols-1 gap-6 lg:grid-cols-2">
+		<div className={cn('flex flex-col gap-6 lg:flex-row', className)}>
 			{/* Base64 Input */}
 			<EditorPane
 				title="Base64 Input String"
@@ -58,17 +64,15 @@ export function DecodeTab() {
 				placeholder="Paste your Base64 string (with or without data URI prefix) here..."
 				allowUpload={true}
 				error={decodeError}
+				className="lg:flex-1"
 			/>
 
 			{/* Image Preview */}
-			<div className="flex flex-col justify-between space-y-4 rounded-sm border border-terminal-border bg-terminal-card/60 p-6">
-				<div className="flex items-center justify-between border-terminal-border border-b pb-2">
-					<span className="flex items-center gap-2 font-bold text-slate-300 text-xs uppercase tracking-wider">
-						<span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
-						Decoded Image Preview
-					</span>
-
-					{decodedSrc && (
+			<Pane
+				title="Decoded Image Preview"
+				type="output"
+				actions={
+					decodedSrc && (
 						<Button
 							variant="outline"
 							size="sm"
@@ -77,22 +81,25 @@ export function DecodeTab() {
 						>
 							<Download className="h-3.5 w-3.5" /> DOWNLOAD IMAGE
 						</Button>
-					)}
+					)
+				}
+				className="lg:flex-1"
+			>
+				<div className="flex h-full flex-col justify-between p-6">
+					<div className="flex min-h-50 flex-1 items-center justify-center rounded border border-terminal-border bg-terminal-bg/40 p-4">
+						{decodedSrc ? (
+							<div className="relative max-h-75 max-w-full overflow-hidden rounded border border-terminal-border bg-checkered bg-size-[16px_16px]">
+								<img src={decodedSrc} alt="Decoded preview" className="max-h-70 object-contain" />
+							</div>
+						) : (
+							<div className="space-y-2 text-center text-slate-600">
+								<FileImage className="mx-auto h-8 w-8" />
+								<span className="text-xs">Waiting for valid Base64 string input...</span>
+							</div>
+						)}
+					</div>
 				</div>
-
-				<div className="flex min-h-50 flex-1 items-center justify-center rounded border border-terminal-border bg-terminal-bg/40 p-4">
-					{decodedSrc ? (
-						<div className="relative max-h-75 max-w-full overflow-hidden rounded border border-terminal-border bg-checkered bg-size-[16px_16px]">
-							<img src={decodedSrc} alt="Decoded preview" className="max-h-70 object-contain" />
-						</div>
-					) : (
-						<div className="space-y-2 text-center text-slate-600">
-							<FileImage className="mx-auto h-8 w-8" />
-							<span className="text-xs">Waiting for valid Base64 string input...</span>
-						</div>
-					)}
-				</div>
-			</div>
+			</Pane>
 		</div>
 	)
 }

@@ -63,10 +63,13 @@ export default function CronParser() {
 	}, [cronString, parseCron])
 
 	return (
-		<div className="grid grid-cols-1 grid-rows-[auto_1fr] items-start gap-6 font-mono lg:grid-cols-12">
+		<div className="flex flex-1 flex-col gap-6">
 			<CronInput cronString={cronString} setCronString={setCronString} error={error} />
-			<CronBreakdown explanation={explanation} />
-			<CronSchedule nextRuns={nextRuns} />
+
+			<div className="flex flex-1 flex-col gap-6 lg:flex-row lg:items-start">
+				<CronBreakdown explanation={explanation} className="lg:flex-7" />
+				<CronSchedule nextRuns={nextRuns} className="lg:flex-5" />
+			</div>
 		</div>
 	)
 }

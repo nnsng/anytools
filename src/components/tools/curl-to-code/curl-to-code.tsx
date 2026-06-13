@@ -37,7 +37,7 @@ export default function CurlToCode() {
 	}, [curlInput, activeTab])
 
 	return (
-		<div className="grid h-full grid-cols-1 gap-6 lg:grid-cols-2">
+		<div className="flex flex-col gap-6 lg:flex-row">
 			<EditorPane
 				title="cURL Command Input"
 				value={curlInput}
@@ -45,6 +45,7 @@ export default function CurlToCode() {
 				placeholder="Paste your cURL command here..."
 				allowUpload={true}
 				error={error}
+				className="lg:flex-1"
 			/>
 
 			<EditorPane
@@ -58,10 +59,11 @@ export default function CurlToCode() {
 						<TabsList>
 							<TabsTrigger value="js">JavaScript</TabsTrigger>
 							<TabsTrigger value="python">Python</TabsTrigger>
-							<TabsTrigger value="go">Go Lang</TabsTrigger>
+							<TabsTrigger value="go">Go</TabsTrigger>
 						</TabsList>
 					</Tabs>
 				}
+				className="lg:flex-1"
 			>
 				{codeOutput ? (
 					<PrismHighlighter

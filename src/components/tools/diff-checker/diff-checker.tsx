@@ -1,5 +1,6 @@
-import { diff_match_patch } from 'diff-match-patch'
+import { diff_match_patch as DiffMatchPatch } from 'diff-match-patch'
 import { useEffect, useState } from 'react'
+import { Pane } from '@/components/tools/shared'
 import { EditorPane } from '@/components/tools/shared/editor-pane'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { InlineDiffView, SideBySideView } from './diff-views'
@@ -16,21 +17,24 @@ export default function DiffChecker() {
 	const [diffs, setDiffs] = useState<[number, string][]>([])
 
 	useEffect(() => {
-		const dmp = new diff_match_patch()
+		const dmp = new DiffMatchPatch()
 		const computedDiffs = dmp.diff_main(textA, textB)
 		dmp.diff_cleanupSemantic(computedDiffs)
 		setDiffs(computedDiffs)
 	}, [textA, textB])
 
+	const DiffComponent = diffMode === 'inline' ? InlineDiffView : SideBySideView
+
 	return (
-		<div className="flex h-full flex-col gap-6 font-mono">
-			<div className="grid min-h-0 flex-1 grid-cols-1 gap-6 lg:grid-cols-2">
+		<div className="flex flex-col gap-6">
+			<div className="flex flex-1 flex-col gap-6 lg:flex-row">
 				<EditorPane
 					title="Original Text (A)"
 					value={textA}
 					onChange={setTextA}
 					placeholder="Enter the original code or text block here..."
 					allowUpload={true}
+					className="flex-1"
 				/>
 				<EditorPane
 					title="Modified Text (B)"
@@ -38,32 +42,27 @@ export default function DiffChecker() {
 					onChange={setTextB}
 					placeholder="Enter the modified code or text block here..."
 					allowUpload={true}
+					className="flex-1"
 				/>
 			</div>
 
-			<div className="space-y-4">
-				<div className="flex items-center justify-between border-terminal-border border-b pb-2">
-					<span className="flex items-center gap-2 font-bold text-slate-300 text-xs uppercase tracking-wider">
-						<span className="h-1.5 w-1.5 rounded-full bg-matrix" />
-						Comparison Results
-					</span>
-
+			<Pane
+				title="Comparison Results"
+				type="output"
+				actions={
 					<Tabs value={diffMode} onValueChange={setDiffMode}>
 						<TabsList>
 							<TabsTrigger value="inline">Inline View</TabsTrigger>
 							<TabsTrigger value="side-by-side">Split View</TabsTrigger>
 						</TabsList>
 					</Tabs>
+				}
+				className="flex-1"
+			>
+				<div className="h-full p-4">
+					<DiffComponent diffs={diffs} className="h-full" />
 				</div>
-
-				<div>
-					{diffMode === 'inline' ? (
-						<InlineDiffView diffs={diffs} />
-					) : (
-						<SideBySideView diffs={diffs} />
-					)}
-				</div>
-			</div>
+			</Pane>
 		</div>
 	)
 }

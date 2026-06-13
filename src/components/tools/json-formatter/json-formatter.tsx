@@ -1,13 +1,7 @@
 import { useEffect, useState } from 'react'
 import { EditorPane } from '@/components/tools/shared/editor-pane'
 import { PrismHighlighter } from '@/components/tools/shared/prism-highlighter'
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from '@/components/ui/select'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 export default function JsonFormatter() {
 	const [input, setInput] = useState<string>(
@@ -27,7 +21,7 @@ export default function JsonFormatter() {
 
 			try {
 				const parsed = JSON.parse(rawInput)
-				const spaces = indentVal === 'minify' ? 0 : indentVal === 'tab' ? '\t' : Number(indentVal)
+				const spaces = indentVal === 'minify' ? 0 : Number(indentVal)
 				const formatted =
 					indentVal === 'minify' ? JSON.stringify(parsed) : JSON.stringify(parsed, null, spaces)
 
@@ -43,37 +37,33 @@ export default function JsonFormatter() {
 	}, [input, indent])
 
 	return (
-		<div className="grid h-full grid-cols-1 gap-6 lg:grid-cols-2">
+		<div className="flex flex-col gap-6 lg:flex-row">
 			<EditorPane
-				title="Raw Input JSON"
+				title="Input"
 				value={input}
 				onChange={setInput}
 				placeholder="Paste your JSON here..."
 				allowUpload={true}
 				error={error}
+				className="lg:flex-1"
 			/>
 
 			<EditorPane
-				title="Formatted Output"
+				title="Output"
 				value={output}
 				readOnly={true}
 				allowDownload={true}
 				downloadFileName="formatted.json"
 				actions={
-					<div className="flex items-center gap-2">
-						<Select value={indent} onValueChange={setIndent}>
-							<SelectTrigger className="h-8 text-xs">
-								<SelectValue />
-							</SelectTrigger>
-							<SelectContent>
-								<SelectItem value="2">2 Spaces</SelectItem>
-								<SelectItem value="4">4 Spaces</SelectItem>
-								<SelectItem value="tab">Tabs</SelectItem>
-								<SelectItem value="minify">Minify</SelectItem>
-							</SelectContent>
-						</Select>
-					</div>
+					<Tabs value={indent} onValueChange={setIndent}>
+						<TabsList>
+							<TabsTrigger value="2">2 Spaces</TabsTrigger>
+							<TabsTrigger value="4">4 Spaces</TabsTrigger>
+							<TabsTrigger value="minify">Minify</TabsTrigger>
+						</TabsList>
+					</Tabs>
 				}
+				className="lg:flex-1"
 			>
 				{output ? (
 					<PrismHighlighter code={output} language="json" className="flex-1" />

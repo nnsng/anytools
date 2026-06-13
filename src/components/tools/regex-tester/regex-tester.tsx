@@ -23,7 +23,7 @@ export default function RegexTester() {
 	const { matches, regexError, highlightedNode } = useRegexMatcher(pattern, flags, subjectText)
 
 	return (
-		<div className="grid grid-cols-1 grid-rows-[auto_1fr] gap-6 font-mono lg:grid-cols-12">
+		<div className="flex flex-col gap-6">
 			<RegexInput
 				pattern={pattern}
 				setPattern={setPattern}
@@ -31,12 +31,16 @@ export default function RegexTester() {
 				handleFlagToggle={handleFlagToggle}
 				regexError={regexError}
 			/>
-			<RegexPanel
-				subjectText={subjectText}
-				setSubjectText={setSubjectText}
-				highlightedNode={highlightedNode}
-			/>
-			<RegexMatches matches={matches} />
+
+			<div className="flex flex-col gap-6 lg:flex-row">
+				<RegexPanel
+					subjectText={subjectText}
+					setSubjectText={setSubjectText}
+					highlightedNode={highlightedNode}
+					className="flex-2"
+				/>
+				<RegexMatches matches={matches} className="flex-1" />
+			</div>
 		</div>
 	)
 }

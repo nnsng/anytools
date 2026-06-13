@@ -118,7 +118,7 @@ export default function MockGenerator() {
 	}, [generateData])
 
 	return (
-		<div className="grid h-full grid-cols-1 gap-6 font-mono lg:grid-cols-12">
+		<div className="flex flex-col gap-6 lg:h-full lg:min-h-0 lg:flex-row">
 			<SchemaBuilder
 				fields={fields}
 				count={count}
@@ -127,26 +127,25 @@ export default function MockGenerator() {
 				onFieldChange={handleFieldChange}
 				onCountChange={setCount}
 				onGenerate={generateData}
+				className="flex-1 lg:min-h-0"
 			/>
 
-			{/* Code output */}
-			<div className="flex h-full min-h-75 flex-col lg:col-span-7">
-				<EditorPane
-					title="Generated Dataset JSON"
-					value={output}
-					readOnly={true}
-					allowDownload={true}
-					downloadFileName="mock-data.json"
-				>
-					{output ? (
-						<PrismHighlighter code={output} language="json" className="flex-1" />
-					) : (
-						<div className="flex grow select-none items-center justify-center font-mono text-slate-600 text-xs">
-							Click Generate to forge data...
-						</div>
-					)}
-				</EditorPane>
-			</div>
+			<EditorPane
+				title="Generated Dataset JSON"
+				value={output}
+				readOnly={true}
+				allowDownload={true}
+				downloadFileName="mock-data.json"
+				className="flex-1 lg:min-h-0"
+			>
+				{output ? (
+					<PrismHighlighter code={output} language="json" className="flex-1" />
+				) : (
+					<div className="flex grow select-none items-center justify-center font-mono text-slate-600 text-xs">
+						Click Generate to forge data...
+					</div>
+				)}
+			</EditorPane>
 		</div>
 	)
 }
