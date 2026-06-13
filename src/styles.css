@@ -21,6 +21,11 @@
   box-sizing: border-box;
 }
 
+::selection {
+  background-color: var(--color-matrix);
+  color: var(--color-terminal-bg);
+}
+
 html,
 body,
 #app {
@@ -39,7 +44,7 @@ body {
 /* Firefox Scrollbars styling */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(34, 197, 94, 0.2) transparent;
+  scrollbar-color: rgba(34, 197, 94, 0.6) transparent;
 }
 
 /* Custom Scrollbar for all webkit browsers */
@@ -51,7 +56,7 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(34, 197, 94, 0.2);
+  background: rgba(34, 197, 94, 0.6);
   border-radius: 9999px;
   border: 1px solid transparent;
   background-clip: padding-box;

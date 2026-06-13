@@ -56,7 +56,7 @@ function RootComponent() {
 
 					{/* Main Panel Content Workspace */}
 					<main className="flex min-w-0 flex-1 flex-col overflow-hidden bg-terminal-bg/10">
-						<div className="mx-auto flex h-full min-h-0 w-full max-w-7xl flex-1 flex-col overflow-hidden p-4 md:p-6 lg:p-8">
+						<div className="flex h-full min-h-0 w-full flex-col overflow-hidden">
 							<Outlet />
 						</div>
 					</main>

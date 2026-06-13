@@ -66,7 +66,7 @@ function ToolContainer() {
 		TOOL_COMPONENTS[tool.id] || (() => <ToolStub toolId={tool.id} name={tool.name} />)
 
 	return (
-		<div className="flex h-full animate-fade-in flex-col gap-4">
+		<div className="mx-auto flex h-full w-full max-w-7xl animate-fade-in flex-col gap-4 p-4 md:p-6 lg:p-8">
 			<div className="flex flex-col justify-between gap-4 border-terminal-border border-b pb-4 md:flex-row md:items-center">
 				<div>
 					<div className="mb-1 flex items-center gap-2 font-mono text-matrix text-xs">
