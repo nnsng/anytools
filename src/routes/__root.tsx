@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { CommandPalette } from '@/components/layout/command-palette'
 import { Header } from '@/components/layout/header'
 import { Sidebar } from '@/components/layout/sidebar'
-import { TOOLS, type ToolMetadata } from '@/utils/tools-registry'
+import { groupToolsByCategory, TOOLS } from '@/utils/tools-registry'
 
 import '../styles.css'
 
@@ -13,14 +13,7 @@ export const Route = createRootRoute({
 	component: RootComponent,
 })
 
-const CATEGORIES = TOOLS.reduce(
-	(categories, tool) => {
-		categories[tool.category] ??= []
-		categories[tool.category].push(tool)
-		return categories
-	},
-	{} as Record<string, ToolMetadata[]>,
-)
+const CATEGORIES = groupToolsByCategory(TOOLS)
 
 function RootComponent() {
 	const [commandPaletteOpen, setCommandPaletteOpen] = useState(false)

@@ -2,7 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { ChevronRight, Search, Sparkles } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { APP_NAME } from '@/constants/app'
-import { TOOLS } from '@/utils/tools-registry'
+import { groupToolsByCategory, TOOLS } from '@/utils/tools-registry'
 
 export const Route = createFileRoute('/')({ component: Home })
 
@@ -23,10 +23,7 @@ function Home() {
 		)
 	})
 
-	// Group filtered tools
-	const converters = filteredTools.filter((t) => t.category === 'Converters')
-	const formatters = filteredTools.filter((t) => t.category === 'Formatters & Parsers')
-	const utilities = filteredTools.filter((t) => t.category === 'Dev Utilities')
+	const categories = groupToolsByCategory(filteredTools)
 
 	const renderSection = (title: string, list: typeof TOOLS) => {
 		if (list.length === 0) return null
@@ -129,11 +126,7 @@ function Home() {
 							</button>
 						</div>
 					) : (
-						<>
-							{renderSection('Converters & Translators', converters)}
-							{renderSection('Formatters & Parsers', formatters)}
-							{renderSection('Development & Preview Utilities', utilities)}
-						</>
+						Object.keys(categories).map((category) => renderSection(category, categories[category]))
 					)}
 				</div>
 			</div>

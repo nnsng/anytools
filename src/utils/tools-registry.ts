@@ -223,3 +223,14 @@ export const TOOLS: ToolMetadata[] = [
 		tags: ['unix', 'epoch', 'timestamp', 'converter', 'date'],
 	},
 ]
+
+export const groupToolsByCategory = (tools: ToolMetadata[]) => {
+	return tools.reduce(
+		(categories, tool) => {
+			categories[tool.category] ??= []
+			categories[tool.category].push(tool)
+			return categories
+		},
+		{} as Record<string, ToolMetadata[]>,
+	)
+}
