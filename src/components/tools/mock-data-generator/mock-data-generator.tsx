@@ -1,7 +1,6 @@
 import { faker } from '@faker-js/faker'
 import { useCallback, useEffect, useState } from 'react'
-import { EditorPane } from '@/components/tools/shared/editor-pane'
-import { PrismHighlighter } from '@/components/tools/shared/prism-highlighter'
+import { CodeBlock, EditorPane } from '@/components/tools/shared'
 import { type MockField, SchemaBuilder } from './schema-builder'
 
 export default function MockGenerator() {
@@ -139,7 +138,7 @@ export default function MockGenerator() {
 				className="flex-1 lg:min-h-0"
 			>
 				{output ? (
-					<PrismHighlighter code={output} language="json" className="flex-1" />
+					<CodeBlock className="flex-1">{output}</CodeBlock>
 				) : (
 					<div className="flex grow select-none items-center justify-center font-mono text-slate-600 text-xs">
 						Click Generate to forge data...

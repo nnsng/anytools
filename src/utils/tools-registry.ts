@@ -61,10 +61,10 @@ export const TOOLS: ToolMetadata[] = [
 	{
 		id: 'json-to-code',
 		name: 'JSON to Code',
-		description: 'Generate TypeScript interfaces or Go structs from JSON.',
+		description: 'Generate TypeScript interfaces from JSON.',
 		category: 'Data & Security',
 		icon: FileJson,
-		tags: ['json', 'typescript', 'interface', 'converter', 'go'],
+		tags: ['json', 'typescript', 'interface', 'converter'],
 	},
 	{
 		id: 'jwt-debugger',

@@ -4,6 +4,7 @@ import { useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
+import { CodeBlock } from './code-block'
 import { Pane } from './pane'
 
 type EditorPaneProps = {
@@ -180,9 +181,9 @@ export function EditorPane(props: EditorPaneProps) {
 				)}
 
 				{error && (
-					<div className="absolute right-0 bottom-0 left-0 max-h-25 overflow-y-auto border-red-500/20 border-t bg-red-950/40 p-3 font-mono text-red-400 text-xs">
+					<CodeBlock className="absolute right-0 bottom-0 left-0 overflow-y-auto border-red-500/20 border-t bg-red-950/40 p-3 text-red-400 text-xs">
 						{error}
-					</div>
+					</CodeBlock>
 				)}
 			</div>
 		</Pane>

@@ -148,7 +148,7 @@ export default function QrCodeTool() {
 
 			{/* GENERATOR TAB */}
 			<TabsContent value="generate" className="mt-0">
-				<div className="flex flex-col gap-6 lg:flex-row">
+				<div className="flex flex-col gap-6 lg:flex-row lg:items-start">
 					{/* Configuration Panel */}
 					<Pane title="Configuration" className="self-start lg:flex-1">
 						<div className="flex flex-col gap-6 p-6">
@@ -283,7 +283,7 @@ export default function QrCodeTool() {
 								) : (
 									<canvas
 										ref={setCanvasElement}
-										className="max-h-80 max-w-[320px] rounded border border-terminal-border shadow-lg shadow-matrix/10"
+										className="rounded border border-terminal-border shadow-lg shadow-matrix/10"
 									/>
 								)}
 							</div>

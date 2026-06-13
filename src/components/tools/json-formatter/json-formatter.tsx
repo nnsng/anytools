@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
-import { EditorPane } from '@/components/tools/shared/editor-pane'
-import { PrismHighlighter } from '@/components/tools/shared/prism-highlighter'
+import { CodeBlock, EditorPane } from '@/components/tools/shared'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { APP_NAME } from '@/constants/app'
 
@@ -67,7 +66,7 @@ export default function JsonFormatter() {
 				className="lg:flex-1"
 			>
 				{output ? (
-					<PrismHighlighter code={output} language="json" className="flex-1" />
+					<CodeBlock className="flex-1">{output}</CodeBlock>
 				) : (
 					<div className="flex grow select-none items-center justify-center font-mono text-slate-600 text-xs">
 						Waiting for valid JSON input...
