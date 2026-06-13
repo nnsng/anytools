@@ -1,5 +1,6 @@
 import { Check, Copy, Download, Trash2, Upload } from 'lucide-react'
-import React, { useRef } from 'react'
+import type React from 'react'
+import { useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
@@ -36,7 +37,7 @@ export function EditorPane(props: EditorPaneProps) {
 		children,
 	} = props
 
-	const [copied, setCopied] = React.useState(false)
+	const [copied, setCopied] = useState(false)
 	const fileInputRef = useRef<HTMLInputElement>(null)
 
 	const handleDownload = () => {
@@ -151,9 +152,15 @@ export function EditorPane(props: EditorPaneProps) {
 		<Pane
 			title={title}
 			type={readOnly ? 'output' : 'input'}
-			editor
+			scrollable={false}
 			actions={editorActions}
 			className={className}
+			footer={
+				<div className="flex select-none items-center justify-between px-4 py-1.5 font-mono text-[10px] text-slate-500">
+					<span>LINES: {lineCount}</span>
+					<span>CHARS: {characterCount}</span>
+				</div>
+			}
 		>
 			{/* Pane Content */}
 			<div className="relative flex min-h-55 flex-1 flex-col lg:min-h-0">
@@ -177,12 +184,6 @@ export function EditorPane(props: EditorPaneProps) {
 						{error}
 					</div>
 				)}
-			</div>
-
-			{/* Pane Footer Stats */}
-			<div className="flex select-none items-center justify-between border-terminal-border border-t bg-terminal-bg/20 px-4 py-1.5 font-mono text-[10px] text-slate-500">
-				<span>LINES: {lineCount}</span>
-				<span>CHARS: {characterCount}</span>
 			</div>
 		</Pane>
 	)

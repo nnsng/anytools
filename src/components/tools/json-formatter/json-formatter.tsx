@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react'
 import { EditorPane } from '@/components/tools/shared/editor-pane'
 import { PrismHighlighter } from '@/components/tools/shared/prism-highlighter'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { APP_NAME } from '@/constants/app'
 
 export default function JsonFormatter() {
 	const [input, setInput] = useState<string>(
-		'{\n  "status": "online",\n  "system": "AnyTools OS",\n  "version": 1.0,\n  "features": [\n    "Formatter",\n    "Base64",\n    "Epoch Converter"\n  ],\n  "nested": {\n    "valid": true,\n    "errors": null\n  }\n}',
+		`{\n  "status": "online",\n  "system": "${APP_NAME} OS",\n  "version": 1.0,\n  "features": [\n    "Formatter",\n    "Base64",\n    "Epoch Converter"\n  ],\n  "nested": {\n    "valid": true,\n    "errors": null\n  }\n}`,
 	)
 	const [output, setOutput] = useState<string>('')
 	const [error, setError] = useState<string | null>(null)

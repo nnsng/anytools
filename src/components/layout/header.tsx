@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { Menu, Search, Terminal } from 'lucide-react'
+import { APP_NAME } from '@/constants/app'
 
 type HeaderProps = {
 	sidebarOpen: boolean
@@ -27,7 +28,8 @@ export function Header(props: HeaderProps) {
 				>
 					<Terminal className="h-6 w-6 text-glow text-matrix transition-transform group-hover:scale-105" />
 					<span className="font-bold text-base uppercase tracking-wider md:text-lg">
-						ANYTOOLS<span className="font-bold text-matrix">.SYS</span>
+						{APP_NAME}
+						<span className="font-bold text-matrix">.SYS</span>
 					</span>
 				</Link>
 			</div>

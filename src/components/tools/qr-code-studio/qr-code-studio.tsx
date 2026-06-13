@@ -255,22 +255,27 @@ export default function QrCodeTool() {
 									</div>
 								</div>
 							</div>
-
-							<div className="mt-auto flex flex-col gap-2">
-								<Button
-									onClick={handleDownload}
-									disabled={!text || !!genError}
-									className="w-full font-bold text-xs"
-								>
-									<Download className="mr-2 h-3.5 w-3.5" />
-									DOWNLOAD PNG
-								</Button>
-							</div>
 						</div>
 					</Pane>
 
 					{/* Preview Panel */}
-					<Pane title="Preview" type="output" className="lg:flex-2">
+					<Pane
+						title="Preview"
+						type="output"
+						actions={
+							<Button
+								variant="ghost"
+								size="sm"
+								className="h-8 w-8 p-0"
+								onClick={handleDownload}
+								disabled={!text || !!genError}
+								title="Download QR code"
+							>
+								<Download className="h-3.5 w-3.5" />
+							</Button>
+						}
+						className="lg:flex-2"
+					>
 						<div className="flex flex-col items-center justify-center p-6">
 							<div className="relative flex flex-1 items-center justify-center rounded border border-terminal-border bg-terminal-bg/30 p-8">
 								{genError ? (

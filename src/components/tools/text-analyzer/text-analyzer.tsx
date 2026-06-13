@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { BorderBox } from '@/components/tools/shared'
 import { EditorPane } from '@/components/tools/shared/editor-pane'
+import { APP_NAME } from '@/constants/app'
 
 function calculateStats(text: string) {
 	if (!text) {
@@ -91,7 +92,7 @@ function calculateStats(text: string) {
 
 export default function TextAnalyzer() {
 	const [text, setText] = useState<string>(
-		'Type or paste your content here. AnyTools will analyze word density, read time, character frequencies, and other readability statistics on the fly in real-time!',
+		`Type or paste your content here. ${APP_NAME} will analyze word density, read time, character frequencies, and other readability statistics on the fly in real-time!`,
 	)
 
 	const stats = calculateStats(text)

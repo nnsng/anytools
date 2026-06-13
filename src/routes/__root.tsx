@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { CommandPalette } from '@/components/layout/command-palette'
 import { Header } from '@/components/layout/header'
 import { Sidebar } from '@/components/layout/sidebar'
-import { TOOLS } from '@/utils/tools-registry'
+import { TOOLS, type ToolMetadata } from '@/utils/tools-registry'
 
 import '../styles.css'
 
@@ -13,11 +13,14 @@ export const Route = createRootRoute({
 	component: RootComponent,
 })
 
-const CATEGORIES = {
-	Converters: TOOLS.filter((t) => t.category === 'Converters'),
-	'Formatters & Parsers': TOOLS.filter((t) => t.category === 'Formatters & Parsers'),
-	'Dev Utilities': TOOLS.filter((t) => t.category === 'Dev Utilities'),
-}
+const CATEGORIES = TOOLS.reduce(
+	(categories, tool) => {
+		categories[tool.category] ??= []
+		categories[tool.category].push(tool)
+		return categories
+	},
+	{} as Record<string, ToolMetadata[]>,
+)
 
 function RootComponent() {
 	const [commandPaletteOpen, setCommandPaletteOpen] = useState(false)
@@ -39,28 +42,28 @@ function RootComponent() {
 	}, [])
 
 	return (
-		<>
-			<div className="flex h-screen w-screen flex-col">
-				<Header
+		<div className="crt flex h-screen w-screen flex-col bg-grid-pattern bg-terminal-bg font-mono text-slate-100 antialiased">
+			<div className="scanlines" />
+
+			<Header
+				sidebarOpen={sidebarOpen}
+				setSidebarOpen={setSidebarOpen}
+				onOpenCommandPalette={() => setCommandPaletteOpen(true)}
+			/>
+
+			<div className="relative flex min-h-0 flex-1">
+				<Sidebar
 					sidebarOpen={sidebarOpen}
 					setSidebarOpen={setSidebarOpen}
-					onOpenCommandPalette={() => setCommandPaletteOpen(true)}
+					categories={CATEGORIES}
 				/>
 
-				<div className="relative flex min-h-0 flex-1">
-					<Sidebar
-						sidebarOpen={sidebarOpen}
-						setSidebarOpen={setSidebarOpen}
-						categories={CATEGORIES}
-					/>
-
-					{/* Main Panel Content Workspace */}
-					<main className="flex min-w-0 flex-1 flex-col bg-terminal-bg/10">
-						<div className="flex h-full w-full flex-col overflow-y-auto">
-							<Outlet />
-						</div>
-					</main>
-				</div>
+				{/* Main Panel Content Workspace */}
+				<main className="flex min-w-0 flex-1 flex-col bg-terminal-bg/10">
+					<div className="flex h-full w-full flex-col overflow-y-auto">
+						<Outlet />
+					</div>
+				</main>
 			</div>
 
 			<CommandPalette open={commandPaletteOpen} onClose={() => setCommandPaletteOpen(false)} />
@@ -76,6 +79,6 @@ function RootComponent() {
 					},
 				]}
 			/>
-		</>
+		</div>
 	)
 }

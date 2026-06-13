@@ -1,56 +1,55 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Loader2 } from 'lucide-react'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { APP_NAME } from '@/constants/app'
 import { TOOLS } from '@/utils/tools-registry'
 
 const Base64Image = React.lazy(() => import('@/components/tools/base64-image'))
-const Base64String = React.lazy(() => import('@/components/tools/base64-string'))
-const ColorStudio = React.lazy(() => import('@/components/tools/color-studio'))
+const Base64Text = React.lazy(() => import('@/components/tools/base64-text'))
+const ColorConverter = React.lazy(() => import('@/components/tools/color-converter'))
 const CronParser = React.lazy(() => import('@/components/tools/cron-parser'))
 const CurlToCode = React.lazy(() => import('@/components/tools/curl-to-code'))
 const DiffChecker = React.lazy(() => import('@/components/tools/diff-checker'))
-const HtmlEncoder = React.lazy(() => import('@/components/tools/html-encoder'))
-const HtmlPreview = React.lazy(() => import('@/components/tools/html-preview'))
+const HtmlEntityEncoder = React.lazy(() => import('@/components/tools/html-entity-encoder'))
+const HtmlSandbox = React.lazy(() => import('@/components/tools/html-sandbox'))
 const JsonFormatter = React.lazy(() => import('@/components/tools/json-formatter'))
 const JsonToCode = React.lazy(() => import('@/components/tools/json-to-code'))
 const MarkdownPreview = React.lazy(() => import('@/components/tools/markdown-preview'))
-const MockGenerator = React.lazy(() => import('@/components/tools/mock-generator'))
+const MockDataGenerator = React.lazy(() => import('@/components/tools/mock-data-generator'))
 const RegexTester = React.lazy(() => import('@/components/tools/regex-tester'))
 const ToolStub = React.lazy(() => import('@/components/tools/stub'))
-const UnixConverter = React.lazy(() => import('@/components/tools/unix-converter'))
+const TimestampConverter = React.lazy(() => import('@/components/tools/timestamp-converter'))
 const UrlEncoder = React.lazy(() => import('@/components/tools/url-encoder'))
-
-// 9 New utilities
-const JavascriptFormatter = React.lazy(() => import('@/components/tools/javascript-formatter'))
+const JsFormatter = React.lazy(() => import('@/components/tools/js-formatter'))
 const UuidGenerator = React.lazy(() => import('@/components/tools/uuid-generator'))
 const PasswordGenerator = React.lazy(() => import('@/components/tools/password-generator'))
-const QrCodeTool = React.lazy(() => import('@/components/tools/qr-code'))
+const QrCodeStudio = React.lazy(() => import('@/components/tools/qr-code-studio'))
 const FaviconGenerator = React.lazy(() => import('@/components/tools/favicon-generator'))
-const JwtCodec = React.lazy(() => import('@/components/tools/jwt-codec'))
+const JwtDebugger = React.lazy(() => import('@/components/tools/jwt-debugger'))
 const TextAnalyzer = React.lazy(() => import('@/components/tools/text-analyzer'))
 
 const TOOL_COMPONENTS: Record<string, React.ComponentType> = {
-	'unix-converter': UnixConverter,
+	'timestamp-converter': TimestampConverter,
 	'json-formatter': JsonFormatter,
-	'base64-string': Base64String,
+	'base64-text': Base64Text,
 	'base64-image': Base64Image,
 	'regex-tester': RegexTester,
 	'url-encoder': UrlEncoder,
-	'html-encoder': HtmlEncoder,
-	'html-preview': HtmlPreview,
+	'html-entity-encoder': HtmlEntityEncoder,
+	'html-sandbox': HtmlSandbox,
 	'markdown-preview': MarkdownPreview,
 	'diff-checker': DiffChecker,
 	'cron-parser': CronParser,
-	'color-studio': ColorStudio,
+	'color-converter': ColorConverter,
 	'curl-to-code': CurlToCode,
 	'json-to-code': JsonToCode,
-	'mock-generator': MockGenerator,
-	'javascript-formatter': JavascriptFormatter,
+	'mock-data-generator': MockDataGenerator,
+	'js-formatter': JsFormatter,
 	'uuid-generator': UuidGenerator,
 	'password-generator': PasswordGenerator,
-	'qr-code': QrCodeTool,
+	'qr-code-studio': QrCodeStudio,
 	'favicon-generator': FaviconGenerator,
-	'jwt-codec': JwtCodec,
+	'jwt-debugger': JwtDebugger,
 	'text-analyzer': TextAnalyzer,
 }
 
@@ -61,6 +60,12 @@ export const Route = createFileRoute('/tools/$toolId')({
 function ToolContainer() {
 	const { toolId } = Route.useParams()
 	const tool = TOOLS.find((t) => t.id === toolId)
+
+	useEffect(() => {
+		if (tool) {
+			document.title = `${tool.name} - ${APP_NAME}`
+		}
+	}, [tool])
 
 	if (!tool) {
 		return (
@@ -90,11 +95,11 @@ function ToolContainer() {
 						<span>/</span>
 						<span>{tool.category.toLowerCase().replace(/\s+/g, '-')}</span>
 					</div>
-					<h1 className="flex cursor-blink items-center gap-3 font-bold font-mono text-2xl text-white tracking-tight md:text-3xl">
+					<h1 className="flex items-center gap-3 font-bold font-mono text-2xl text-white tracking-tight md:text-3xl">
 						{React.createElement(tool.icon, {
 							className: 'w-7 h-7 text-matrix text-glow',
 						})}
-						{tool.name}
+						<span className="cursor-blink">{tool.name}</span>
 					</h1>
 					<p className="mt-1 font-mono text-slate-400 text-sm">{tool.description}</p>
 				</div>

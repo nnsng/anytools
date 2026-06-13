@@ -1,12 +1,17 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { ChevronRight, Search, Sparkles } from 'lucide-react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { APP_NAME } from '@/constants/app'
 import { TOOLS } from '@/utils/tools-registry'
 
 export const Route = createFileRoute('/')({ component: Home })
 
 function Home() {
 	const [searchQuery, setSearchQuery] = useState('')
+
+	useEffect(() => {
+		document.title = `${APP_NAME} - Developer Utilities Suite`
+	}, [])
 
 	const filteredTools = TOOLS.filter((tool) => {
 		const q = searchQuery.toLowerCase().trim()

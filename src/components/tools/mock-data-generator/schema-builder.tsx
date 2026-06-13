@@ -100,7 +100,7 @@ export function SchemaBuilder(props: SchemaBuilderProps) {
 		<Pane
 			title="Schema Definition"
 			type="input"
-			editor
+			scrollable={false}
 			actions={
 				<Button
 					variant="ghost"
@@ -112,6 +112,60 @@ export function SchemaBuilder(props: SchemaBuilderProps) {
 				</Button>
 			}
 			className={className}
+			footer={
+				<div className="flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between">
+					<div className="flex gap-3">
+						<div className="flex items-center gap-3">
+							<span className="font-bold text-slate-500 text-xs uppercase">Rows:</span>
+							<div className="flex items-center">
+								<Button
+									variant="outline"
+									size="sm"
+									className="h-8 rounded-r-none border-r-0 px-2.5 text-slate-400 hover:text-white"
+									onClick={() => onCountChange(Math.max(1, count - 1))}
+								>
+									-
+								</Button>
+								<Input
+									type="number"
+									min="1"
+									max="500"
+									value={count}
+									onChange={(e) =>
+										onCountChange(Math.min(500, Math.max(1, parseInt(e.target.value, 10) || 1)))
+									}
+									className="h-8 w-16 rounded-none border-terminal-border text-center font-mono text-xs [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+								/>
+								<Button
+									variant="outline"
+									size="sm"
+									className="h-8 rounded-l-none border-l-0 px-2.5 text-slate-400 hover:text-white"
+									onClick={() => onCountChange(Math.min(500, count + 1))}
+								>
+									+
+								</Button>
+							</div>
+						</div>
+						<div className="flex items-center gap-1.5">
+							{[10, 50, 100, 500].map((preset) => (
+								<Button
+									key={preset}
+									variant={count === preset ? 'default' : 'outline'}
+									size="sm"
+									className="h-7 px-2 text-[10px]"
+									onClick={() => onCountChange(preset)}
+								>
+									{preset}
+								</Button>
+							))}
+						</div>
+					</div>
+
+					<Button onClick={onGenerate} className="flex h-8 items-center gap-1.5 px-4">
+						<span>GENERATE</span>
+					</Button>
+				</div>
+			}
 		>
 			<div className="scrollbar-thin flex-1 space-y-3 overflow-y-auto p-4">
 				{fields.length === 0 ? (
@@ -169,60 +223,6 @@ export function SchemaBuilder(props: SchemaBuilderProps) {
 						</div>
 					))
 				)}
-			</div>
-
-			{/* Action Panel */}
-			<div className="flex flex-col gap-4 border-terminal-border border-t bg-terminal-bg/30 p-4 sm:flex-row sm:items-center sm:justify-between">
-				<div className="flex gap-3">
-					<div className="flex items-center gap-3">
-						<span className="font-bold text-slate-500 text-xs uppercase">Rows:</span>
-						<div className="flex items-center">
-							<Button
-								variant="outline"
-								size="sm"
-								className="h-8 rounded-r-none border-r-0 px-2.5 text-slate-400 hover:text-white"
-								onClick={() => onCountChange(Math.max(1, count - 1))}
-							>
-								-
-							</Button>
-							<Input
-								type="number"
-								min="1"
-								max="500"
-								value={count}
-								onChange={(e) =>
-									onCountChange(Math.min(500, Math.max(1, parseInt(e.target.value, 10) || 1)))
-								}
-								className="h-8 w-16 rounded-none border-terminal-border text-center font-mono text-xs [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-							/>
-							<Button
-								variant="outline"
-								size="sm"
-								className="h-8 rounded-l-none border-l-0 px-2.5 text-slate-400 hover:text-white"
-								onClick={() => onCountChange(Math.min(500, count + 1))}
-							>
-								+
-							</Button>
-						</div>
-					</div>
-					<div className="flex items-center gap-1.5">
-						{[10, 50, 100, 500].map((preset) => (
-							<Button
-								key={preset}
-								variant={count === preset ? 'default' : 'outline'}
-								size="sm"
-								className="h-7 px-2 text-[10px]"
-								onClick={() => onCountChange(preset)}
-							>
-								{preset}
-							</Button>
-						))}
-					</div>
-				</div>
-
-				<Button onClick={onGenerate} className="flex h-8 items-center gap-1.5 px-4">
-					<span>GENERATE</span>
-				</Button>
 			</div>
 		</Pane>
 	)

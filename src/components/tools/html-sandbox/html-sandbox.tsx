@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Pane } from '@/components/tools/shared'
 import { EditorPane } from '@/components/tools/shared/editor-pane'
+import { APP_NAME } from '@/constants/app'
 
 export default function HtmlPreview() {
 	const [input, setInput] = useState<string>(`<!DOCTYPE html>
@@ -47,7 +48,7 @@ export default function HtmlPreview() {
 </head>
 <body>
   <div class="card">
-    <h1>AnyTools Sandbox</h1>
+    <h1>${APP_NAME} Sandbox</h1>
     <p>This is a live, secure client-side HTML preview!</p>
     <button onclick="console.log('JS is active inside sandboxed iframe!')">Trigger Action</button>
   </div>

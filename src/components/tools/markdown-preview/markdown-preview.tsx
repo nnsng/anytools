@@ -2,11 +2,12 @@ import { marked } from 'marked'
 import { useEffect, useState } from 'react'
 import { Pane } from '@/components/tools/shared'
 import { EditorPane } from '@/components/tools/shared/editor-pane'
+import { APP_NAME } from '@/constants/app'
 
 export default function MarkdownPreview() {
-	const [input, setInput] = useState<string>(`# AnyTools Markdown Previewer
+	const [input, setInput] = useState<string>(`# ${APP_NAME} Markdown Previewer
 
-Welcome to the **AnyTools** live Markdown compiler.
+Welcome to the **${APP_NAME}** live Markdown compiler.
 
 ## Key Features
 

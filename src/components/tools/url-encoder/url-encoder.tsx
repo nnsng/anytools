@@ -11,7 +11,7 @@ import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 export default function UrlEncoder() {
 	const [input, setInput] = useState<string>(
-		'https://anytools.dev/search?q=developer tools&category=converters',
+		`${window.location.origin}/search?q=developer tools&category=converters`,
 	)
 	const [output, setOutput] = useState<string>('')
 	const [error, setError] = useState<string | null>(null)

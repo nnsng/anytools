@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { EditorPane } from '@/components/tools/shared/editor-pane'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { APP_NAME } from '@/constants/app'
 
 const utf8Btoa = (str: string): string => {
 	return btoa(
@@ -22,7 +23,7 @@ const utf8Atob = (str: string): string => {
 }
 
 export default function Base64String() {
-	const [input, setInput] = useState<string>('Welcome to AnyTools!')
+	const [input, setInput] = useState<string>(`Welcome to ${APP_NAME}!`)
 	const [output, setOutput] = useState<string>('')
 	const [error, setError] = useState<string | null>(null)
 	const [activeTab, setActiveTab] = useState<string>('encode')

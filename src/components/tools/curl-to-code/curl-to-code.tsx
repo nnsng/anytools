@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react'
 import { EditorPane } from '@/components/tools/shared/editor-pane'
 import { PrismHighlighter } from '@/components/tools/shared/prism-highlighter'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { APP_NAME } from '@/constants/app'
 import { generateGo, generateJavascript, generatePython, parseCurl } from './curl-parsers'
 
 export default function CurlToCode() {
 	const [curlInput, setCurlInput] = useState<string>(
-		`curl -X POST "https://api.anytools.dev/v1/data" \\\n  -H "Content-Type: application/json" \\\n  -H "Authorization: Bearer token123" \\\n  -d '{"name": "Neo", "status": "active"}'`,
+		`curl -X POST "https://api.${APP_NAME.toLowerCase()}.dev/v1/data" \\\n  -H "Content-Type: application/json" \\\n  -H "Authorization: Bearer token123" \\\n  -d '{"name": "Neo", "status": "active"}'`,
 	)
 	const [activeTab, setActiveTab] = useState<string>('js')
 	const [codeOutput, setCodeOutput] = useState<string>('')
