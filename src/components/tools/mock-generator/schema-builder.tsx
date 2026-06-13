@@ -4,7 +4,9 @@ import { Input } from '@/components/ui/input'
 import {
 	Select,
 	SelectContent,
+	SelectGroup,
 	SelectItem,
+	SelectLabel,
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select'
@@ -14,16 +16,61 @@ export type MockField = {
 	type: string
 }
 
-export const MOCK_FIELD_TYPES = [
-	{ value: 'uuid', label: 'UUID String' },
-	{ value: 'name', label: 'Full Name' },
-	{ value: 'email', label: 'Email Address' },
-	{ value: 'phone', label: 'Phone Number' },
-	{ value: 'company', label: 'Company Name' },
-	{ value: 'date', label: 'Recent Date' },
-	{ value: 'number', label: 'Random Number' },
-	{ value: 'lorem', label: 'Lorem Paragraph' },
+export const MOCK_FIELD_GROUPS = [
+	{
+		label: 'System & Identifiers',
+		types: [
+			{ value: 'uuid', label: 'UUID String' },
+			{ value: 'number', label: 'Random Integer' },
+			{ value: 'boolean', label: 'Boolean Value' },
+			{ value: 'date', label: 'Recent Date' },
+		],
+	},
+	{
+		label: 'Personal & Identity',
+		types: [
+			{ value: 'name', label: 'Full Name' },
+			{ value: 'firstName', label: 'First Name' },
+			{ value: 'lastName', label: 'Last Name' },
+			{ value: 'avatar', label: 'Avatar URL' },
+			{ value: 'job', label: 'Job Title' },
+		],
+	},
+	{
+		label: 'Contact & Location',
+		types: [
+			{ value: 'email', label: 'Email Address' },
+			{ value: 'phone', label: 'Phone Number' },
+			{ value: 'website', label: 'Website URL' },
+			{ value: 'address', label: 'Street Address' },
+			{ value: 'company', label: 'Company Name' },
+		],
+	},
+	{
+		label: 'Text & Content',
+		types: [
+			{ value: 'lorem', label: 'Lorem Paragraph' },
+			{ value: 'sentence', label: 'Lorem Sentence' },
+			{ value: 'word', label: 'Single Word' },
+		],
+	},
+	{
+		label: 'Commerce & Finance',
+		types: [
+			{ value: 'amount', label: 'Amount / Price' },
+			{ value: 'currency', label: 'Currency Code' },
+		],
+	},
+	{
+		label: 'Media & Design',
+		types: [
+			{ value: 'image', label: 'Image URL' },
+			{ value: 'color', label: 'Color Name' },
+		],
+	},
 ]
+
+export const MOCK_FIELD_TYPES = MOCK_FIELD_GROUPS.flatMap((group) => group.types)
 
 type SchemaBuilderProps = {
 	fields: MockField[]
@@ -84,14 +131,21 @@ export function SchemaBuilder({
 
 							<div className="w-[45%]">
 								<Select value={field.type} onValueChange={(v) => onFieldChange(idx, 'type', v)}>
-									<SelectTrigger className="h-8 text-xs">
+									<SelectTrigger className="h-8 w-full text-xs">
 										<SelectValue />
 									</SelectTrigger>
-									<SelectContent>
-										{MOCK_FIELD_TYPES.map((opt) => (
-											<SelectItem key={opt.value} value={opt.value}>
-												{opt.label}
-											</SelectItem>
+									<SelectContent className="max-h-60 border-terminal-border bg-terminal-card font-mono text-xs">
+										{MOCK_FIELD_GROUPS.map((group) => (
+											<SelectGroup key={group.label}>
+												<SelectLabel className="font-bold text-[10px] text-slate-500 uppercase">
+													{group.label}
+												</SelectLabel>
+												{group.types.map((opt) => (
+													<SelectItem key={opt.value} value={opt.value}>
+														{opt.label}
+													</SelectItem>
+												))}
+											</SelectGroup>
 										))}
 									</SelectContent>
 								</Select>
