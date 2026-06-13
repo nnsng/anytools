@@ -10,7 +10,7 @@ export function InlineDiffView({ diffs }: InlineDiffViewProps) {
 	if (diffs.length === 0) return <div className="text-slate-500 italic">No difference found.</div>
 
 	return (
-		<pre className="h-full min-h-75 w-full select-text whitespace-pre-wrap break-all rounded border border-terminal-border p-4 font-mono text-slate-300 text-sm">
+		<pre className="h-full min-h-75 w-full select-text whitespace-pre-wrap break-all rounded border border-terminal-border bg-slate-950 p-4 font-mono text-slate-300 text-sm">
 			{diffs.map(([op, text], idx) => {
 				if (op === 0) return <span key={`${idx}-equal`}>{text}</span>
 				if (op === -1) {
@@ -77,7 +77,7 @@ export function SideBySideView({ diffs }: SideBySideViewProps) {
 						Original (Text A)
 					</span>
 				</div>
-				<pre className="scrollbar-thin max-h-100 grow select-text overflow-y-auto whitespace-pre-wrap break-all p-4 font-mono text-slate-400 text-sm">
+				<pre className="scrollbar-thin max-h-100 grow select-text overflow-y-auto whitespace-pre-wrap break-all bg-slate-950 p-4 font-mono text-slate-400 text-sm">
 					{leftPane}
 				</pre>
 			</div>
@@ -88,7 +88,7 @@ export function SideBySideView({ diffs }: SideBySideViewProps) {
 						Modified (Text B)
 					</span>
 				</div>
-				<pre className="scrollbar-thin max-h-100 grow select-text overflow-y-auto whitespace-pre-wrap break-all p-4 font-mono text-slate-200 text-sm">
+				<pre className="scrollbar-thin max-h-100 grow select-text overflow-y-auto whitespace-pre-wrap break-all bg-slate-950 p-4 font-mono text-slate-200 text-sm">
 					{rightPane}
 				</pre>
 			</div>

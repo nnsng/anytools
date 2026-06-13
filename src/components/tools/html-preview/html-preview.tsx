@@ -48,7 +48,7 @@ export default function HtmlPreview() {
   <div class="card">
     <h1>AnyTools Sandbox</h1>
     <p>This is a live, secure client-side HTML preview!</p>
-    <button onclick="alert('JS is active inside sandboxed iframe!')">Trigger Action</button>
+    <button onclick="console.log('JS is active inside sandboxed iframe!')">Trigger Action</button>
   </div>
 </body>
 </html>`)

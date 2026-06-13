@@ -1,10 +1,9 @@
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
-import { Pause, Play, RefreshCw } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { DateTimePicker } from '@/components/ui/date-time-picker'
-import { Input } from '@/components/ui/input'
+import { DateToEpoch } from './date-to-epoch'
+import { EpochToDate } from './epoch-to-date'
+import { LiveClock } from './live-clock'
 
 dayjs.extend(relativeTime)
 
@@ -117,146 +116,28 @@ export default function UnixConverter() {
 
 	return (
 		<div className="grid grid-cols-1 grid-rows-[auto_1fr] items-start gap-6 font-mono lg:grid-cols-12">
-			{/* Live Clock Widget */}
-			<div className="flex flex-col items-center justify-between gap-2 rounded-sm border border-terminal-border bg-terminal-card/40 p-4 lg:col-span-12 lg:flex-row">
-				<div className="flex items-center gap-4">
-					<div className="text-slate-500 text-xs uppercase tracking-wider">LIVE EPOCH CLOCK:</div>
-					<div className="font-bold text-glow text-matrix text-xl tabular-nums">{liveEpoch}</div>
-				</div>
-				<div className="flex items-center gap-2">
-					<Button
-						variant="outline"
-						size="sm"
-						onClick={() => setIsLiveActive(!isLiveActive)}
-						className="flex items-center gap-1.5"
-					>
-						{isLiveActive ? (
-							<>
-								<Pause className="h-3.5 w-3.5" /> PAUSE
-							</>
-						) : (
-							<>
-								<Play className="h-3.5 w-3.5" /> RESUME
-							</>
-						)}
-					</Button>
-					<Button
-						variant="ghost"
-						size="sm"
-						onClick={setInputToCurrent}
-						className="flex items-center gap-1.5"
-					>
-						<RefreshCw className="h-3.5 w-3.5" /> COPY TO INPUT
-					</Button>
-				</div>
-			</div>
+			<LiveClock
+				liveEpoch={liveEpoch}
+				isLiveActive={isLiveActive}
+				setIsLiveActive={setIsLiveActive}
+				setInputToCurrent={setInputToCurrent}
+			/>
 
-			{/* Epoch to Date Pane */}
-			<div className="flex flex-col space-y-6 rounded-sm border border-terminal-border bg-terminal-card/60 p-6 lg:col-span-6">
-				<h3 className="border-terminal-border border-b pb-2 font-bold text-slate-300 text-sm uppercase">
-					Epoch Timestamp to Date
-				</h3>
+			<EpochToDate
+				inputEpoch={inputEpoch}
+				epochError={epochError}
+				epochResults={epochResults}
+				handleConvertEpoch={handleConvertEpoch}
+				setInputToCurrent={setInputToCurrent}
+			/>
 
-				<div className="space-y-2">
-					<label htmlFor="input-epoch" className="text-slate-400 text-xs uppercase">
-						Input Timestamp (Seconds / Millis)
-					</label>
-					<div className="flex gap-2">
-						<Input
-							id="input-epoch"
-							value={inputEpoch}
-							onChange={(e) => handleConvertEpoch(e.target.value)}
-							placeholder="e.g. 1718211092"
-						/>
-						<Button variant="outline" onClick={setInputToCurrent}>
-							Now
-						</Button>
-					</div>
-					{epochError && <p className="text-red-400 text-xs">{epochError}</p>}
-				</div>
-
-				{epochResults && (
-					<div className="space-y-4 pt-2">
-						<div className="grid grid-cols-1 gap-3 text-sm">
-							<div className="rounded-xs border border-terminal-border bg-terminal-bg p-3">
-								<span className="block text-[10px] text-slate-500">ISO 8601</span>
-								<span className="select-all break-all font-mono text-slate-200">
-									{epochResults.iso}
-								</span>
-							</div>
-							<div className="rounded-xs border border-terminal-border bg-terminal-bg p-3">
-								<span className="block text-[10px] text-slate-500">UTC Date-Time</span>
-								<span className="select-all break-all font-mono text-slate-200">
-									{epochResults.utc}
-								</span>
-							</div>
-							<div className="rounded-xs border border-terminal-border bg-terminal-bg p-3">
-								<span className="block text-[10px] text-slate-500">Local Date-Time</span>
-								<span className="select-all break-all font-mono text-slate-200">
-									{epochResults.local}
-								</span>
-							</div>
-							<div className="rounded-xs border border-terminal-border bg-terminal-bg p-3">
-								<span className="block text-[10px] text-slate-500">Relative Time</span>
-								<span className="font-mono font-semibold text-matrix">{epochResults.relative}</span>
-							</div>
-						</div>
-					</div>
-				)}
-			</div>
-
-			{/* Date to Epoch Pane */}
-			<div className="flex flex-col space-y-6 rounded-sm border border-terminal-border bg-terminal-card/60 p-6 lg:col-span-6">
-				<h3 className="border-terminal-border border-b pb-2 font-bold text-slate-300 text-sm uppercase">
-					Date to Epoch Timestamp
-				</h3>
-
-				<div className="space-y-2">
-					<label htmlFor="input-date" className="text-slate-400 text-xs uppercase">
-						Input Date/Time
-					</label>
-					<DateTimePicker value={inputDate} onChange={(value) => handleConvertDate(value)} />
-					{dateError && <p className="text-red-400 text-xs">{dateError}</p>}
-				</div>
-
-				{dateResults && (
-					<div className="space-y-4 pt-2">
-						<div className="grid grid-cols-1 gap-3 text-sm">
-							<div className="flex items-center justify-between rounded-xs border border-terminal-border bg-terminal-bg p-3">
-								<div>
-									<span className="block text-[10px] text-slate-500">Seconds (Epoch)</span>
-									<span className="select-all font-bold font-mono text-slate-200">
-										{dateResults.seconds}
-									</span>
-								</div>
-								<Button
-									variant="ghost"
-									size="sm"
-									onClick={() => handleConvertEpoch(dateResults.seconds.toString())}
-								>
-									Load
-								</Button>
-							</div>
-
-							<div className="flex items-center justify-between rounded-xs border border-terminal-border bg-terminal-bg p-3">
-								<div>
-									<span className="block text-[10px] text-slate-500">Milliseconds (Epoch)</span>
-									<span className="select-all font-bold font-mono text-slate-200">
-										{dateResults.millis}
-									</span>
-								</div>
-								<Button
-									variant="ghost"
-									size="sm"
-									onClick={() => handleConvertEpoch(dateResults.millis.toString())}
-								>
-									Load
-								</Button>
-							</div>
-						</div>
-					</div>
-				)}
-			</div>
+			<DateToEpoch
+				inputDate={inputDate}
+				dateError={dateError}
+				dateResults={dateResults}
+				handleConvertDate={handleConvertDate}
+				handleConvertEpoch={handleConvertEpoch}
+			/>
 		</div>
 	)
 }

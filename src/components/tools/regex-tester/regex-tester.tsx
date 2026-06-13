@@ -1,8 +1,7 @@
 import { useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
-import { cn } from '@/lib/utils'
+import { RegexInput } from './regex-input'
+import { RegexMatches } from './regex-matches'
+import { RegexPanel } from './regex-panel'
 import { useRegexMatcher } from './use-regex-matcher'
 
 export default function RegexTester() {
@@ -24,141 +23,20 @@ export default function RegexTester() {
 	const { matches, regexError, highlightedNode } = useRegexMatcher(pattern, flags, subjectText)
 
 	return (
-		<div className="grid grid-cols-1 gap-6 font-mono lg:grid-cols-12">
-			{/* Pattern and Flags Input */}
-			<div className="space-y-4 rounded-sm border border-terminal-border bg-terminal-card/60 p-6 lg:col-span-12">
-				<span className="flex items-center gap-2 font-bold text-slate-300 text-xs uppercase tracking-wider">
-					<span className="h-1.5 w-1.5 rounded-full bg-matrix" />
-					RegExp Expression
-				</span>
-
-				<div className="flex flex-col items-stretch gap-4 md:flex-row">
-					<div className="flex flex-1 items-center rounded-sm border border-terminal-border bg-terminal-bg px-3">
-						<span className="mr-2 font-bold text-slate-500">/</span>
-						<Input
-							type="text"
-							value={pattern}
-							onChange={(e) => setPattern(e.target.value)}
-							placeholder="e.g. ([a-zA-Z]+)"
-							className="w-full border-none bg-transparent py-2.5 text-sm text-white placeholder-slate-700 focus-visible:border-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
-						/>
-						<span className="ml-2 font-bold text-slate-500">/</span>
-					</div>
-
-					<div className="flex flex-wrap items-center gap-2 rounded border border-terminal-border bg-terminal-bg/30 px-3 py-1">
-						{Object.keys(flags).map((flag) => {
-							const active = flags[flag as keyof typeof flags]
-							return (
-								<Button
-									key={flag}
-									type="button"
-									variant={active ? 'default' : 'outline'}
-									size="xs"
-									onClick={() => handleFlagToggle(flag as keyof typeof flags)}
-									className={cn(
-										'font-bold text-xs transition-all duration-100',
-										active
-											? 'border-matrix bg-matrix font-bold text-terminal-bg shadow-[0_0_6px_rgba(34,197,94,0.3)] hover:bg-matrix/80 hover:text-terminal-bg'
-											: 'border-terminal-border text-slate-500 hover:text-slate-300',
-									)}
-									title={`Flag: ${flag}`}
-								>
-									{flag}
-								</Button>
-							)
-						})}
-					</div>
-				</div>
-
-				{regexError && (
-					<p className="rounded border border-red-500/20 bg-red-950/20 p-2 text-red-400 text-xs">
-						{regexError}
-					</p>
-				)}
-			</div>
-
-			{/* Editor & Highlight Display */}
-			<div className="flex flex-col gap-6 lg:col-span-8">
-				<div className="flex flex-col rounded-sm border border-terminal-border bg-terminal-card/60">
-					<div className="flex items-center justify-between border-terminal-border border-b bg-terminal-bg/40 px-4 py-2">
-						<span className="font-bold text-slate-300 text-xs uppercase tracking-wider">
-							Subject Text
-						</span>
-					</div>
-					<Textarea
-						value={subjectText}
-						onChange={(e) => setSubjectText(e.target.value)}
-						placeholder="Type subject text to match against here..."
-						className="min-h-37.5 border-none bg-transparent focus:ring-0"
-					/>
-				</div>
-
-				{/* Live highlighting visualization */}
-				<div className="flex flex-col rounded-sm border border-terminal-border bg-terminal-card/60">
-					<div className="border-terminal-border border-b bg-terminal-bg/40 px-4 py-2">
-						<span className="font-bold text-slate-300 text-xs uppercase tracking-wider">
-							Live Highlighter Output
-						</span>
-					</div>
-					<div className="max-h-75 min-h-37.5 overflow-y-auto whitespace-pre-wrap break-all bg-terminal-bg/50 p-4 font-mono text-slate-300 text-sm">
-						{highlightedNode}
-					</div>
-				</div>
-			</div>
-
-			{/* Matches List */}
-			<div className="flex h-full max-h-125 flex-col space-y-4 rounded-sm border border-terminal-border bg-terminal-card/60 p-4 lg:col-span-4">
-				<div className="border-terminal-border border-b pb-2">
-					<span className="font-bold text-slate-300 text-xs uppercase tracking-wider">
-						Matches ({matches.length})
-					</span>
-				</div>
-
-				<div className="scrollbar-thin flex-1 space-y-3 overflow-y-auto pr-1">
-					{matches.length === 0 ? (
-						<div className="py-8 text-center text-slate-600 text-xs">No matches found.</div>
-					) : (
-						matches.map((match, i) => (
-							<div
-								key={`${match.index}-${match.text}`}
-								className="space-y-2 rounded-xs border border-terminal-border bg-terminal-bg/60 p-3 text-xs transition-colors hover:border-matrix/30"
-							>
-								<div className="flex items-center justify-between border-terminal-border border-b pb-1 font-bold text-[10px] text-slate-500">
-									<span>MATCH #{i + 1}</span>
-									<span>INDEX: {match.index}</span>
-								</div>
-
-								<div>
-									<span className="block font-bold text-[9px] text-slate-500 uppercase">
-										Matched String:
-									</span>
-									<span className="break-all rounded bg-matrix/5 px-1 py-0.5 font-bold text-matrix">
-										{match.text}
-									</span>
-								</div>
-
-								{match.groups.length > 0 && (
-									<div className="space-y-1">
-										<span className="block font-bold text-[9px] text-slate-500 uppercase">
-											Groups:
-										</span>
-										<div className="space-y-1 border-terminal-border border-l pl-2">
-											{match.groups.map((group) => (
-												<div key={group.index} className="flex gap-2">
-													<span className="font-semibold text-slate-500">Group {group.index}:</span>
-													<span className="select-all break-all text-amber-400">
-														{group.content || '""'}
-													</span>
-												</div>
-											))}
-										</div>
-									</div>
-								)}
-							</div>
-						))
-					)}
-				</div>
-			</div>
+		<div className="grid grid-cols-1 grid-rows-[auto_1fr] gap-6 font-mono lg:grid-cols-12">
+			<RegexInput
+				pattern={pattern}
+				setPattern={setPattern}
+				flags={flags}
+				handleFlagToggle={handleFlagToggle}
+				regexError={regexError}
+			/>
+			<RegexPanel
+				subjectText={subjectText}
+				setSubjectText={setSubjectText}
+				highlightedNode={highlightedNode}
+			/>
+			<RegexMatches matches={matches} />
 		</div>
 	)
 }
