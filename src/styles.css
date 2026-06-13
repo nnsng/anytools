@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -13,7 +13,7 @@
   --color-matrix: #22c55e;
   --color-matrix-glow: #00ff66;
 
-  --font-mono: 'Geist Mono', 'JetBrains Mono', monospace;
+  --font-mono: 'Geist Mono', monospace;
 }
 
 /* Base resets & layouts */
