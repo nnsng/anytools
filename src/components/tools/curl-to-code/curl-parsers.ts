@@ -44,7 +44,7 @@ export function parseCurl(curl: string): ParsedCurl {
 	return { url, method, headers, body }
 }
 
-export function generateJavascript(parsed: ParsedCurl): string {
+export function generateFetch(parsed: ParsedCurl): string {
 	const fetchOptions: {
 		method: string
 		headers?: Record<string, string>
@@ -70,69 +70,31 @@ export function generateJavascript(parsed: ParsedCurl): string {
 	return `// JavaScript (Fetch API)\n\nfetch("${parsed.url}", ${optionsStr})\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));`
 }
 
-export function generatePython(parsed: ParsedCurl): string {
-	let code = `import requests\nimport json\n\nurl = "${parsed.url}"\n`
+export function generateAxios(parsed: ParsedCurl): string {
+	const axiosConfig: {
+		method: string
+		url: string
+		headers?: Record<string, string>
+		// biome-ignore lint/suspicious/noExplicitAny: dynamic payload body
+		data?: any
+	} = {
+		method: parsed.method.toLowerCase(),
+		url: parsed.url,
+	}
 
-	code +=
-		Object.keys(parsed.headers).length > 0
-			? `headers = ${JSON.stringify(parsed.headers, null, 4)}\n`
-			: `headers = {}\n`
+	if (Object.keys(parsed.headers).length > 0) {
+		axiosConfig.headers = parsed.headers
+	}
 
 	if (parsed.body) {
 		try {
-			const parsedBody = JSON.parse(parsed.body)
-			code += `data = ${JSON.stringify(parsedBody, null, 4)}\n`
-			code += `\nresponse = requests.${parsed.method.toLowerCase()}(\n    url,\n    headers=headers,\n    json=data\n)\n`
+			axiosConfig.data = JSON.parse(parsed.body)
 		} catch {
-			code += `data = """${parsed.body}"""\n`
-			code += `\nresponse = requests.${parsed.method.toLowerCase()}(\n    url,\n    headers=headers,\n    data=data\n)\n`
+			axiosConfig.data = parsed.body
 		}
-	} else {
-		code += `\nresponse = requests.${parsed.method.toLowerCase()}(url, headers=headers)\n`
 	}
 
-	code += `\nprint("Status Code:", response.status_code)\nprint("Response Body:", response.json())`
-	return code
-}
+	const configStr = JSON.stringify(axiosConfig, null, 2)
 
-export function generateGo(parsed: ParsedCurl): string {
-	let headersStr = ''
-	for (const [k, v] of Object.entries(parsed.headers)) {
-		headersStr += `\treq.Header.Add("${k}", "${v}")\n`
-	}
-
-	let bodySetup = `\tresp, err := http.Get("${parsed.url}")`
-	if (parsed.method !== 'GET' || parsed.body) {
-		const payload = parsed.body
-			? `var payload = []byte(\`${parsed.body}\`)\n\treq, err := http.NewRequest("${parsed.method}", "${parsed.url}", bytes.NewBuffer(payload))`
-			: `req, err := http.NewRequest("${parsed.method}", "${parsed.url}", nil)`
-
-		bodySetup = `\t${payload}\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n${headersStr}\n\tclient := &http.Client{}\n\tresp, err := client.Do(req)`
-	}
-
-	return `package main
-
-import (
-	"bytes"
-	"fmt"
-	"io"
-	"log"
-	"net/http"
-)
-
-func main() {
-${bodySetup}
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer resp.Body.Close()
-
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Println("Status Code:", resp.StatusCode)
-	fmt.Println("Response Body:", string(body))
-}`
+	return `// JavaScript (Axios)\nimport axios from 'axios';\n\nconst config = ${configStr};\n\naxios(config)\n  .then(response => {\n    console.log(response.data);\n  })\n  .catch(error => {\n    console.error(error);\n  });`
 }

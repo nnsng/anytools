@@ -2,13 +2,15 @@ import { useEffect, useState } from 'react'
 import { CodeBlock, EditorPane } from '@/components/tools/shared'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { APP_NAME } from '@/constants/app'
-import { generateGo, generateJavascript, generatePython, parseCurl } from './curl-parsers'
+import { generateAxios, generateFetch, parseCurl } from './curl-parsers'
+
+type TabType = 'fetch' | 'axios'
 
 export default function CurlToCode() {
 	const [curlInput, setCurlInput] = useState<string>(
 		`curl -X POST "https://api.${APP_NAME.toLowerCase()}.dev/v1/data" \\\n  -H "Content-Type: application/json" \\\n  -H "Authorization: Bearer token123" \\\n  -d '{"name": "Neo", "status": "active"}'`,
 	)
-	const [activeTab, setActiveTab] = useState<string>('js')
+	const [activeTab, setActiveTab] = useState<TabType>('fetch')
 	const [codeOutput, setCodeOutput] = useState<string>('')
 	const [error, setError] = useState<string | null>(null)
 
@@ -23,12 +25,10 @@ export default function CurlToCode() {
 			const parsed = parseCurl(curlInput)
 			setError(null)
 
-			if (activeTab === 'js') {
-				setCodeOutput(generateJavascript(parsed))
-			} else if (activeTab === 'python') {
-				setCodeOutput(generatePython(parsed))
-			} else if (activeTab === 'go') {
-				setCodeOutput(generateGo(parsed))
+			if (activeTab === 'fetch') {
+				setCodeOutput(generateFetch(parsed))
+			} else if (activeTab === 'axios') {
+				setCodeOutput(generateAxios(parsed))
 			}
 		} catch {
 			setError('cURL parse failed. Check string structure.')
@@ -53,13 +53,12 @@ export default function CurlToCode() {
 				value={codeOutput}
 				readOnly={true}
 				allowDownload={true}
-				downloadFileName={`request.${activeTab === 'js' ? 'js' : activeTab === 'python' ? 'py' : 'go'}`}
+				downloadFileName="request.js"
 				actions={
-					<Tabs value={activeTab} onValueChange={setActiveTab}>
+					<Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as TabType)}>
 						<TabsList>
-							<TabsTrigger value="js">JavaScript</TabsTrigger>
-							<TabsTrigger value="python">Python</TabsTrigger>
-							<TabsTrigger value="go">Go</TabsTrigger>
+							<TabsTrigger value="fetch">Fetch API</TabsTrigger>
+							<TabsTrigger value="axios">Axios</TabsTrigger>
 						</TabsList>
 					</Tabs>
 				}
