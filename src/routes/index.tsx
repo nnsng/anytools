@@ -1,6 +1,7 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
-import { ChevronRight, Search, Sparkles } from 'lucide-react'
-import React, { useEffect, useState } from 'react'
+import { createFileRoute } from '@tanstack/react-router'
+import { Search } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { CategorySection, HeroSection } from '@/components/dashboard'
 import { APP_NAME } from '@/constants/app'
 import { groupToolsByCategory, TOOLS } from '@/utils/tools-registry'
 
@@ -25,78 +26,10 @@ function Home() {
 
 	const categories = groupToolsByCategory(filteredTools)
 
-	const renderSection = (title: string, list: typeof TOOLS) => {
-		if (list.length === 0) return null
-
-		return (
-			<div className="space-y-4">
-				<h2 className="border-terminal-border/80 border-b pb-2 font-bold text-slate-500 text-xs uppercase tracking-widest">
-					{title} ({list.length})
-				</h2>
-				<div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-					{list.map((tool) => (
-						<Link
-							key={tool.id}
-							to="/tools/$toolId"
-							params={{ toolId: tool.id }}
-							className="group relative flex flex-col justify-between overflow-hidden rounded border border-terminal-border bg-terminal-card/40 p-5 transition-all duration-200 hover:border-matrix/40 hover:bg-terminal-card/90 hover:shadow-[0_0_15px_rgba(34,197,94,0.08)]"
-						>
-							{/* Subtle top indicator bar */}
-							<div className="absolute top-0 right-0 left-0 h-0.5 bg-terminal-border transition-colors group-hover:bg-matrix" />
-
-							<div className="space-y-3">
-								<div className="flex items-center gap-3">
-									<div className="rounded border border-terminal-border bg-terminal-bg p-2 group-hover:border-matrix/20 group-hover:bg-matrix/5">
-										{React.createElement(tool.icon, {
-											className:
-												'w-5 h-5 text-slate-400 group-hover:text-matrix group-hover:scale-105 transition-transform text-glow',
-										})}
-									</div>
-									<h3 className="font-bold font-mono text-sm text-white transition-colors group-hover:text-matrix-glow">
-										{tool.name}
-									</h3>
-								</div>
-								<p className="line-clamp-2 font-mono text-slate-400 text-xs leading-relaxed">
-									{tool.description}
-								</p>
-							</div>
-
-							<div className="mt-5 flex items-center justify-between border-terminal-border/40 border-t pt-3 font-mono text-[10px] text-slate-500 group-hover:text-slate-300">
-								<span className="uppercase tracking-wider">{tool.category}</span>
-								<span className="flex items-center gap-0.5 font-bold text-matrix/80 group-hover:text-matrix-glow">
-									LAUNCH{' '}
-									<ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-								</span>
-							</div>
-						</Link>
-					))}
-				</div>
-			</div>
-		)
-	}
-
 	return (
 		<div className="scrollbar-thin h-full w-full animate-fade-in overflow-y-auto font-mono">
 			<div className="mx-auto max-w-7xl space-y-8 p-4 md:p-6 lg:p-8">
-				{/* Hero Welcome Console */}
-				<div className="relative flex flex-col items-start justify-between gap-6 overflow-hidden rounded border border-terminal-border bg-terminal-card/50 p-6 md:flex-row md:items-center md:p-8">
-					<div className="relative z-10 max-w-2xl space-y-3">
-						<div className="inline-flex items-center gap-1.5 rounded border border-matrix/30 bg-matrix/10 px-2.5 py-1 font-bold text-[10px] text-matrix-glow uppercase">
-							<Sparkles className="h-3.5 w-3.5" /> Client-Side Sandbox Operational
-						</div>
-
-						<h1 className="cursor-blink font-bold text-3xl text-white uppercase tracking-tight">
-							ANYTOOLS_WORKSPACE
-							<span className="font-bold text-matrix">.LOG</span>
-						</h1>
-
-						<p className="text-slate-400 text-xs leading-relaxed md:text-sm">
-							Welcome to the local system utilities suite. All transformations, encodings, and
-							calculations process natively within your browser. No server calls, no trackers, zero
-							data leakage.
-						</p>
-					</div>
-				</div>
+				<HeroSection />
 
 				{/* Instant Search Bar */}
 				<div className="relative">
@@ -126,7 +59,9 @@ function Home() {
 							</button>
 						</div>
 					) : (
-						Object.keys(categories).map((category) => renderSection(category, categories[category]))
+						Object.entries(categories).map(([category, tools]) => (
+							<CategorySection key={category} title={category} tools={tools} />
+						))
 					)}
 				</div>
 			</div>
