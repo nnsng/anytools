@@ -7,64 +7,21 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select'
-
-function toTitleCase(str: string): string {
-	return str.replace(
-		/\w\S*/g,
-		(txt) => txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase(),
-	)
-}
-
-function toSentenceCase(str: string): string {
-	return str.toLowerCase().replace(/(^\s*|[.!?]\s+)([a-z])/g, (m) => m.toUpperCase())
-}
-
-function toCamelCase(str: string): string {
-	return str
-		.replace(/[^a-zA-Z0-9]+(.)/g, (_, chr) => chr.toUpperCase())
-		.replace(/^[A-Z]/, (c) => c.toLowerCase())
-}
-
-function toSnakeCase(str: string): string {
-	return str
-		.replace(/([a-z])([A-Z])/g, '$1_$2')
-		.replace(/[^a-zA-Z0-9]+/g, '_')
-		.toLowerCase()
-}
-
-function toKebabCase(str: string): string {
-	return str
-		.replace(/([a-z])([A-Z])/g, '$1-$2')
-		.replace(/[^a-zA-Z0-9]+/g, '-')
-		.toLowerCase()
-}
-
-function toPascalCase(str: string): string {
-	const camel = toCamelCase(str)
-	return camel.charAt(0).toUpperCase() + camel.slice(1)
-}
-
-function toConstantCase(str: string): string {
-	return toSnakeCase(str).toUpperCase()
-}
-
-function toToggleCase(str: string): string {
-	return str
-		.split('')
-		.map((c) => (c === c.toUpperCase() ? c.toLowerCase() : c.toUpperCase()))
-		.join('')
-}
-
-function toAlternatingCase(str: string): string {
-	return str
-		.split('')
-		.map((c, i) => (i % 2 === 0 ? c.toLowerCase() : c.toUpperCase()))
-		.join('')
-}
+import {
+	toCamelCase,
+	toConstantCase,
+	toKebabCase,
+	toLowerCase,
+	toPascalCase,
+	toSentenceCase,
+	toSnakeCase,
+	toTitleCase,
+	toUpperCase,
+} from './converter'
 
 const casingOptions = [
-	{ id: 'lower', label: 'lowercase', fn: (s: string) => s.toLowerCase() },
-	{ id: 'upper', label: 'UPPERCASE', fn: (s: string) => s.toUpperCase() },
+	{ id: 'lower', label: 'lowercase', fn: toLowerCase },
+	{ id: 'upper', label: 'UPPERCASE', fn: toUpperCase },
 	{ id: 'title', label: 'Title Case', fn: toTitleCase },
 	{ id: 'sentence', label: 'Sentence case', fn: toSentenceCase },
 	{ id: 'camel', label: 'camelCase', fn: toCamelCase },
@@ -72,8 +29,6 @@ const casingOptions = [
 	{ id: 'kebab', label: 'kebab-case', fn: toKebabCase },
 	{ id: 'pascal', label: 'PascalCase', fn: toPascalCase },
 	{ id: 'constant', label: 'CONSTANT_CASE', fn: toConstantCase },
-	{ id: 'toggle', label: 'tOGGLE cASE', fn: toToggleCase },
-	{ id: 'alternate', label: 'aLtErNaTiNg CaSe', fn: toAlternatingCase },
 ]
 
 export default function StringCaseConverter() {
