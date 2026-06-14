@@ -3,9 +3,9 @@ import { CodeBlock, EditorPane } from '@/components/tools/shared'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { beautify, minify } from '@/utils/formatter'
 
-export default function JavascriptFormatter() {
+export default function HtmlFormatter() {
 	const [input, setInput] = useState<string>(
-		`// Simple JS Demo\nfunction greet(user) {\n  const message = "Hello, " + user.name + "!";\n  console.log(message);\n  return { success: true, timestamp: Date.now() };\n}`,
+		`<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<title>Demo Page</title>\n<style>body { font-family: sans-serif; }</style>\n</head>\n<body>\n<div class="card"><h1>Hello World</h1><p>Formatting HTML templates has never been easier.</p></div>\n<script>console.log("Hello from script tag!");</script>\n</body>\n</html>`,
 	)
 	const [output, setOutput] = useState<string>('')
 	const [activeTab, setActiveTab] = useState<string>('beautify')
@@ -18,19 +18,20 @@ export default function JavascriptFormatter() {
 			return
 		}
 
-		const processJs = async () => {
+		const processHtml = async () => {
 			try {
-				const result = activeTab === 'beautify' ? await beautify(input, 'js') : minify(input, 'js')
+				const result =
+					activeTab === 'beautify' ? await beautify(input, 'html') : minify(input, 'html')
 				setOutput(result)
 				setError(null)
 			} catch (err) {
 				console.dir(err)
-				setError(err instanceof Error ? err.message : 'JS formatting failed.')
+				setError(err instanceof Error ? err.message : 'HTML formatting failed.')
 				setOutput('')
 			}
 		}
 
-		processJs()
+		processHtml()
 	}, [input, activeTab])
 
 	return (
@@ -39,7 +40,7 @@ export default function JavascriptFormatter() {
 				title="Input"
 				value={input}
 				onChange={setInput}
-				placeholder="Paste JavaScript code here..."
+				placeholder="Paste HTML code here..."
 				allowUpload={true}
 				error={error}
 				className="lg:flex-1"
@@ -50,7 +51,7 @@ export default function JavascriptFormatter() {
 				value={output}
 				readOnly={true}
 				allowDownload={true}
-				downloadFileName={activeTab === 'beautify' ? 'formatted.js' : 'minified.js'}
+				downloadFileName={activeTab === 'beautify' ? 'formatted.html' : 'minified.html'}
 				actions={
 					<Tabs value={activeTab} onValueChange={setActiveTab}>
 						<TabsList>

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { CodeBlock, EditorPane } from '@/components/tools/shared'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { APP_NAME } from '@/constants/app'
+import { beautify, minify } from '@/utils/formatter'
 
 export default function JsonFormatter() {
 	const [input, setInput] = useState<string>(
@@ -12,20 +13,20 @@ export default function JsonFormatter() {
 	const [indent, setIndent] = useState<string>('2')
 
 	useEffect(() => {
-		const processJson = (rawInput: string, indentVal: string) => {
-			if (!rawInput.trim()) {
-				setOutput('')
-				setError(null)
-				return
-			}
+		if (!input.trim()) {
+			setOutput('')
+			setError(null)
+			return
+		}
 
+		const processJson = async () => {
 			try {
-				const parsed = JSON.parse(rawInput)
-				const spaces = indentVal === 'minify' ? 0 : Number(indentVal)
-				const formatted =
-					indentVal === 'minify' ? JSON.stringify(parsed) : JSON.stringify(parsed, null, spaces)
+				const result =
+					indent === 'minify'
+						? minify(input, 'json')
+						: await beautify(input, 'json', { tabWidth: Number(indent) })
 
-				setOutput(formatted)
+				setOutput(result)
 				setError(null)
 			} catch (err) {
 				setError(err instanceof Error ? err.message : 'Invalid JSON format')
@@ -33,7 +34,7 @@ export default function JsonFormatter() {
 			}
 		}
 
-		processJson(input, indent)
+		processJson()
 	}, [input, indent])
 
 	return (

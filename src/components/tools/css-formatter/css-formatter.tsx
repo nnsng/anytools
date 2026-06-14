@@ -3,9 +3,9 @@ import { CodeBlock, EditorPane } from '@/components/tools/shared'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { beautify, minify } from '@/utils/formatter'
 
-export default function JavascriptFormatter() {
+export default function CssFormatter() {
 	const [input, setInput] = useState<string>(
-		`// Simple JS Demo\nfunction greet(user) {\n  const message = "Hello, " + user.name + "!";\n  console.log(message);\n  return { success: true, timestamp: Date.now() };\n}`,
+		`/* CSS Demo */\nbody { background-color: #08090c; color: #ffffff; font-family: sans-serif; }\n.card { margin: 2rem auto; padding: 1.5rem; border: 1px solid rgba(34, 197, 94, 0.2); border-radius: 4px; max-width: 500px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); }\n.card h1 { font-size: 1.5rem; margin-bottom: 1rem; color: #22c55e; }`,
 	)
 	const [output, setOutput] = useState<string>('')
 	const [activeTab, setActiveTab] = useState<string>('beautify')
@@ -18,19 +18,20 @@ export default function JavascriptFormatter() {
 			return
 		}
 
-		const processJs = async () => {
+		const processCss = async () => {
 			try {
-				const result = activeTab === 'beautify' ? await beautify(input, 'js') : minify(input, 'js')
+				const result =
+					activeTab === 'beautify' ? await beautify(input, 'css') : minify(input, 'css')
 				setOutput(result)
 				setError(null)
 			} catch (err) {
 				console.dir(err)
-				setError(err instanceof Error ? err.message : 'JS formatting failed.')
+				setError(err instanceof Error ? err.message : 'CSS formatting failed.')
 				setOutput('')
 			}
 		}
 
-		processJs()
+		processCss()
 	}, [input, activeTab])
 
 	return (
@@ -39,7 +40,7 @@ export default function JavascriptFormatter() {
 				title="Input"
 				value={input}
 				onChange={setInput}
-				placeholder="Paste JavaScript code here..."
+				placeholder="Paste CSS code here..."
 				allowUpload={true}
 				error={error}
 				className="lg:flex-1"
@@ -50,7 +51,7 @@ export default function JavascriptFormatter() {
 				value={output}
 				readOnly={true}
 				allowDownload={true}
-				downloadFileName={activeTab === 'beautify' ? 'formatted.js' : 'minified.js'}
+				downloadFileName={activeTab === 'beautify' ? 'formatted.css' : 'minified.css'}
 				actions={
 					<Tabs value={activeTab} onValueChange={setActiveTab}>
 						<TabsList>
