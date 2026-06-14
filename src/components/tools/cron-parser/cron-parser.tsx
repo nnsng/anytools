@@ -6,7 +6,7 @@ import { CronSchedule } from './cron-schedule'
 import { describeCronPart } from './cron-utils'
 
 export default function CronParser() {
-	const [cronString, setCronString] = useState<string>('*/15 9-17 * * 1-5')
+	const [cronString, setCronString] = useState<string>('* * * * *')
 	const [error, setError] = useState<string | null>(null)
 	const [nextRuns, setNextRuns] = useState<string[]>([])
 	const [explanation, setExplanation] = useState<{
