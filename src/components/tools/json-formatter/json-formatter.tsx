@@ -66,13 +66,11 @@ export default function JsonFormatter() {
 				}
 				className="lg:flex-1"
 			>
-				{output ? (
-					<CodeBlock className="flex-1">{output}</CodeBlock>
-				) : (
-					<div className="flex grow select-none items-center justify-center font-mono text-slate-600 text-xs">
-						Waiting for valid JSON input...
-					</div>
-				)}
+				<CodeBlock
+					className="flex-1"
+					value={output}
+					placeholder="Waiting for valid JSON input..."
+				/>
 			</EditorPane>
 		</div>
 	)

@@ -62,13 +62,11 @@ export default function JsonToCode() {
 				}
 				className="lg:flex-1"
 			>
-				{codeOutput ? (
-					<CodeBlock className="flex-1">{codeOutput}</CodeBlock>
-				) : (
-					<div className="flex grow select-none items-center justify-center font-mono text-slate-600 text-xs">
-						Waiting for valid JSON input...
-					</div>
-				)}
+				<CodeBlock
+					className="flex-1"
+					value={codeOutput}
+					placeholder="Waiting for valid JSON input..."
+				/>
 			</EditorPane>
 		</div>
 	)

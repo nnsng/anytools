@@ -181,9 +181,10 @@ export function EditorPane(props: EditorPaneProps) {
 				)}
 
 				{error && (
-					<CodeBlock className="absolute right-0 bottom-0 left-0 overflow-y-auto border-red-500/20 border-t bg-red-950/40 p-3 text-red-400 text-xs">
-						{error}
-					</CodeBlock>
+					<CodeBlock
+						value={error}
+						className="absolute right-0 bottom-0 left-0 overflow-y-auto border-red-500/20 border-t bg-red-950/40 p-3 text-red-400 text-xs"
+					/>
 				)}
 			</div>
 		</Pane>

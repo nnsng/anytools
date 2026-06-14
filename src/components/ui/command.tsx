@@ -47,7 +47,7 @@ function CommandDialog({
 				className={cn('top-1/3 translate-y-0 overflow-hidden rounded-xl! p-0', className)}
 				showCloseButton={showCloseButton}
 			>
-				<Command className="[&_[data-slot=command-input-wrapper]]:border-b [&_[data-slot=command-input-wrapper]]:px-5 [&_[data-slot=command-input-wrapper]]:py-3 [&_[data-slot=command-input]]:h-12 [&_[data-slot=command-item]]:px-5 [&_[data-slot=command-item]]:py-3 **:[[cmdk-group-heading]]:px-5 **:[[cmdk-group-heading]]:font-medium **:[[cmdk-group-heading]]:text-muted-foreground">
+				<Command className="**:data-[slot=command-input]:h-12 **:data-[slot=command-input-wrapper]:border-b **:data-[slot=command-input-wrapper]:px-5 **:data-[slot=command-item]:px-5 **:data-[slot=command-input-wrapper]:py-3 **:data-[slot=command-item]:py-3 **:[[cmdk-group-heading]]:px-5 **:[[cmdk-group-heading]]:font-medium **:[[cmdk-group-heading]]:text-muted-foreground">
 					{children}
 				</Command>
 			</DialogContent>

@@ -62,13 +62,7 @@ export default function HtmlFormatter() {
 				}
 				className="lg:flex-1"
 			>
-				{output ? (
-					<CodeBlock className="flex-1">{output}</CodeBlock>
-				) : (
-					<div className="flex grow select-none items-center justify-center font-mono text-slate-600 text-xs">
-						Waiting for input...
-					</div>
-				)}
+				<CodeBlock className="flex-1" value={output} />
 			</EditorPane>
 		</div>
 	)

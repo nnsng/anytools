@@ -137,13 +137,11 @@ export default function MockGenerator() {
 				downloadFileName="mock-data.json"
 				className="flex-1 lg:min-h-0"
 			>
-				{output ? (
-					<CodeBlock className="flex-1">{output}</CodeBlock>
-				) : (
-					<div className="flex grow select-none items-center justify-center font-mono text-slate-600 text-xs">
-						Click Generate to forge data...
-					</div>
-				)}
+				<CodeBlock
+					className="flex-1"
+					value={output}
+					placeholder="Click Generate to forge data..."
+				/>
 			</EditorPane>
 		</div>
 	)
