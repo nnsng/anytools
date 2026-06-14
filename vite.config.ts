@@ -12,6 +12,9 @@ const config = defineConfig({
 		tanstackRouter({ target: 'react', autoCodeSplitting: true }),
 		viteReact(),
 	],
+	build: {
+		chunkSizeWarningLimit: 1000,
+	},
 })
 
 export default config
