@@ -30,6 +30,7 @@ const TextAnalyzer = React.lazy(() => import('@/components/tools/text-analyzer')
 const CssFormatter = React.lazy(() => import('@/components/tools/css-formatter'))
 const HtmlFormatter = React.lazy(() => import('@/components/tools/html-formatter'))
 const StringCaseConverter = React.lazy(() => import('@/components/tools/string-case-converter'))
+const Dedupe = React.lazy(() => import('@/components/tools/dedupe'))
 
 const TOOL_COMPONENTS: Record<string, React.ComponentType> = {
 	'timestamp-converter': TimestampConverter,
@@ -57,6 +58,7 @@ const TOOL_COMPONENTS: Record<string, React.ComponentType> = {
 	'css-formatter': CssFormatter,
 	'html-formatter': HtmlFormatter,
 	'string-case-converter': StringCaseConverter,
+	dedupe: Dedupe,
 }
 
 export const Route = createFileRoute('/tools/$toolId')({

@@ -4,6 +4,7 @@ import {
 	CalendarRange,
 	Clock,
 	Code2,
+	CopyMinus,
 	Database,
 	Eye,
 	FileCode,
@@ -214,6 +215,14 @@ export const TOOLS: ToolMetadata[] = [
 		category: 'Dev Utilities',
 		icon: GitCompare,
 		tags: ['diff', 'compare', 'text'],
+	},
+	{
+		id: 'dedupe',
+		name: 'List Deduplicator',
+		description: 'Remove duplicate lines or items from a text list.',
+		category: 'Dev Utilities',
+		icon: CopyMinus,
+		tags: ['dedupe', 'duplicate', 'unique', 'lines', 'list'],
 	},
 	{
 		id: 'regex-tester',
