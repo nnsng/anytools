@@ -27,6 +27,9 @@ const QrCodeStudio = React.lazy(() => import('@/components/tools/qr-code-studio'
 const FaviconGenerator = React.lazy(() => import('@/components/tools/favicon-generator'))
 const JwtDebugger = React.lazy(() => import('@/components/tools/jwt-debugger'))
 const TextAnalyzer = React.lazy(() => import('@/components/tools/text-analyzer'))
+const CssFormatter = React.lazy(() => import('@/components/tools/css-formatter'))
+const HtmlFormatter = React.lazy(() => import('@/components/tools/html-formatter'))
+const StringCaseConverter = React.lazy(() => import('@/components/tools/string-case-converter'))
 
 const TOOL_COMPONENTS: Record<string, React.ComponentType> = {
 	'timestamp-converter': TimestampConverter,
@@ -51,6 +54,9 @@ const TOOL_COMPONENTS: Record<string, React.ComponentType> = {
 	'favicon-generator': FaviconGenerator,
 	'jwt-debugger': JwtDebugger,
 	'text-analyzer': TextAnalyzer,
+	'css-formatter': CssFormatter,
+	'html-formatter': HtmlFormatter,
+	'string-case-converter': StringCaseConverter,
 }
 
 export const Route = createFileRoute('/tools/$toolId')({

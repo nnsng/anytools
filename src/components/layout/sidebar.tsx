@@ -1,22 +1,23 @@
 import { Link } from '@tanstack/react-router'
 import React from 'react'
 import { cn } from '@/lib/utils'
-import type { ToolMetadata } from '@/utils/tools-registry'
+import { groupToolsByCategory, TOOLS } from '@/utils/tools-registry'
 
 type SidebarProps = {
 	sidebarOpen: boolean
 	setSidebarOpen: (open: boolean) => void
-	categories: Record<string, ToolMetadata[]>
 }
 
+const categories = groupToolsByCategory(TOOLS)
+
 export function Sidebar(props: SidebarProps) {
-	const { sidebarOpen, setSidebarOpen, categories } = props
+	const { sidebarOpen, setSidebarOpen } = props
 
 	return (
 		<>
 			<aside
 				className={cn(
-					'fixed inset-y-0 top-13.25 left-0 z-30 w-67 transform overflow-y-auto border-terminal-border border-r bg-terminal-card p-4 transition-transform duration-200 ease-in-out lg:static lg:flex lg:h-full lg:min-h-0 lg:translate-x-0 lg:flex-col lg:overflow-hidden',
+					'fixed inset-y-0 top-13.25 left-0 z-30 w-67 transform overflow-y-auto border-terminal-border border-r bg-terminal-card p-4 transition-transform duration-200 ease-in-out lg:static lg:flex lg:h-full lg:min-h-0 lg:translate-x-0 lg:flex-col',
 					sidebarOpen ? 'translate-x-0' : '-translate-x-full',
 				)}
 			>
