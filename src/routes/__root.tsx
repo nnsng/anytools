@@ -14,7 +14,7 @@ function RootComponent() {
 	const [sidebarOpen, setSidebarOpen] = useState(false)
 
 	return (
-		<div className="crt flex h-screen w-screen flex-col bg-grid-pattern bg-terminal-bg font-mono text-slate-100 antialiased">
+		<div className="crt flex h-screen w-screen flex-col bg-grid-pattern bg-terminal-bg font-mono text-foreground antialiased">
 			<div className="scanlines" />
 
 			<Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />

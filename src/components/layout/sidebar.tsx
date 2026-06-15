@@ -39,7 +39,8 @@ export function Sidebar(props: SidebarProps) {
 												'bg-matrix/10 border-l-2 border-matrix text-matrix-glow font-bold shadow-[inset_4px_0_10px_rgba(34,197,94,0.05)]',
 										}}
 										inactiveProps={{
-											className: 'text-slate-400 hover:text-slate-200 hover:bg-terminal-bg/50',
+											className:
+												'text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-terminal-bg/50',
 										}}
 										className="flex items-center gap-3 rounded-xs border-transparent border-l-2 px-3 py-2 font-semibold text-xs transition-all duration-150"
 									>
