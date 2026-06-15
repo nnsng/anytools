@@ -1,15 +1,25 @@
+import { js_beautify as beautifyJs } from 'js-beautify'
 import { useEffect, useState } from 'react'
 import { CodeBlock, EditorPane } from '@/components/tools/shared'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { beautify, minify } from '@/utils/formatter'
+
+type Indent = '2' | '4' | 'minify'
+
+function minifyJs(rawCode: string): string {
+	return rawCode
+		.replace(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm, '$1') // Strip comments
+		.replace(/\s+/g, ' ') // Collapse whitespace
+		.replace(/([{};,()[\]])\s+|\s+([{};,()[\]])/g, '$1$2') // Clean spacing around operators
+		.trim()
+}
 
 export default function JavascriptFormatter() {
 	const [input, setInput] = useState<string>(
 		`// Simple JS Demo\nfunction greet(user) {\n  const message = "Hello, " + user.name + "!";\n  console.log(message);\n  return { success: true, timestamp: Date.now() };\n}`,
 	)
 	const [output, setOutput] = useState<string>('')
-	const [activeTab, setActiveTab] = useState<string>('beautify')
 	const [error, setError] = useState<string | null>(null)
+	const [indent, setIndent] = useState<Indent>('2')
 
 	useEffect(() => {
 		if (!input.trim()) {
@@ -18,9 +28,10 @@ export default function JavascriptFormatter() {
 			return
 		}
 
-		const processJs = async () => {
+		const processJs = () => {
 			try {
-				const result = activeTab === 'beautify' ? await beautify(input, 'js') : minify(input, 'js')
+				const result =
+					indent === 'minify' ? minifyJs(input) : beautifyJs(input, { indent_size: Number(indent) })
 				setOutput(result)
 				setError(null)
 			} catch (err) {
@@ -31,7 +42,7 @@ export default function JavascriptFormatter() {
 		}
 
 		processJs()
-	}, [input, activeTab])
+	}, [input, indent])
 
 	return (
 		<div className="flex flex-1 flex-col gap-6 lg:flex-row">
@@ -50,11 +61,12 @@ export default function JavascriptFormatter() {
 				value={output}
 				readOnly={true}
 				allowDownload={true}
-				downloadFileName={activeTab === 'beautify' ? 'formatted.js' : 'minified.js'}
+				downloadFileName={indent === 'minify' ? 'minified.js' : 'formatted.js'}
 				actions={
-					<Tabs value={activeTab} onValueChange={setActiveTab}>
+					<Tabs value={indent} onValueChange={(v) => setIndent(v as Indent)}>
 						<TabsList>
-							<TabsTrigger value="beautify">Beautify</TabsTrigger>
+							<TabsTrigger value="2">2 Spaces</TabsTrigger>
+							<TabsTrigger value="4">4 Spaces</TabsTrigger>
 							<TabsTrigger value="minify">Minify</TabsTrigger>
 						</TabsList>
 					</Tabs>

@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import { CodeBlock, EditorPane } from '@/components/tools/shared'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { APP_NAME } from '@/constants/app'
-import { beautify, minify } from '@/utils/formatter'
+
+type Indent = '2' | '4' | 'minify'
 
 export default function JsonFormatter() {
 	const [input, setInput] = useState<string>(
@@ -10,7 +11,7 @@ export default function JsonFormatter() {
 	)
 	const [output, setOutput] = useState<string>('')
 	const [error, setError] = useState<string | null>(null)
-	const [indent, setIndent] = useState<string>('2')
+	const [indent, setIndent] = useState<Indent>('2')
 
 	useEffect(() => {
 		if (!input.trim()) {
@@ -19,12 +20,13 @@ export default function JsonFormatter() {
 			return
 		}
 
-		const processJson = async () => {
+		const processJson = () => {
 			try {
+				const parsed = JSON.parse(input)
 				const result =
 					indent === 'minify'
-						? minify(input, 'json')
-						: await beautify(input, 'json', { tabWidth: Number(indent) })
+						? JSON.stringify(parsed)
+						: JSON.stringify(parsed, null, Number(indent))
 
 				setOutput(result)
 				setError(null)
@@ -54,9 +56,9 @@ export default function JsonFormatter() {
 				value={output}
 				readOnly={true}
 				allowDownload={true}
-				downloadFileName="formatted.json"
+				downloadFileName={indent === 'minify' ? 'minified.json' : 'formatted.json'}
 				actions={
-					<Tabs value={indent} onValueChange={setIndent}>
+					<Tabs value={indent} onValueChange={(v) => setIndent(v as Indent)}>
 						<TabsList>
 							<TabsTrigger value="2">2 Spaces</TabsTrigger>
 							<TabsTrigger value="4">4 Spaces</TabsTrigger>

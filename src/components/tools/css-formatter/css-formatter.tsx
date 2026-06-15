@@ -1,15 +1,26 @@
+import { css_beautify as beautifyCss } from 'js-beautify'
 import { useEffect, useState } from 'react'
 import { CodeBlock, EditorPane } from '@/components/tools/shared'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { beautify, minify } from '@/utils/formatter'
+
+type Indent = '2' | '4' | 'minify'
+
+function minifyCss(rawCode: string): string {
+	return rawCode
+		.replace(/\/\*[\s\S]*?\*\//g, '') // Remove comments
+		.replace(/\s+/g, ' ') // Collapse whitespace
+		.replace(/ ?([{}:;,]) ?/g, '$1') // Remove spacing around symbols
+		.replace(/;}/g, '}') // Remove trailing semicolons
+		.trim()
+}
 
 export default function CssFormatter() {
 	const [input, setInput] = useState<string>(
 		`/* CSS Demo */\nbody { background-color: #08090c; color: #ffffff; font-family: sans-serif; }\n.card { margin: 2rem auto; padding: 1.5rem; border: 1px solid rgba(34, 197, 94, 0.2); border-radius: 4px; max-width: 500px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); }\n.card h1 { font-size: 1.5rem; margin-bottom: 1rem; color: #22c55e; }`,
 	)
 	const [output, setOutput] = useState<string>('')
-	const [activeTab, setActiveTab] = useState<string>('beautify')
 	const [error, setError] = useState<string | null>(null)
+	const [indent, setIndent] = useState<Indent>('2')
 
 	useEffect(() => {
 		if (!input.trim()) {
@@ -18,10 +29,12 @@ export default function CssFormatter() {
 			return
 		}
 
-		const processCss = async () => {
+		const processCss = () => {
 			try {
 				const result =
-					activeTab === 'beautify' ? await beautify(input, 'css') : minify(input, 'css')
+					indent === 'minify'
+						? minifyCss(input)
+						: beautifyCss(input, { indent_size: Number(indent) })
 				setOutput(result)
 				setError(null)
 			} catch (err) {
@@ -31,7 +44,7 @@ export default function CssFormatter() {
 		}
 
 		processCss()
-	}, [input, activeTab])
+	}, [input, indent])
 
 	return (
 		<div className="flex flex-1 flex-col gap-6 lg:flex-row">
@@ -50,11 +63,12 @@ export default function CssFormatter() {
 				value={output}
 				readOnly={true}
 				allowDownload={true}
-				downloadFileName={activeTab === 'beautify' ? 'formatted.css' : 'minified.css'}
+				downloadFileName={indent === 'minify' ? 'minified.css' : 'formatted.css'}
 				actions={
-					<Tabs value={activeTab} onValueChange={setActiveTab}>
+					<Tabs value={indent} onValueChange={(v) => setIndent(v as Indent)}>
 						<TabsList>
-							<TabsTrigger value="beautify">Beautify</TabsTrigger>
+							<TabsTrigger value="2">2 Spaces</TabsTrigger>
+							<TabsTrigger value="4">4 Spaces</TabsTrigger>
 							<TabsTrigger value="minify">Minify</TabsTrigger>
 						</TabsList>
 					</Tabs>
