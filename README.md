@@ -1,204 +1,120 @@
-Welcome to your new TanStack Start app! 
+# Anytools - All-in-One Developer Utilities Suite
 
-# Getting Started
+Anytools is an open-source, offline-first developer utility toolkit designed with a modern cyber terminal aesthetic. Built to increase productivity, every tool runs **100% client-side** inside your browser. No data is ever sent to a server, ensuring absolute privacy and security for your configuration files, tokens, and data payload.
 
-To run this application:
+## 🛠️ Built-in Modules
+
+The workspace is packed with multiple essential tools categorized for everyday development:
+
+### 📝 Text & Encoders
+
+- **Base64 Text/Image:** Seamlessly convert plain text or images directly to Base64 URI strings and vice versa.
+- **URL Encoder & Decoder:** Securely parse and format deep link query parameters.
+- **HTML Entity Encoder:** Safely escape special characters to avoid cross-site scripting issues.
+- **String Case Converter:** Instantly switch text cases between camelCase, snake_case, PascalCase, kebab-case, etc.
+- **Text Analyzer:** Count characters, words, sentences, and run structural readability statistics on paragraphs.
+
+### 🧹 Code Formatters
+
+- **JSON Formatter & Minifier:** Format bulky payloads, prettify JSON, or minify scripts to reduce payload sizes.
+- **JS / CSS / HTML Formatters:** Clean up raw code snippets with tailored indentation and nesting rules.
+
+### ⚙️ Development Utilities
+
+- **Cron Parser:** Decode complex cron job expressions into clear, readable schedules with upcoming execution lists.
+- **cURL-to-Code:** Translate raw bash `curl` requests into modern JavaScript `fetch` or Axios promises instantly.
+- **JSON-to-TypeScript:** Generate complete TS type declarations and interfaces straight from an active JSON payload.
+- **JWT Debugger:** Decode token headers, payloads, signatures, and verify lifetime periods completely client-side.
+- **Diff Checker:** Compare two blocks of code or text files side-by-side with clear color-coded inline adjustments.
+- **Regex Tester:** Draft, debug, and test active regular expressions with syntax highlighting against matching content.
+
+### 🎨 Generators & Studios
+
+- **Mock Data Generator:** Rapidly craft mock schemas, JSON objects, and dummy database entities using Faker.js.
+- **Secure Password Generator:** Create highly customized, cryptographic-grade password phrases.
+- **Favicon Generator:** Build optimized, multi-sized web favicons and standard `.ico` bundles from images.
+- **QR Code Studio:** Generate dynamic, high-resolution QR codes with customizable colors, sizing, and error-correction levels.
+
+### 🧪 Playgrounds & Lists
+
+- **HTML Sandbox:** Live preview playground to write and run CSS, HTML, and JS code snippets in an isolated environment.
+- **Markdown Previewer:** Instantly parse and preview Markdown syntax into fully stylized rich HTML.
+- **Deduplicate Tool:** Instantly filter out duplicate items from a custom text or coordinate array.
+
+---
+
+## 🚀 Tech Stack
+
+- **Core:** React 19, TypeScript, Vite 8
+- **Routing:** TanStack Router (File-based SPA Routing)
+- **Styling:** Tailwind CSS v4, Lucide Icons
+- **UI Primitives:** Radix UI components (Shadcn UI presets)
+- **Code Quality:** Biome (Lightning-fast formatter, linter, and code check)
+- **Environment:** pnpm workspaces
+
+---
+
+## 💻 Getting Started
+
+### Prerequisites
+
+Ensure you have [Node.js](https://nodejs.org/) (v18+) and [pnpm](https://pnpm.io/) installed on your machine.
+
+### Installation
+
+Clone the repository and install dependencies:
 
 ```bash
 pnpm install
+```
+
+### Run Local Server
+
+Execute the Vite local development pipeline with automatic file-based route updates:
+
+```bash
 pnpm dev
 ```
 
-# Building For Production
+### Production Build
 
-To build this application for production:
+Build and optimize the static assets into the target production folder (`dist/`):
 
 ```bash
 pnpm build
 ```
 
-## Testing
+### Static Analysis & Lints
 
-This project uses [Vitest](https://vitest.dev/) for testing. You can run the tests with:
+Validate and keep the codebase tidy using Biome:
+
+```bash
+# Auto-format files
+pnpm format
+
+# Verify linting patterns
+pnpm lint
+
+# Perform formatting, linting, and TS verification in one go
+pnpm check
+```
+
+### Testing
+
+Execute unit tests via Vitest:
 
 ```bash
 pnpm test
 ```
 
-## Styling
+---
 
-This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
+## 🌐 Deploying to Vercel
 
-### Removing Tailwind CSS
+This project includes a native `vercel.json` rewrite schema suited for Single Page Application (SPA) routing, allowing nested TanStack routes to re-route correctly directly in the client:
 
-If you prefer not to use Tailwind CSS:
-
-1. Remove the demo pages in `src/routes/demo/`
-2. Replace the Tailwind import in `src/styles.css` with your own styles
-3. Remove `tailwindcss()` from the plugins array in `vite.config.ts`
-4. Uninstall the packages: `pnpm add @tailwindcss/vite tailwindcss --dev`
-
-## Linting & Formatting
-
-This project uses [Biome](https://biomejs.dev/) for linting and formatting. The following scripts are available:
-
-
-```bash
-pnpm lint
-pnpm format
-pnpm check
-```
-
-
-
-## Routing
-
-This project uses [TanStack Router](https://tanstack.com/router) with file-based routing. Routes are managed as files in `src/routes`.
-
-### Adding A Route
-
-To add a new route to your application just add a new file in the `./src/routes` directory.
-
-TanStack will automatically generate the content of the route file for you.
-
-Now that you have two routes you can use a `Link` component to navigate between them.
-
-### Adding Links
-
-To use SPA (Single Page Application) navigation you will need to import the `Link` component from `@tanstack/react-router`.
-
-```tsx
-import { Link } from "@tanstack/react-router";
-```
-
-Then anywhere in your JSX you can use it like so:
-
-```tsx
-<Link to="/about">About</Link>
-```
-
-This will create a link that will navigate to the `/about` route.
-
-More information on the `Link` component can be found in the [Link documentation](https://tanstack.com/router/v1/docs/framework/react/api/router/linkComponent).
-
-### Using A Layout
-
-In the File Based Routing setup the layout is located in `src/routes/__root.tsx`. Anything you add to the root route will appear in all the routes. The route content will appear in the JSX where you render `{children}` in the `shellComponent`.
-
-Here is an example layout that includes a header:
-
-```tsx
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
-
-export const Route = createRootRoute({
-  head: () => ({
-    meta: [
-      { charSet: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { title: 'My App' },
-    ],
-  }),
-  shellComponent: ({ children }) => (
-    <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        <header>
-          <nav>
-            <Link to="/">Home</Link>
-            <Link to="/about">About</Link>
-          </nav>
-        </header>
-        {children}
-        <Scripts />
-      </body>
-    </html>
-  ),
-})
-```
-
-More information on layouts can be found in the [Layouts documentation](https://tanstack.com/router/latest/docs/framework/react/guide/routing-concepts#layouts).
-
-## Server Functions
-
-TanStack Start provides server functions that allow you to write server-side code that seamlessly integrates with your client components.
-
-```tsx
-import { createServerFn } from '@tanstack/react-start'
-
-const getServerTime = createServerFn({
-  method: 'GET',
-}).handler(async () => {
-  return new Date().toISOString()
-})
-
-// Use in a component
-function MyComponent() {
-  const [time, setTime] = useState('')
-  
-  useEffect(() => {
-    getServerTime().then(setTime)
-  }, [])
-  
-  return <div>Server time: {time}</div>
+```json
+{
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
 }
 ```
-
-## API Routes
-
-You can create API routes by using the `server` property in your route definitions:
-
-```tsx
-import { createFileRoute } from '@tanstack/react-router'
-import { json } from '@tanstack/react-start'
-
-export const Route = createFileRoute('/api/hello')({
-  server: {
-    handlers: {
-      GET: () => json({ message: 'Hello, World!' }),
-    },
-  },
-})
-```
-
-## Data Fetching
-
-There are multiple ways to fetch data in your application. You can use TanStack Query to fetch data from a server. But you can also use the `loader` functionality built into TanStack Router to load the data for a route before it's rendered.
-
-For example:
-
-```tsx
-import { createFileRoute } from '@tanstack/react-router'
-
-export const Route = createFileRoute('/people')({
-  loader: async () => {
-    const response = await fetch('https://swapi.dev/api/people')
-    return response.json()
-  },
-  component: PeopleComponent,
-})
-
-function PeopleComponent() {
-  const data = Route.useLoaderData()
-  return (
-    <ul>
-      {data.results.map((person) => (
-        <li key={person.name}>{person.name}</li>
-      ))}
-    </ul>
-  )
-}
-```
-
-Loaders simplify your data fetching logic dramatically. Check out more information in the [Loader documentation](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#loader-parameters).
-
-# Demo files
-
-Files prefixed with `demo` can be safely deleted. They are there to provide a starting point for you to play around with the features you've installed.
-
-# Learn More
-
-You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
-
-For TanStack Start specific documentation, visit [TanStack Start](https://tanstack.com/start).
