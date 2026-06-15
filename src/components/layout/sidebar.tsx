@@ -17,11 +17,11 @@ export function Sidebar(props: SidebarProps) {
 		<>
 			<aside
 				className={cn(
-					'fixed inset-y-0 top-13.25 left-0 z-30 w-67 transform overflow-y-auto border-terminal-border border-r bg-terminal-card p-4 transition-transform duration-200 ease-in-out lg:static lg:flex lg:h-full lg:min-h-0 lg:translate-x-0 lg:flex-col',
+					'fixed inset-y-0 top-13.25 left-0 z-30 w-67 transform overflow-y-auto border-terminal-border border-r bg-terminal-card p-4 transition-transform duration-200 ease-in-out lg:static lg:h-full lg:min-h-0 lg:translate-x-0',
 					sidebarOpen ? 'translate-x-0' : '-translate-x-full',
 				)}
 			>
-				<nav className="scrollbar-thin h-[calc(100vh-80px)] select-none space-y-6 pr-1 lg:h-auto lg:flex-1">
+				<nav className="scrollbar-thin mb-4 select-none space-y-6">
 					{Object.entries(categories).map(([categoryName, toolList]) => (
 						<div key={categoryName} className="space-y-2">
 							<h4 className="px-2 font-bold text-[10px] text-slate-600 uppercase tracking-widest">

@@ -13,10 +13,11 @@ import {
 } from '@/components/ui/select'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
+type TabType = 'image' | 'text'
 type ShapeType = 'circle' | 'square' | 'rounded' | 'transparent'
 
 export default function FaviconGenerator() {
-	const [activeTab, setActiveTab] = useState<'image' | 'text'>('image')
+	const [activeTab, setActiveTab] = useState<TabType>('image')
 
 	// Shared Config
 	const [bgColor, setBgColor] = useState<string>('#00ff66')
@@ -299,21 +300,17 @@ export default function FaviconGenerator() {
 	return (
 		<Tabs
 			value={activeTab}
-			onValueChange={(v) => setActiveTab(v as 'image' | 'text')}
+			onValueChange={(v) => setActiveTab(v as TabType)}
+			variant="contained"
+			size="lg"
 			className="gap-4"
 		>
-			<TabsList className="grid w-full grid-cols-2 border-terminal-border bg-terminal-bg/40 p-1">
-				<TabsTrigger
-					value="image"
-					className="border-none font-bold text-xs uppercase data-[state=active]:bg-matrix data-[state=active]:text-black"
-				>
+			<TabsList className="grid w-full grid-cols-2">
+				<TabsTrigger value="image">
 					<ImageIcon className="mr-1.5 h-3.5 w-3.5" />
 					Image Upload
 				</TabsTrigger>
-				<TabsTrigger
-					value="text"
-					className="border-none font-bold text-xs uppercase data-[state=active]:bg-matrix data-[state=active]:text-black"
-				>
+				<TabsTrigger value="text">
 					<Type className="mr-1.5 h-3.5 w-3.5" />
 					Text Generator
 				</TabsTrigger>

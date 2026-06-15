@@ -54,20 +54,16 @@ export default function UrlEncoder() {
 	}
 
 	return (
-		<Tabs value={activeTab} onValueChange={handleTabChange} className="flex h-full flex-col gap-4">
-			<TabsList className="grid w-full grid-cols-2 border-terminal-border bg-terminal-bg/40 p-1">
-				<TabsTrigger
-					value="encode"
-					className="border-none font-bold text-xs uppercase data-[state=active]:bg-matrix data-[state=active]:text-black"
-				>
-					URL Encode
-				</TabsTrigger>
-				<TabsTrigger
-					value="decode"
-					className="border-none font-bold text-xs uppercase data-[state=active]:bg-matrix data-[state=active]:text-black"
-				>
-					URL Decode
-				</TabsTrigger>
+		<Tabs
+			value={activeTab}
+			onValueChange={handleTabChange}
+			variant="contained"
+			size="lg"
+			className="flex h-full flex-col gap-4"
+		>
+			<TabsList className="grid w-full grid-cols-2">
+				<TabsTrigger value="encode">URL Encode</TabsTrigger>
+				<TabsTrigger value="decode">URL Decode</TabsTrigger>
 			</TabsList>
 
 			<div className="flex flex-1 flex-col gap-6 lg:flex-row">
@@ -105,7 +101,7 @@ export default function UrlEncoder() {
 							</Select>
 						</div>
 					}
-					className="lg:flex-1"
+					className="flex-1"
 				/>
 			</div>
 		</Tabs>

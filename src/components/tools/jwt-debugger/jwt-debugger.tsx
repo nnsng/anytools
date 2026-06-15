@@ -12,68 +12,12 @@ import {
 	SelectValue,
 } from '@/components/ui/select'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { base64urlDecode, base64urlEncode, signJwt } from './helpers'
 
-// Base64URL encoding helpers
-export function base64urlEncode(source: string | ArrayBuffer): string {
-	let binary = ''
-	if (typeof source === 'string') {
-		binary = btoa(unescape(encodeURIComponent(source)))
-	} else {
-		const bytes = new Uint8Array(source)
-		for (let i = 0; i < bytes.byteLength; i++) {
-			binary += String.fromCharCode(bytes[i])
-		}
-		binary = btoa(binary)
-	}
-	return binary.replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_')
-}
-
-// Base64URL decoding helper
-export function base64urlDecode(str: string): string {
-	let base64 = str.replace(/-/g, '+').replace(/_/g, '/')
-	while (base64.length % 4) {
-		base64 += '='
-	}
-	try {
-		return decodeURIComponent(
-			atob(base64)
-				.split('')
-				.map((c) => `%${`00${c.charCodeAt(0).toString(16)}`.slice(-2)}`)
-				.join(''),
-		)
-	} catch (_e) {
-		// Fallback for non-utf8
-		return atob(base64)
-	}
-}
-
-// HMAC Web Crypto Signature
-async function signJwt(headerAndPayload: string, secret: string, alg: string): Promise<string> {
-	if (alg === 'none') return ''
-
-	let hashName = 'SHA-256'
-	if (alg === 'HS384') hashName = 'SHA-384'
-	else if (alg === 'HS512') hashName = 'SHA-512'
-
-	const encoder = new TextEncoder()
-	const keyData = encoder.encode(secret)
-	const cryptoKey = await window.crypto.subtle.importKey(
-		'raw',
-		keyData,
-		{ name: 'HMAC', hash: { name: hashName } },
-		false,
-		['sign'],
-	)
-	const signatureBuffer = await window.crypto.subtle.sign(
-		'HMAC',
-		cryptoKey,
-		encoder.encode(headerAndPayload),
-	)
-	return base64urlEncode(signatureBuffer)
-}
+type TabType = 'decode' | 'encode'
 
 export default function JwtCodec() {
-	const [activeTab, setActiveTab] = useState<'decode' | 'encode'>('decode')
+	const [activeTab, setActiveTab] = useState<TabType>('decode')
 
 	// Decoder State
 	const [encodedToken, setEncodedToken] = useState<string>('')
@@ -265,22 +209,14 @@ export default function JwtCodec() {
 	return (
 		<Tabs
 			value={activeTab}
-			onValueChange={(v) => setActiveTab(v as 'decode' | 'encode')}
+			onValueChange={(v) => setActiveTab(v as TabType)}
+			variant="contained"
+			size="lg"
 			className="gap-4"
 		>
-			<TabsList className="grid w-full grid-cols-2 border-terminal-border bg-terminal-bg/40 p-1">
-				<TabsTrigger
-					value="decode"
-					className="border-none font-bold text-xs uppercase data-[state=active]:bg-matrix data-[state=active]:text-black"
-				>
-					JWT Decoder
-				</TabsTrigger>
-				<TabsTrigger
-					value="encode"
-					className="border-none font-bold text-xs uppercase data-[state=active]:bg-matrix data-[state=active]:text-black"
-				>
-					JWT Encoder
-				</TabsTrigger>
+			<TabsList className="grid w-full grid-cols-2">
+				<TabsTrigger value="decode">JWT Decoder</TabsTrigger>
+				<TabsTrigger value="encode">JWT Encoder</TabsTrigger>
 			</TabsList>
 
 			{/* DECODE TAB */}

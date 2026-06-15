@@ -2,8 +2,7 @@ import { TanStackDevtools } from '@tanstack/react-devtools'
 import { createRootRoute, Outlet } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { useState } from 'react'
-import { Header } from '@/components/layout/header'
-import { Sidebar } from '@/components/layout/sidebar'
+import { Header, Sidebar } from '@/components/layout'
 
 import '../styles.css'
 

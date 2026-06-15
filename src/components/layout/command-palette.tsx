@@ -59,7 +59,7 @@ export function CommandPalette({ className }: CommandPaletteProps) {
 				<button
 					type="button"
 					onClick={() => setOpen(true)}
-					className="flex items-center gap-2 rounded border border-terminal-border bg-terminal-bg px-3 py-1.5 font-mono text-slate-500 text-xs transition-all duration-150 hover:border-matrix/40"
+					className="flex cursor-pointer items-center gap-2 rounded border border-terminal-border bg-terminal-bg px-3 py-1.5 font-mono text-slate-500 text-xs transition-all duration-150 hover:border-matrix/40"
 				>
 					<Search className="h-3.5 w-3.5" />
 					<span className="hidden sm:inline">Search modules...</span>

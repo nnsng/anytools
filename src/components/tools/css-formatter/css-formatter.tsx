@@ -42,7 +42,7 @@ export default function CssFormatter() {
 				placeholder="Paste CSS code here..."
 				allowUpload={true}
 				error={error}
-				className="lg:flex-1"
+				className="flex-1"
 			/>
 
 			<EditorPane
@@ -59,7 +59,7 @@ export default function CssFormatter() {
 						</TabsList>
 					</Tabs>
 				}
-				className="lg:flex-1"
+				className="flex-1"
 			>
 				<CodeBlock className="flex-1" value={output} />
 			</EditorPane>

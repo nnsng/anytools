@@ -51,16 +51,16 @@ export default function StringCaseConverter() {
 	return (
 		<div className="flex flex-1 flex-col gap-6 lg:flex-row">
 			<EditorPane
-				title="Input Text"
+				title="Input"
 				value={input}
 				onChange={setInput}
 				placeholder="Type or paste text to convert..."
 				allowUpload={true}
-				className="lg:flex-1"
+				className="flex-1"
 			/>
 
 			<EditorPane
-				title="Output Text"
+				title="Output"
 				value={output}
 				readOnly={true}
 				allowDownload={true}
@@ -82,7 +82,7 @@ export default function StringCaseConverter() {
 						</Select>
 					</div>
 				}
-				className="lg:flex-1"
+				className="flex-1"
 			>
 				<CodeBlock className="flex-1" value={output} />
 			</EditorPane>

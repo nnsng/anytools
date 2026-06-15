@@ -14,8 +14,10 @@ import {
 } from '@/components/ui/select'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
+type TabType = 'generate' | 'scan'
+
 export default function QrCodeTool() {
-	const [activeTab, setActiveTab] = useState<'generate' | 'scan'>('generate')
+	const [activeTab, setActiveTab] = useState<TabType>('generate')
 
 	// Generator State
 	const [text, setText] = useState<string>(() => window.location.origin)
@@ -128,22 +130,14 @@ export default function QrCodeTool() {
 	return (
 		<Tabs
 			value={activeTab}
-			onValueChange={(v) => setActiveTab(v as 'generate' | 'scan')}
+			onValueChange={(v) => setActiveTab(v as TabType)}
+			variant="contained"
+			size="lg"
 			className="gap-4"
 		>
-			<TabsList className="grid w-full grid-cols-2 border-terminal-border bg-terminal-bg/40 p-1">
-				<TabsTrigger
-					value="generate"
-					className="border-none font-bold text-xs uppercase data-[state=active]:bg-matrix data-[state=active]:text-black"
-				>
-					QR Generator
-				</TabsTrigger>
-				<TabsTrigger
-					value="scan"
-					className="border-none font-bold text-xs uppercase data-[state=active]:bg-matrix data-[state=active]:text-black"
-				>
-					QR Scanner
-				</TabsTrigger>
+			<TabsList className="grid w-full grid-cols-2">
+				<TabsTrigger value="generate">QR Generator</TabsTrigger>
+				<TabsTrigger value="scan">QR Scanner</TabsTrigger>
 			</TabsList>
 
 			{/* GENERATOR TAB */}
