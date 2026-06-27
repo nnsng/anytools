@@ -38,8 +38,8 @@ export function DateToEpoch({
 					<div className="space-y-4 pt-2">
 						<div className="grid grid-cols-1 gap-3 text-sm">
 							<BorderBox className="flex items-center justify-between bg-terminal-bg p-3">
-								<div>
-									<span className="block text-[10px] text-slate-500">Seconds (Epoch)</span>
+								<div className="flex flex-col gap-1">
+									<span className="block text-slate-500 text-xs">Seconds (Epoch)</span>
 									<span className="select-all font-bold font-mono text-slate-200">
 										{dateResults.seconds}
 									</span>
@@ -54,8 +54,8 @@ export function DateToEpoch({
 							</BorderBox>
 
 							<BorderBox className="flex items-center justify-between bg-terminal-bg p-3">
-								<div>
-									<span className="block text-[10px] text-slate-500">Milliseconds (Epoch)</span>
+								<div className="flex flex-col gap-1">
+									<span className="block text-slate-500 text-xs">Milliseconds (Epoch)</span>
 									<span className="select-all font-bold font-mono text-slate-200">
 										{dateResults.millis}
 									</span>

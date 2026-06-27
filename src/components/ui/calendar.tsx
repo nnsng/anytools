@@ -1,5 +1,3 @@
-'use client'
-
 import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 import * as React from 'react'
 import { type DayButton, DayPicker, getDefaultClassNames, type Locale } from 'react-day-picker'
@@ -71,6 +69,7 @@ function Calendar({
 						: 'flex items-center gap-1 rounded-(--cell-radius) text-sm [&>svg]:size-3.5 [&>svg]:text-muted-foreground',
 					defaultClassNames.caption_label,
 				),
+				month_grid: cn('w-full border-collapse', defaultClassNames.month_grid),
 				weekdays: cn('flex', defaultClassNames.weekdays),
 				weekday: cn(
 					'flex-1 select-none rounded-(--cell-radius) font-normal text-[0.8rem] text-muted-foreground',

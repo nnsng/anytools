@@ -74,13 +74,7 @@ export default function Base64String() {
 	}
 
 	return (
-		<Tabs
-			value={activeTab}
-			onValueChange={handleTabChange}
-			variant="contained"
-			size="lg"
-			className="flex flex-col gap-4"
-		>
+		<Tabs value={activeTab} onValueChange={handleTabChange} className="flex flex-col gap-4">
 			<TabsList className="grid w-full grid-cols-2">
 				<TabsTrigger value="encode">Encode Text</TabsTrigger>
 				<TabsTrigger value="decode">Decode Base64</TabsTrigger>

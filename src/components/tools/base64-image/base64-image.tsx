@@ -8,7 +8,7 @@ export default function Base64Image() {
 
 	return (
 		<div className="flex flex-col gap-4">
-			<Tabs value={activeTab} onValueChange={setActiveTab} variant="contained" size="lg">
+			<Tabs value={activeTab} onValueChange={setActiveTab}>
 				<TabsList className="grid w-full grid-cols-2">
 					<TabsTrigger value="encode">Image to Base64</TabsTrigger>
 					<TabsTrigger value="decode">Base64 to Image</TabsTrigger>

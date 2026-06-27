@@ -14,7 +14,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { base64urlDecode, base64urlEncode, signJwt } from './helpers'
 
-type TabType = 'decode' | 'encode'
+type TabType = 'decode' | 'encode' | (string & {})
 
 export default function JwtCodec() {
 	const [activeTab, setActiveTab] = useState<TabType>('decode')
@@ -207,13 +207,7 @@ export default function JwtCodec() {
 	}
 
 	return (
-		<Tabs
-			value={activeTab}
-			onValueChange={(v) => setActiveTab(v as TabType)}
-			variant="contained"
-			size="lg"
-			className="gap-4"
-		>
+		<Tabs value={activeTab} onValueChange={setActiveTab} className="gap-4">
 			<TabsList className="grid w-full grid-cols-2">
 				<TabsTrigger value="decode">JWT Decoder</TabsTrigger>
 				<TabsTrigger value="encode">JWT Encoder</TabsTrigger>

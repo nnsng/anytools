@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { EditorPane } from '@/components/tools/shared/editor-pane'
 import { Pane } from '@/components/tools/shared/pane'
 import { Button } from '@/components/ui/button'
@@ -6,6 +6,12 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Slider } from '@/components/ui/slider'
 import { cn } from '@/lib/utils'
+
+type Strength = {
+	label: string
+	color: string
+	percentage: number
+}
 
 function generatePassword(
 	length: number,
@@ -57,7 +63,7 @@ function calculateStrength(
 	useLower: boolean,
 	useDigits: boolean,
 	useSymbols: boolean,
-): { label: string; color: string; percentage: number } {
+): Strength {
 	if (!pass) return { label: 'Empty', color: 'bg-slate-700', percentage: 0 }
 
 	let score = 0
@@ -93,18 +99,21 @@ export default function PasswordGenerator() {
 	const [symbols, setSymbols] = useState<boolean>(true)
 	const [avoidAmbiguous, setAvoidAmbiguous] = useState<boolean>(true)
 	const [password, setPassword] = useState<string>('')
+	const [strength, setStrength] = useState<Strength>({
+		label: 'Empty',
+		color: 'bg-slate-700',
+		percentage: 0,
+	})
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: deliberately runs only on mount with initial values
-	useEffect(() => {
-		handleGenerate()
-	}, [])
-
-	const handleGenerate = () => {
+	const handleGenerate = useCallback(() => {
 		const pass = generatePassword(length, uppercase, lowercase, digits, symbols, avoidAmbiguous)
 		setPassword(pass)
-	}
+		setStrength(calculateStrength(pass, uppercase, lowercase, digits, symbols))
+	}, [length, uppercase, lowercase, digits, symbols, avoidAmbiguous])
 
-	const strength = calculateStrength(password, uppercase, lowercase, digits, symbols)
+	useEffect(() => {
+		handleGenerate()
+	}, [handleGenerate])
 
 	return (
 		<div className="flex flex-col gap-6 lg:flex-row lg:items-start">
@@ -230,7 +239,7 @@ export default function PasswordGenerator() {
 					</div>
 
 					<Button onClick={handleGenerate} className="mt-auto h-9 w-full">
-						GENERATE PASSWORD
+						GENERATE
 					</Button>
 				</div>
 			</Pane>

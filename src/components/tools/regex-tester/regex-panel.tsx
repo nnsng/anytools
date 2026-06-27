@@ -27,7 +27,7 @@ export function RegexPanel(props: RegexPanelProps) {
 			</Pane>
 
 			{/* Live highlighting visualization */}
-			<Pane title="Live Highlighter Output" type="output">
+			<Pane title="Live Highlighter Output" dotClassName="bg-blue-500">
 				<div className="flex flex-col">
 					<div className="max-h-75 min-h-37.5 overflow-y-auto whitespace-pre-wrap break-all bg-terminal-bg/50 p-4 font-mono text-slate-300 text-sm">
 						{highlightedNode}

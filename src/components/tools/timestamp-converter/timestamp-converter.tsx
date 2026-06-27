@@ -1,11 +1,8 @@
-import dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
+import { formatDistanceToNow } from 'date-fns'
 import { useCallback, useEffect, useState } from 'react'
 import { DateToEpoch } from './date-to-epoch'
 import { EpochToDate } from './epoch-to-date'
 import { LiveClock } from './live-clock'
-
-dayjs.extend(relativeTime)
 
 export default function UnixConverter() {
 	// Live Clock
@@ -60,7 +57,7 @@ export default function UnixConverter() {
 				local: date.toString(),
 				utc: date.toUTCString(),
 				iso: date.toISOString(),
-				relative: dayjs(date).fromNow(),
+				relative: formatDistanceToNow(date, { addSuffix: true }),
 			})
 		} catch {
 			setEpochError('Date conversion failed. Out of range?')

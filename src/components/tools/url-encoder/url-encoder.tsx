@@ -9,17 +9,20 @@ import {
 } from '@/components/ui/select'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
+type ActiveTab = 'encode' | 'decode' | (string & {})
+type EncodeMode = 'component' | 'full' | (string & {})
+
 export default function UrlEncoder() {
 	const [input, setInput] = useState<string>(
 		`${window.location.origin}/search?q=developer tools&category=converters`,
 	)
 	const [output, setOutput] = useState<string>('')
 	const [error, setError] = useState<string | null>(null)
-	const [activeTab, setActiveTab] = useState<string>('encode')
-	const [encodeMode, setEncodeMode] = useState<string>('component') // 'component' or 'full'
+	const [activeTab, setActiveTab] = useState<ActiveTab>('encode')
+	const [encodeMode, setEncodeMode] = useState<EncodeMode>('component')
 
 	useEffect(() => {
-		const handleConvert = (val: string, mode: string, type: string) => {
+		const handleConvert = (val: string, mode: EncodeMode, type: ActiveTab) => {
 			if (!val) {
 				setOutput('')
 				setError(null)
@@ -45,7 +48,7 @@ export default function UrlEncoder() {
 		handleConvert(input, activeTab, encodeMode)
 	}, [input, activeTab, encodeMode])
 
-	const handleTabChange = (newTab: string) => {
+	const handleTabChange = (newTab: ActiveTab) => {
 		setActiveTab(newTab)
 		if (output && !error) {
 			setInput(output)
@@ -54,13 +57,7 @@ export default function UrlEncoder() {
 	}
 
 	return (
-		<Tabs
-			value={activeTab}
-			onValueChange={handleTabChange}
-			variant="contained"
-			size="lg"
-			className="flex h-full flex-col gap-4"
-		>
+		<Tabs value={activeTab} onValueChange={handleTabChange} className="flex h-full flex-col gap-4">
 			<TabsList className="grid w-full grid-cols-2">
 				<TabsTrigger value="encode">URL Encode</TabsTrigger>
 				<TabsTrigger value="decode">URL Decode</TabsTrigger>

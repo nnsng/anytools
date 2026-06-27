@@ -1,9 +1,21 @@
 import { html_beautify as beautifyHtml } from 'js-beautify'
 import { useEffect, useState } from 'react'
 import { CodeBlock, EditorPane } from '@/components/tools/shared'
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from '@/components/ui/select'
 
-type Indent = '2' | '4' | 'minify'
+type Indent = '2' | '4' | 'minify' | (string & {})
+
+const indentOptions: Array<{ value: Indent; label: string }> = [
+	{ value: '2', label: '2 Spaces' },
+	{ value: '4', label: '4 Spaces' },
+	{ value: 'minify', label: 'Minify' },
+]
 
 function minifyHtml(rawCode: string): string {
 	return rawCode
@@ -65,13 +77,18 @@ export default function HtmlFormatter() {
 				allowDownload={true}
 				downloadFileName={indent === 'minify' ? 'minified.html' : 'formatted.html'}
 				actions={
-					<Tabs value={indent} onValueChange={(v) => setIndent(v as Indent)}>
-						<TabsList>
-							<TabsTrigger value="2">2 Spaces</TabsTrigger>
-							<TabsTrigger value="4">4 Spaces</TabsTrigger>
-							<TabsTrigger value="minify">Minify</TabsTrigger>
-						</TabsList>
-					</Tabs>
+					<Select value={indent} onValueChange={setIndent}>
+						<SelectTrigger className="h-8 border-terminal-border font-mono text-xs">
+							<SelectValue />
+						</SelectTrigger>
+						<SelectContent className="border-terminal-border bg-terminal-card font-mono text-xs">
+							{indentOptions.map((opt) => (
+								<SelectItem key={opt.value} value={opt.value}>
+									{opt.label}
+								</SelectItem>
+							))}
+						</SelectContent>
+					</Select>
 				}
 				className="flex-1"
 			>

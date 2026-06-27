@@ -152,10 +152,10 @@ export function EditorPane(props: EditorPaneProps) {
 	return (
 		<Pane
 			title={title}
-			type={readOnly ? 'output' : 'input'}
 			scrollable={false}
 			actions={editorActions}
 			className={className}
+			dotClassName={readOnly ? 'bg-blue-500' : ''}
 			footer={
 				<div className="flex select-none items-center justify-between px-4 py-1.5 font-mono text-[10px] text-slate-500">
 					<span>LINES: {lineCount}</span>

@@ -49,29 +49,29 @@ export function EpochToDate({
 				{epochResults && (
 					<div className="space-y-4 pt-2">
 						<div className="grid grid-cols-1 gap-3 text-sm">
-							<BorderBox className="bg-terminal-bg p-3">
-								<span className="block text-[10px] text-slate-500">ISO 8601</span>
+							<BorderBox className="flex flex-col gap-1 bg-terminal-bg p-3">
+								<span className="block text-slate-500 text-xs">ISO 8601</span>
 								<span className="select-all break-all font-mono text-slate-200">
 									{epochResults.iso}
 								</span>
 							</BorderBox>
 
-							<BorderBox className="bg-terminal-bg p-3">
-								<span className="block text-[10px] text-slate-500">UTC Date-Time</span>
+							<BorderBox className="flex flex-col gap-1 bg-terminal-bg p-3">
+								<span className="block text-slate-500 text-xs">UTC Date-Time</span>
 								<span className="select-all break-all font-mono text-slate-200">
 									{epochResults.utc}
 								</span>
 							</BorderBox>
 
-							<BorderBox className="bg-terminal-bg p-3">
-								<span className="block text-[10px] text-slate-500">Local Date-Time</span>
+							<BorderBox className="flex flex-col gap-1 bg-terminal-bg p-3">
+								<span className="block text-slate-500 text-xs">Local Date-Time</span>
 								<span className="select-all break-all font-mono text-slate-200">
 									{epochResults.local}
 								</span>
 							</BorderBox>
 
-							<BorderBox className="bg-terminal-bg p-3">
-								<span className="block text-[10px] text-slate-500">Relative Time</span>
+							<BorderBox className="flex flex-col gap-1 bg-terminal-bg p-3">
+								<span className="block text-slate-500 text-xs">Relative Time</span>
 								<span className="font-mono font-semibold text-matrix">{epochResults.relative}</span>
 							</BorderBox>
 						</div>

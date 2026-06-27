@@ -58,13 +58,7 @@ export default function HtmlEncoder() {
 	}
 
 	return (
-		<Tabs
-			value={activeTab}
-			onValueChange={handleTabChange}
-			variant="contained"
-			size="lg"
-			className="flex flex-col gap-4"
-		>
+		<Tabs value={activeTab} onValueChange={handleTabChange} className="flex flex-col gap-4">
 			<TabsList className="grid w-full grid-cols-2">
 				<TabsTrigger value="encode">HTML Entity Encode</TabsTrigger>
 				<TabsTrigger value="decode">HTML Entity Decode</TabsTrigger>

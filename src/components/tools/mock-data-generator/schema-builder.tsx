@@ -99,7 +99,6 @@ export function SchemaBuilder(props: SchemaBuilderProps) {
 	return (
 		<Pane
 			title="Schema Definition"
-			type="input"
 			scrollable={false}
 			actions={
 				<Button

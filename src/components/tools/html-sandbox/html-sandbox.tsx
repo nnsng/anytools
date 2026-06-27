@@ -84,7 +84,7 @@ export default function HtmlPreview() {
 				className="flex-1"
 			/>
 
-			<Pane title="Live Preview (Sandboxed Frame)" type="output" className="flex-1">
+			<Pane title="Live Preview (Sandboxed Frame)" dotClassName="bg-blue-500" className="flex-1">
 				<div className="relative min-h-50 flex-1 bg-white">
 					{blobUrl ? (
 						<iframe

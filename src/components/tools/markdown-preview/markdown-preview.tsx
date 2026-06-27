@@ -64,7 +64,7 @@ greet('Matrix Operator');
 				className="flex-1"
 			/>
 
-			<Pane title="Markdown Preview" type="output" className="flex-1">
+			<Pane title="Markdown Preview" dotClassName="bg-blue-500" className="flex-1">
 				<div className="scrollbar-thin grow select-text overflow-y-auto p-6 font-sans text-slate-300">
 					{compiledHtml ? (
 						<div

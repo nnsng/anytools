@@ -19,7 +19,7 @@ type RegexMatchesProps = {
 
 export function RegexMatches({ matches, className }: RegexMatchesProps) {
 	return (
-		<Pane title={`Matches (${matches.length})`} type="output" className={className}>
+		<Pane title={`Matches (${matches.length})`} dotClassName="bg-blue-500" className={className}>
 			<div className="flex h-full flex-col space-y-4 p-4">
 				<div className="flex-1 space-y-3">
 					{matches.length === 0 ? (

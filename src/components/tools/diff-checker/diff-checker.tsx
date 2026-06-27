@@ -2,8 +2,19 @@ import { diff_match_patch as DiffMatchPatch } from 'diff-match-patch'
 import { useEffect, useState } from 'react'
 import { Pane } from '@/components/tools/shared'
 import { EditorPane } from '@/components/tools/shared/editor-pane'
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from '@/components/ui/select'
 import { InlineDiffView, SideBySideView } from './diff-views'
+
+const viewOptions = [
+	{ value: 'inline', label: 'Inline' },
+	{ value: 'side-by-side', label: 'Side by Side' },
+]
 
 export default function DiffChecker() {
 	const [textA, setTextA] = useState<string>(
@@ -48,14 +59,23 @@ export default function DiffChecker() {
 
 			<Pane
 				title="Comparison Results"
-				type="output"
+				dotClassName="bg-blue-500"
 				actions={
-					<Tabs value={diffMode} onValueChange={setDiffMode}>
-						<TabsList>
-							<TabsTrigger value="inline">Inline View</TabsTrigger>
-							<TabsTrigger value="side-by-side">Split View</TabsTrigger>
-						</TabsList>
-					</Tabs>
+					<div className="flex items-center gap-2 font-mono">
+						<span className="font-bold text-[10px] text-slate-500 uppercase">View:</span>
+						<Select value={diffMode} onValueChange={setDiffMode}>
+							<SelectTrigger className="h-8 w-36 border-terminal-border bg-terminal-bg font-mono text-xs">
+								<SelectValue />
+							</SelectTrigger>
+							<SelectContent className="border-terminal-border bg-terminal-card font-mono text-xs">
+								{viewOptions.map((opt) => (
+									<SelectItem key={opt.value} value={opt.value}>
+										{opt.label}
+									</SelectItem>
+								))}
+							</SelectContent>
+						</Select>
+					</div>
 				}
 				className="flex-1"
 			>

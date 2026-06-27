@@ -73,7 +73,7 @@ export function ColorFields({
 	}
 
 	return (
-		<Pane title="Color Format Translations" type="output">
+		<Pane title="Color Format Translations">
 			<div className="flex flex-col gap-6 p-6">
 				<div className="space-y-4">
 					{/* HEX */}

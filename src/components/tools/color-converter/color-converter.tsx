@@ -22,7 +22,6 @@ export default function ColorConverter() {
 	// Eyedropper / Image State
 	const [history, setHistory] = useState<ColorHistoryItem[]>([
 		{ hex: '#22c55e', rgb: 'rgb(34, 197, 94)' },
-		{ hex: '#00ff66', rgb: 'rgb(0, 255, 102)' },
 	])
 	const [imageSrc, setImageSrc] = useState<string | null>(null)
 	const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -222,7 +221,7 @@ export default function ColorConverter() {
 				/>
 
 				{/* Eyedropper History */}
-				<Pane title="Color History" type="output">
+				<Pane title="Color History">
 					<div className="flex flex-col p-6">
 						{history.length === 0 ? (
 							<div className="py-2 text-center text-slate-600 text-xs">No history.</div>

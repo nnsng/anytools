@@ -14,7 +14,7 @@ type CronBreakdownProps = {
 
 export function CronBreakdown({ explanation, className }: CronBreakdownProps) {
 	return (
-		<Pane title="Expression Breakdown" type="output" className={className}>
+		<Pane title="Expression Breakdown" dotClassName="bg-blue-500" className={className}>
 			<div className="p-6">
 				{explanation ? (
 					<div className="flex flex-col gap-3 text-xs">

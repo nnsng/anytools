@@ -1,10 +1,21 @@
 import { useEffect, useState } from 'react'
 import { CodeBlock, EditorPane } from '@/components/tools/shared'
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from '@/components/ui/select'
 import { APP_NAME } from '@/constants/app'
 import { generateAxios, generateFetch, parseCurl } from './curl-parsers'
 
-type TabType = 'fetch' | 'axios'
+type TabType = 'fetch' | 'axios' | (string & {})
+
+const options = [
+	{ value: 'fetch', label: 'Fetch API' },
+	{ value: 'axios', label: 'Axios' },
+]
 
 export default function CurlToCode() {
 	const [curlInput, setCurlInput] = useState<string>(
@@ -55,12 +66,18 @@ export default function CurlToCode() {
 				allowDownload={true}
 				downloadFileName="request.js"
 				actions={
-					<Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as TabType)}>
-						<TabsList>
-							<TabsTrigger value="fetch">Fetch API</TabsTrigger>
-							<TabsTrigger value="axios">Axios</TabsTrigger>
-						</TabsList>
-					</Tabs>
+					<Select value={activeTab} onValueChange={setActiveTab}>
+						<SelectTrigger className="h-8 border-terminal-border font-mono text-xs">
+							<SelectValue />
+						</SelectTrigger>
+						<SelectContent className="border-terminal-border bg-terminal-card font-mono text-xs">
+							{options.map((opt) => (
+								<SelectItem key={opt.value} value={opt.value}>
+									{opt.label}
+								</SelectItem>
+							))}
+						</SelectContent>
+					</Select>
 				}
 				className="lg:flex-1"
 			>

@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/select'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
-type TabType = 'generate' | 'scan'
+type TabType = 'generate' | 'scan' | (string & {})
 
 export default function QrCodeTool() {
 	const [activeTab, setActiveTab] = useState<TabType>('generate')
@@ -128,13 +128,7 @@ export default function QrCodeTool() {
 	}
 
 	return (
-		<Tabs
-			value={activeTab}
-			onValueChange={(v) => setActiveTab(v as TabType)}
-			variant="contained"
-			size="lg"
-			className="gap-4"
-		>
+		<Tabs value={activeTab} onValueChange={setActiveTab} className="gap-4">
 			<TabsList className="grid w-full grid-cols-2">
 				<TabsTrigger value="generate">QR Generator</TabsTrigger>
 				<TabsTrigger value="scan">QR Scanner</TabsTrigger>
@@ -255,7 +249,7 @@ export default function QrCodeTool() {
 					{/* Preview Panel */}
 					<Pane
 						title="Preview"
-						type="output"
+						dotClassName="bg-blue-500"
 						actions={
 							<Button
 								variant="ghost"
@@ -330,7 +324,7 @@ export default function QrCodeTool() {
 					</Pane>
 
 					{/* Result Output */}
-					<Pane title="Scan Results" type="output" className="lg:flex-1">
+					<Pane title="Scan Results" dotClassName="bg-blue-500" className="lg:flex-1">
 						<div className="flex h-full flex-col p-6">
 							<div className="flex flex-1 flex-col justify-between gap-4">
 								<div className="relative flex flex-1">
