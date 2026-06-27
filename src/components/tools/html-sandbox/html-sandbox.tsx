@@ -2,16 +2,35 @@ import { useEffect, useRef, useState } from 'react'
 import { Pane } from '@/components/tools/shared'
 import { EditorPane } from '@/components/tools/shared/editor-pane'
 import { APP_NAME } from '@/constants/app'
+import { useThemeContext } from '@/contexts/theme-context'
 
 export default function HtmlPreview() {
+	const { theme } = useThemeContext()
+
 	const [input, setInput] = useState<string>(`<!DOCTYPE html>
-<html>
+<html${theme === 'dark' ? ' class="dark"' : ''}>
 <head>
   <style>
+    :root {
+      --bg: #f8fafc;
+      --fg: #0f172a;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --primary: #16a34a;
+      --primary-fg: #ffffff;
+    }
+    .dark {
+      --bg: #08090c;
+      --fg: #e2e8f0;
+      --card: #0e1117;
+      --border: #1a202c;
+      --primary: #22c55e;
+      --primary-fg: #08090c;
+    }
     body {
-      background-color: #0b0c10;
-      color: #e2e8f0;
-      font-family: sans-serif;
+      background-color: var(--bg);
+      color: var(--fg);
+      font-family: ui-sans-serif, system-ui, sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -20,37 +39,40 @@ export default function HtmlPreview() {
       margin: 0;
     }
     .card {
-      border: 1px solid #1f242d;
-      background: #11141a;
-      padding: 30px;
-      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      padding: 32px;
+      border-radius: 8px;
       text-align: center;
-      box-shadow: 0 4px 20px rgba(0, 255, 102, 0.1);
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      max-width: 400px;
     }
     h1 {
-      color: #00ff66;
+      color: var(--primary);
       margin-top: 0;
+      font-size: 24px;
     }
     button {
-      background: #00ff66;
-      color: #000;
+      background: var(--primary);
+      color: var(--primary-fg);
       border: none;
       padding: 10px 20px;
-      font-weight: bold;
+      font-weight: 600;
       cursor: pointer;
-      border-radius: 2px;
-      transition: all 0.2s;
+      border-radius: 4px;
+      transition: opacity 0.2s;
+      margin-top: 16px;
     }
     button:hover {
-      box-shadow: 0 0 10px #00ff66;
+      opacity: 0.9;
     }
   </style>
 </head>
 <body>
   <div class="card">
     <h1>${APP_NAME} Sandbox</h1>
-    <p>This is a live, secure client-side HTML preview!</p>
-    <button onclick="console.log('JS is active inside sandboxed iframe!')">Trigger Action</button>
+    <p style="color: var(--fg); opacity: 0.8; font-size: 14px;">This is a live, secure client-side HTML preview that matches your system theme!</p>
+    <button onclick="console.log('JavaScript is active inside the sandboxed iframe!')">Trigger Action</button>
   </div>
 </body>
 </html>`)
@@ -85,7 +107,7 @@ export default function HtmlPreview() {
 			/>
 
 			<Pane title="Live Preview (Sandboxed Frame)" dotClassName="bg-blue-500" className="flex-1">
-				<div className="relative min-h-50 flex-1 bg-white">
+				<div className="relative min-h-50 flex-1 bg-background">
 					{blobUrl ? (
 						<iframe
 							ref={iframeRef}
