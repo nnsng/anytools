@@ -62,7 +62,7 @@ export default function DiffChecker() {
 				dotClassName="bg-blue-500"
 				actions={
 					<div className="flex items-center gap-2 font-mono">
-						<span className="font-bold text-[10px] text-slate-500 uppercase">View:</span>
+						<span className="font-bold text-slate-500 text-xs uppercase">View:</span>
 						<Select value={diffMode} onValueChange={setDiffMode}>
 							<SelectTrigger className="h-8 w-36 border-terminal-border bg-terminal-bg font-mono text-xs">
 								<SelectValue />

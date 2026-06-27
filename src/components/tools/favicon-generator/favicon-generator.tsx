@@ -335,13 +335,13 @@ export default function FaviconGenerator() {
 											className="flex w-full cursor-pointer flex-col items-center justify-center border border-terminal-border border-dashed bg-terminal-bg/20 p-6 hover:bg-terminal-bg/40 focus:outline-none focus:ring-1 focus:ring-matrix/50"
 										>
 											{imageSrc ? (
-												<span className="text-[10px] text-matrix uppercase">
+												<span className="text-matrix text-xs uppercase">
 													File Loaded (Click to replace)
 												</span>
 											) : (
 												<>
 													<Upload className="mb-2 h-5 w-5 text-slate-500" />
-													<span className="text-[10px] text-slate-400">Upload square image</span>
+													<span className="text-slate-400 text-xs">Upload square image</span>
 												</>
 											)}
 										</button>
@@ -383,7 +383,7 @@ export default function FaviconGenerator() {
 											maxLength={3}
 											value={text}
 											onChange={(e) => setText(e.target.value.toUpperCase())}
-											className="h-8 border-terminal-border font-mono text-white text-xs"
+											className="h-8 border-terminal-border font-mono text-foreground text-xs"
 										/>
 									</div>
 									<div className="flex flex-row gap-4">
@@ -403,7 +403,7 @@ export default function FaviconGenerator() {
 													type="text"
 													value={textColor}
 													onChange={(e) => setTextColor(e.target.value)}
-													className="h-7 border-terminal-border font-mono text-[9px] text-white"
+													className="h-7 border-terminal-border font-mono text-[10px] text-foreground"
 												/>
 											</div>
 										</div>
@@ -469,7 +469,7 @@ export default function FaviconGenerator() {
 												type="text"
 												value={bgColor}
 												onChange={(e) => setBgColor(e.target.value)}
-												className="h-7 border-terminal-border font-mono text-[9px] text-white"
+												className="h-7 border-terminal-border font-mono text-[10px] text-foreground"
 											/>
 										</div>
 									</div>
@@ -482,7 +482,7 @@ export default function FaviconGenerator() {
 								<Download className="mr-2 h-3.5 w-3.5" />
 								DOWNLOAD MULTI-SIZE ICO
 							</Button>
-							<span className="text-center text-[9px] text-slate-500 uppercase">
+							<span className="text-center text-[10px] text-slate-500 uppercase">
 								Includes 16x16, 32x32, and 48x48 PNG sizes
 							</span>
 						</div>
@@ -492,8 +492,8 @@ export default function FaviconGenerator() {
 				{/* Right Preview Panel */}
 				<div className="flex flex-col gap-6 lg:flex-8">
 					{/* Mock Browser Tab Preview */}
-					<div className="rounded border border-terminal-border bg-slate-950 p-1">
-						<div className="flex items-center gap-2 border-slate-800 border-b bg-slate-900 px-3 py-2">
+					<div className="rounded border border-terminal-border bg-muted/50 p-1">
+						<div className="flex items-center gap-2 border-border border-b bg-muted px-3 py-2">
 							{/* Browser Buttons */}
 							<div className="flex gap-1.5">
 								<div className="h-2.5 w-2.5 rounded-full bg-red-500/80" />
@@ -501,7 +501,7 @@ export default function FaviconGenerator() {
 								<div className="h-2.5 w-2.5 rounded-full bg-green-500/80" />
 							</div>
 							{/* Browser Tab */}
-							<div className="ml-4 flex h-7 items-center gap-2 rounded-t-sm bg-slate-950 px-3 font-sans text-slate-300 text-xs">
+							<div className="ml-4 flex h-7 items-center gap-2 rounded-t-sm bg-muted/50 px-3 font-sans text-foreground text-xs">
 								{/* Canvas 16x16 as tab icon */}
 								<canvas
 									ref={canvas16Ref}
@@ -510,11 +510,11 @@ export default function FaviconGenerator() {
 									className="h-4 w-4 bg-transparent"
 								/>
 								<span className="max-w-20 truncate">Your Web App</span>
-								<span className="ml-1 text-[10px] text-slate-500">×</span>
+								<span className="ml-1 text-muted-foreground text-xs">×</span>
 							</div>
 						</div>
-						<div className="flex h-12 items-center bg-slate-950 px-3 py-2">
-							<div className="flex h-6 w-full items-center rounded-sm border border-slate-800 bg-slate-900 px-3 font-sans text-[10px] text-slate-500">
+						<div className="flex h-12 items-center bg-muted/50 px-3 py-2">
+							<div className="flex h-6 w-full items-center rounded-sm border border-border bg-muted px-3 font-sans text-muted-foreground text-xs">
 								https://yourdomain.com
 							</div>
 						</div>
@@ -524,7 +524,7 @@ export default function FaviconGenerator() {
 					<div className="grid grid-cols-2 gap-4 md:grid-cols-4">
 						{/* 16x16 */}
 						<div className="flex flex-col items-center justify-between rounded border border-terminal-border bg-terminal-card/30 p-4">
-							<span className="mb-2 text-[10px] text-slate-500">16 x 16 (Standard)</span>
+							<span className="mb-2 text-slate-500 text-xs">16 x 16 (Standard)</span>
 							<div className="flex h-20 items-center justify-center">
 								{/* Show actual size + zoom */}
 								<div className="flex flex-col items-center gap-2">
@@ -540,7 +540,7 @@ export default function FaviconGenerator() {
 								variant="secondary"
 								size="sm"
 								onClick={() => downloadPng(canvas16Ref, 16)}
-								className="mt-2 h-7 w-full text-[9px]"
+								className="mt-2 h-7 w-full text-[10px]"
 							>
 								DOWNLOAD PNG
 							</Button>
@@ -548,7 +548,7 @@ export default function FaviconGenerator() {
 
 						{/* 32x32 */}
 						<div className="flex flex-col items-center justify-between rounded border border-terminal-border bg-terminal-card/30 p-4">
-							<span className="mb-2 text-[10px] text-slate-500">32 x 32 (Taskbar)</span>
+							<span className="mb-2 text-slate-500 text-xs">32 x 32 (Taskbar)</span>
 							<div className="flex h-20 items-center justify-center">
 								<div className="flex flex-col items-center gap-2">
 									<canvas
@@ -563,7 +563,7 @@ export default function FaviconGenerator() {
 								variant="secondary"
 								size="sm"
 								onClick={() => downloadPng(canvas32Ref, 32)}
-								className="mt-2 h-7 w-full text-[9px]"
+								className="mt-2 h-7 w-full text-[10px]"
 							>
 								DOWNLOAD PNG
 							</Button>
@@ -571,7 +571,7 @@ export default function FaviconGenerator() {
 
 						{/* 48x48 */}
 						<div className="flex flex-col items-center justify-between rounded border border-terminal-border bg-terminal-card/30 p-4">
-							<span className="mb-2 text-[10px] text-slate-500">48 x 48 (Desktop)</span>
+							<span className="mb-2 text-slate-500 text-xs">48 x 48 (Desktop)</span>
 							<div className="flex h-20 items-center justify-center">
 								<div className="flex flex-col items-center gap-2">
 									<canvas
@@ -587,7 +587,7 @@ export default function FaviconGenerator() {
 								variant="secondary"
 								size="sm"
 								onClick={() => downloadPng(canvas48Ref, 48)}
-								className="mt-2 h-7 w-full text-[9px]"
+								className="mt-2 h-7 w-full text-[10px]"
 							>
 								DOWNLOAD PNG
 							</Button>
@@ -595,7 +595,7 @@ export default function FaviconGenerator() {
 
 						{/* 180x180 */}
 						<div className="flex flex-col items-center justify-between rounded border border-terminal-border bg-terminal-card/30 p-4">
-							<span className="mb-2 text-[10px] text-slate-500">180 x 180 (Apple Touch)</span>
+							<span className="mb-2 text-slate-500 text-xs">180 x 180 (Apple Touch)</span>
 							<div className="flex h-20 items-center justify-center">
 								<div className="flex flex-col items-center gap-1">
 									<canvas
@@ -611,7 +611,7 @@ export default function FaviconGenerator() {
 								variant="secondary"
 								size="sm"
 								onClick={() => downloadPng(canvas180Ref, 180)}
-								className="mt-2 h-7 w-full text-[9px]"
+								className="mt-2 h-7 w-full text-[10px]"
 							>
 								DOWNLOAD PNG
 							</Button>

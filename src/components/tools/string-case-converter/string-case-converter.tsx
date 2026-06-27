@@ -79,7 +79,7 @@ export default function StringCaseConverter() {
 				downloadFileName="converted-text.txt"
 				actions={
 					<div className="flex items-center gap-2 font-mono">
-						<span className="font-bold text-[10px] text-slate-500 uppercase">Case:</span>
+						<span className="font-bold text-slate-500 text-xs uppercase">Case:</span>
 						<Select value={casingType} onValueChange={setCasingType}>
 							<SelectTrigger className="h-8 w-40 border-terminal-border bg-terminal-bg font-mono text-xs">
 								<SelectValue />

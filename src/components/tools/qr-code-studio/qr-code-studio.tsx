@@ -151,7 +151,7 @@ export default function QrCodeTool() {
 										value={text}
 										onChange={(e) => setText(e.target.value)}
 										placeholder="Enter text or URL to encode..."
-										className="scrollbar-thin min-h-20 w-full resize-none rounded-sm border border-terminal-border bg-terminal-bg/50 p-2 font-mono text-white text-xs placeholder-slate-700 focus:outline-none"
+										className="scrollbar-thin min-h-20 w-full resize-none rounded-sm border border-terminal-border bg-terminal-bg/50 p-2 font-mono text-foreground text-xs placeholder:text-muted-foreground focus:outline-none"
 									/>
 								</div>
 
@@ -216,7 +216,7 @@ export default function QrCodeTool() {
 												type="text"
 												value={fgColor}
 												onChange={(e) => setFgColor(e.target.value)}
-												className="h-7 border-terminal-border font-mono text-[10px] text-white"
+												className="h-7 border-terminal-border font-mono text-foreground text-xs"
 											/>
 										</div>
 									</div>
@@ -237,7 +237,7 @@ export default function QrCodeTool() {
 												type="text"
 												value={bgColor}
 												onChange={(e) => setBgColor(e.target.value)}
-												className="h-7 border-terminal-border font-mono text-[10px] text-white"
+												className="h-7 border-terminal-border font-mono text-foreground text-xs"
 											/>
 										</div>
 									</div>
@@ -306,7 +306,7 @@ export default function QrCodeTool() {
 											alt="Uploaded QR Code Preview"
 											className="max-h-55 rounded border border-terminal-border"
 										/>
-										<span className="text-[10px] text-slate-500 uppercase">
+										<span className="text-slate-500 text-xs uppercase">
 											Click or drag to replace image
 										</span>
 									</div>
@@ -314,7 +314,7 @@ export default function QrCodeTool() {
 									<>
 										<Upload className="mb-3 h-8 w-8 text-slate-500" />
 										<span className="text-slate-400 text-xs">Click to upload file</span>
-										<span className="mt-1 text-[10px] text-slate-500 uppercase">
+										<span className="mt-1 text-slate-500 text-xs uppercase">
 											PNG, JPG, JPEG, WEBP
 										</span>
 									</>
@@ -332,7 +332,7 @@ export default function QrCodeTool() {
 										readOnly
 										value={scanResult}
 										placeholder="Upload a QR code to read its content..."
-										className="scrollbar-thin min-h-40 w-full flex-1 resize-none rounded-sm border border-terminal-border bg-terminal-bg/50 p-4 font-mono text-white text-xs placeholder-slate-700 focus:outline-none"
+										className="scrollbar-thin min-h-40 w-full flex-1 resize-none rounded-sm border border-terminal-border bg-terminal-bg/50 p-4 font-mono text-foreground text-xs placeholder:text-muted-foreground focus:outline-none"
 									/>
 									{scanResult && (
 										<Button

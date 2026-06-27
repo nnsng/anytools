@@ -137,7 +137,7 @@ export default function PasswordGenerator() {
 									<Button
 										type="button"
 										variant="outline"
-										className="h-7 w-7 rounded-r-none border-terminal-border border-r-0 p-0 text-slate-400 hover:bg-terminal-border/20 hover:text-white"
+										className="h-7 w-7 rounded-r-none border-terminal-border border-r-0 p-0 text-slate-400 hover:bg-terminal-border/20 hover:text-foreground"
 										onClick={() => setLength((l) => Math.max(6, l - 1))}
 									>
 										-
@@ -150,12 +150,12 @@ export default function PasswordGenerator() {
 										onChange={(e) =>
 											setLength(Math.min(64, Math.max(6, parseInt(e.target.value, 10) || 6)))
 										}
-										className="h-7 w-12 rounded-none border-terminal-border p-0 text-center font-mono text-white text-xs [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+										className="h-7 w-12 rounded-none border-terminal-border p-0 text-center font-mono text-foreground text-xs [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
 									/>
 									<Button
 										type="button"
 										variant="outline"
-										className="h-7 w-7 rounded-l-none border-terminal-border border-l-0 p-0 text-slate-400 hover:bg-terminal-border/20 hover:text-white"
+										className="h-7 w-7 rounded-l-none border-terminal-border border-l-0 p-0 text-slate-400 hover:bg-terminal-border/20 hover:text-foreground"
 										onClick={() => setLength((l) => Math.min(64, l + 1))}
 									>
 										+
@@ -174,7 +174,7 @@ export default function PasswordGenerator() {
 								/>
 								<label
 									htmlFor="uppercase"
-									className="cursor-pointer select-none font-semibold text-slate-300 hover:text-white"
+									className="cursor-pointer select-none font-semibold text-slate-300 hover:text-foreground"
 								>
 									UPPERCASE (A-Z)
 								</label>
@@ -188,7 +188,7 @@ export default function PasswordGenerator() {
 								/>
 								<label
 									htmlFor="lowercase"
-									className="cursor-pointer select-none font-semibold text-slate-300 hover:text-white"
+									className="cursor-pointer select-none font-semibold text-slate-300 hover:text-foreground"
 								>
 									LOWERCASE (a-z)
 								</label>
@@ -202,7 +202,7 @@ export default function PasswordGenerator() {
 								/>
 								<label
 									htmlFor="digits"
-									className="cursor-pointer select-none font-semibold text-slate-300 hover:text-white"
+									className="cursor-pointer select-none font-semibold text-slate-300 hover:text-foreground"
 								>
 									NUMBERS (0-9)
 								</label>
@@ -216,7 +216,7 @@ export default function PasswordGenerator() {
 								/>
 								<label
 									htmlFor="symbols"
-									className="cursor-pointer select-none font-semibold text-slate-300 hover:text-white"
+									className="cursor-pointer select-none font-semibold text-slate-300 hover:text-foreground"
 								>
 									SYMBOLS (!@#$...)
 								</label>
@@ -230,7 +230,7 @@ export default function PasswordGenerator() {
 								/>
 								<label
 									htmlFor="avoidAmbiguous"
-									className="cursor-pointer select-none font-semibold text-slate-300 hover:text-white"
+									className="cursor-pointer select-none font-semibold text-slate-300 hover:text-foreground"
 								>
 									AVOID AMBIGUOUS CHARACTERS (e.g. l, 1, I)
 								</label>
@@ -259,7 +259,7 @@ export default function PasswordGenerator() {
 						<span>Password Strength:</span>
 						<span
 							className={cn(
-								'rounded px-2 py-0.5 font-bold text-[10px] text-black',
+								'rounded px-2 py-0.5 font-bold text-primary-foreground text-xs',
 								strength.label === 'Weak' && 'bg-red-500',
 								strength.label === 'Fair' && 'bg-yellow-500',
 								strength.label === 'Strong' && 'bg-blue-500',

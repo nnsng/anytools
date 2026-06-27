@@ -157,7 +157,7 @@ export function EditorPane(props: EditorPaneProps) {
 			className={className}
 			dotClassName={readOnly ? 'bg-blue-500' : ''}
 			footer={
-				<div className="flex select-none items-center justify-between px-4 py-1.5 font-mono text-[10px] text-slate-500">
+				<div className="flex select-none items-center justify-between px-4 py-1.5 font-mono text-slate-500 text-xs">
 					<span>LINES: {lineCount}</span>
 					<span>CHARS: {characterCount}</span>
 				</div>
@@ -174,7 +174,7 @@ export function EditorPane(props: EditorPaneProps) {
 						placeholder={placeholder}
 						readOnly={readOnly}
 						className={cn(
-							'scrollbar-thin w-full flex-1 resize-none bg-transparent p-4 font-mono text-foreground text-sm placeholder-slate-700 focus:outline-none',
+							'scrollbar-thin w-full flex-1 resize-none bg-transparent p-4 font-mono text-foreground text-sm placeholder:text-muted-foreground focus:outline-none',
 							error && 'border border-red-500/20 focus:border-red-500/40',
 						)}
 					/>

@@ -98,7 +98,7 @@ export default function UuidGenerator() {
 								<Button
 									type="button"
 									variant="outline"
-									className="h-8 w-8 rounded-r-none border-terminal-border border-r-0 text-slate-400 hover:bg-terminal-border/20 hover:text-white"
+									className="h-8 w-8 rounded-r-none border-terminal-border border-r-0 text-slate-400 hover:bg-terminal-border/20 hover:text-foreground"
 									onClick={() => setQuantity((q) => Math.max(1, q - 1))}
 								>
 									-
@@ -112,12 +112,12 @@ export default function UuidGenerator() {
 									onChange={(e) =>
 										setQuantity(Math.min(100, Math.max(1, parseInt(e.target.value, 10) || 1)))
 									}
-									className="h-8 w-full rounded-none border-terminal-border text-center font-mono text-white text-xs [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+									className="h-8 w-full rounded-none border-terminal-border text-center font-mono text-foreground text-xs [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
 								/>
 								<Button
 									type="button"
 									variant="outline"
-									className="h-8 w-8 rounded-l-none border-terminal-border border-l-0 text-slate-400 hover:bg-terminal-border/20 hover:text-white"
+									className="h-8 w-8 rounded-l-none border-terminal-border border-l-0 text-slate-400 hover:bg-terminal-border/20 hover:text-foreground"
 									onClick={() => setQuantity((q) => Math.min(100, q + 1))}
 								>
 									+
@@ -135,7 +135,7 @@ export default function UuidGenerator() {
 								/>
 								<label
 									htmlFor="uppercase"
-									className="cursor-pointer select-none font-semibold text-slate-300 hover:text-white"
+									className="cursor-pointer select-none font-semibold text-slate-300 hover:text-foreground"
 								>
 									UPPERCASE
 								</label>
@@ -149,7 +149,7 @@ export default function UuidGenerator() {
 								/>
 								<label
 									htmlFor="braces"
-									className="cursor-pointer select-none font-semibold text-slate-300 hover:text-white"
+									className="cursor-pointer select-none font-semibold text-slate-300 hover:text-foreground"
 								>
 									WRAP IN BRACES {'{}'}
 								</label>
@@ -163,7 +163,7 @@ export default function UuidGenerator() {
 								/>
 								<label
 									htmlFor="hyphens"
-									className="cursor-pointer select-none font-semibold text-slate-300 hover:text-white"
+									className="cursor-pointer select-none font-semibold text-slate-300 hover:text-foreground"
 								>
 									INCLUDE HYPHENS
 								</label>

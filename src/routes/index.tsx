@@ -41,7 +41,7 @@ function Home() {
 						value={searchQuery}
 						onChange={(e) => setSearchQuery(e.target.value)}
 						placeholder="Filter utility modules instantly by name, feature, or keyword..."
-						className="w-full rounded border border-terminal-border bg-terminal-card py-3 pr-4 pl-12 text-sm text-white placeholder-slate-600 transition-all duration-150 focus:border-matrix/80 focus:shadow-[0_0_12px_rgba(34,197,94,0.05)] focus:outline-none focus:ring-1 focus:ring-matrix/80"
+						className="w-full rounded border border-terminal-border bg-terminal-card py-3 pr-4 pl-12 text-foreground text-sm transition-all duration-150 placeholder:text-muted-foreground focus:border-matrix/80 focus:shadow-[0_0_12px_rgba(34,197,94,0.05)] focus:outline-none focus:ring-1 focus:ring-matrix/80"
 					/>
 				</div>
 

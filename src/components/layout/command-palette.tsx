@@ -63,7 +63,7 @@ export function CommandPalette({ className }: CommandPaletteProps) {
 				>
 					<Search className="h-3.5 w-3.5" />
 					<span className="hidden sm:inline">Search modules...</span>
-					<kbd className="hidden rounded border border-terminal-border bg-terminal-card px-1.5 py-0.5 text-[10px] text-slate-400 lg:block">
+					<kbd className="hidden rounded border border-terminal-border bg-terminal-card px-1.5 py-0.5 text-slate-400 text-xs lg:block">
 						{isMac ? '⌘K' : 'Ctrl+K'}
 					</kbd>
 				</button>
@@ -92,7 +92,7 @@ export function CommandPalette({ className }: CommandPaletteProps) {
 									})}
 									<div>
 										<div className="font-bold font-mono text-xs">{tool.name}</div>
-										<div className="text-[10px] text-slate-500">{tool.description}</div>
+										<div className="text-slate-500 text-xs">{tool.description}</div>
 									</div>
 								</div>
 							</CommandItem>

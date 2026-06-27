@@ -103,7 +103,7 @@ function ToolContainer() {
 						<span>/</span>
 						<span>{tool.category.toLowerCase().replace(/\s+/g, '-')}</span>
 					</div>
-					<h1 className="flex items-center gap-3 font-bold font-mono text-2xl text-white tracking-tight md:text-3xl">
+					<h1 className="flex items-center gap-3 font-bold font-mono text-2xl text-foreground tracking-tight md:text-3xl">
 						{React.createElement(tool.icon, {
 							className: 'w-7 h-7 text-matrix text-glow',
 						})}

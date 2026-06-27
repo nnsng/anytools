@@ -35,7 +35,7 @@ export function RegexInput(props: RegexInputProps) {
 							value={pattern}
 							onChange={(e) => setPattern(e.target.value)}
 							placeholder="e.g. ([a-zA-Z]+)"
-							className="w-full border-none bg-transparent py-2.5 text-sm text-white placeholder-slate-700 focus-visible:border-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+							className="w-full border-none bg-transparent py-2.5 text-foreground text-sm placeholder:text-muted-foreground focus-visible:border-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
 						/>
 						<span className="ml-2 font-bold text-slate-500">/</span>
 					</div>

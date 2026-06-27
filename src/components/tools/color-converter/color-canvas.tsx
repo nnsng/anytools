@@ -22,7 +22,7 @@ export function ColorCanvas({ hex, onColorChange }: ColorCanvasProps) {
 			<div className="w-full">
 				<label
 					htmlFor="color-picker"
-					className="mb-1 block text-center font-bold text-[10px] text-slate-500 uppercase"
+					className="mb-1 block text-center font-bold text-slate-500 text-xs uppercase"
 				>
 					Pick Color
 				</label>

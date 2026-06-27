@@ -6,20 +6,151 @@
 @custom-variant dark (&:is(.dark *));
 @plugin "@tailwindcss/typography";
 
-@theme {
+:root {
+  /* Terminal Custom Colors (Light Mode Equivalent) */
+  --terminal-bg: #f8fafc;
+  --terminal-card: #ffffff;
+  --terminal-border: #e2e8f0;
+  --matrix: #16a34a;
+  --matrix-glow: #15803d;
+
+  /* Standard Shadcn Colors */
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #16a34a;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #0f172a;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #dcfce7;
+  --accent-foreground: #15803d;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #16a34a;
+  --chart-1: #16a34a;
+  --chart-2: #15803d;
+  --chart-3: #166534;
+  --chart-4: #14532d;
+  --chart-5: #052e16;
+  
+  --sidebar: #ffffff;
+  --sidebar-foreground: #0f172a;
+  --sidebar-primary: #16a34a;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #dcfce7;
+  --sidebar-accent-foreground: #15803d;
+  --sidebar-border: #e2e8f0;
+  --sidebar-ring: #16a34a;
+
+  /* Tab text colors */
+  --tab-text: #64748b;
+  --tab-text-hover: #0f172a;
+
+  /* Slate overrides for specific elements not using standard UI */
+  --slate-100: var(--foreground);
+  --slate-200: var(--foreground);
+  --slate-300: #334155;
+  --slate-400: #475569;
+  --slate-500: #64748b;
+  --slate-600: #475569;
+  --slate-700: #334155;
+
+  --font-sans: 'Geist', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --radius: 0.25rem;
+  
+  /* Drop shadow from template.css */
+  --shadow-x: 0;
+  --shadow-y: 1px;
+  --shadow-blur: 3px;
+  --shadow-spread: 0px;
+  --shadow-opacity: 0.1;
+  --shadow-color: oklch(0 0 0);
+  --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+  --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+  --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
+  --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
+  --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 2px 4px -1px hsl(0 0% 0% / 0.10);
+  --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 4px 6px -1px hsl(0 0% 0% / 0.10);
+  --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 8px 10px -1px hsl(0 0% 0% / 0.10);
+  --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
+}
+
+.dark {
+  /* Terminal Custom Colors */
+  --terminal-bg: #08090c;
+  --terminal-card: #0e1117;
+  --terminal-border: #1a202c;
+  --matrix: #22c55e;
+  --matrix-glow: #00ff66;
+
+  /* Standard Shadcn Colors */
+  --background: #08090c;
+  --foreground: #e2e8f0;
+  --card: #0e1117;
+  --card-foreground: #e2e8f0;
+  --popover: #0e1117;
+  --popover-foreground: #e2e8f0;
+  --primary: #22c55e;
+  --primary-foreground: #08090c;
+  --secondary: #12161f;
+  --secondary-foreground: #e2e8f0;
+  --muted: #12161f;
+  --muted-foreground: #64748b;
+  --accent: #112a1b;
+  --accent-foreground: #00ff66;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #1a202c;
+  --input: #1a202c;
+  --ring: #22c55e;
+  --chart-1: #22c55e;
+  --chart-2: #15803d;
+  --chart-3: #166534;
+  --chart-4: #14532d;
+  --chart-5: #052e16;
+  
+  --sidebar: #0e1117;
+  --sidebar-foreground: #e2e8f0;
+  --sidebar-primary: #22c55e;
+  --sidebar-primary-foreground: #08090c;
+  --sidebar-accent: #112a1b;
+  --sidebar-accent-foreground: #00ff66;
+  --sidebar-border: #1a202c;
+  --sidebar-ring: #22c55e;
+
+  /* Tab text colors */
+  --tab-text: #94a3b8;
+  --tab-text-hover: #e2e8f0;
+
+  /* Slate overrides */
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
+  --slate-500: #64748b;
+  --slate-600: #475569;
+  --slate-700: #334155;
+}
+
+@theme inline {
   --color-terminal-bg: var(--terminal-bg);
   --color-terminal-card: var(--terminal-card);
   --color-terminal-border: var(--terminal-border);
   --color-matrix: var(--matrix);
   --color-matrix-glow: var(--matrix-glow);
 
-  --font-mono: 'Geist Mono', monospace;
-
-  /* Tab text colors */
   --color-tab-text: var(--tab-text);
   --color-tab-text-hover: var(--tab-text-hover);
 
-  /* Slate colors mapped to CSS variables for dynamic themes without overrides */
   --color-slate-100: var(--slate-100);
   --color-slate-200: var(--slate-200);
   --color-slate-300: var(--slate-300);
@@ -27,37 +158,86 @@
   --color-slate-500: var(--slate-500);
   --color-slate-600: var(--slate-600);
   --color-slate-700: var(--slate-700);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-serif: var(--font-serif);
+  --font-heading: var(--font-sans);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  --shadow-2xs: var(--shadow-2xs);
+  --shadow-xs: var(--shadow-xs);
+  --shadow-sm: var(--shadow-sm);
+  --shadow: var(--shadow);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-xl);
+  --shadow-2xl: var(--shadow-2xl);
 }
 
-/* Base resets & layouts */
-* {
-  box-sizing: border-box;
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(34, 197, 94, 0.6) transparent;
+  }
+  
+  html, body, #app {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    margin: 0;
+  }
 }
 
 ::selection {
-  background-color: var(--color-matrix);
-  color: var(--color-terminal-bg);
-}
-
-html,
-body,
-#app {
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
-  background-color: var(--color-terminal-bg);
-  color: var(--foreground);
-  font-family: var(--font-sans);
-}
-
-body {
-  margin: 0;
-}
-
-/* Firefox Scrollbars styling */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(34, 197, 94, 0.6) transparent;
+  background-color: var(--matrix);
+  color: var(--terminal-bg);
 }
 
 /* Custom Scrollbar for all webkit browsers */
@@ -94,7 +274,7 @@ body {
 .cursor-blink::after {
   content: "█";
   margin-left: 4px;
-  color: var(--color-matrix);
+  color: var(--matrix);
   animation: blink 1s step-start infinite;
 }
 
@@ -105,173 +285,6 @@ body {
 }
 .pulse-fast {
   animation: pulse-fast 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-
-
-@theme inline {
-  --font-heading: var(--font-sans);
-  --font-sans: 'Geist', sans-serif;
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --color-foreground: var(--foreground);
-  --color-background: var(--background);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
-}
-
-:root {
-  --terminal-bg: #f8fafc;
-  --terminal-card: #ffffff;
-  --terminal-border: #e2e8f0;
-  --matrix: #16a34a;
-  --matrix-glow: #15803d;
-
-  --background: #f8fafc;
-  --foreground: #0f172a;
-  --card: #ffffff;
-  --card-foreground: #0f172a;
-  --popover: #ffffff;
-  --popover-foreground: #0f172a;
-  --primary: #16a34a;
-  --primary-foreground: #ffffff;
-  --secondary: #f1f5f9;
-  --secondary-foreground: #0f172a;
-  --muted: #f1f5f9;
-  --muted-foreground: #64748b;
-  --accent: #dcfce7;
-  --accent-foreground: #15803d;
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
-  --border: #e2e8f0;
-  --input: #e2e8f0;
-  --ring: #16a34a;
-  --chart-1: #16a34a;
-  --chart-2: #15803d;
-  --chart-3: #166534;
-  --chart-4: #14532d;
-  --chart-5: #052e16;
-  --radius: 0.25rem;
-  --sidebar: #ffffff;
-  --sidebar-foreground: #0f172a;
-  --sidebar-primary: #16a34a;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #dcfce7;
-  --sidebar-accent-foreground: #15803d;
-  --sidebar-border: #e2e8f0;
-  --sidebar-ring: #16a34a;
-
-  /* Tab text colors */
-  --tab-text: #64748b;
-  --tab-text-hover: #0f172a;
-
-  /* Slate colors for light theme */
-  --slate-100: var(--foreground);
-  --slate-200: var(--foreground);
-  --slate-300: #334155;
-  --slate-400: #475569;
-  --slate-500: #64748b;
-  --slate-600: #475569;
-  --slate-700: #334155;
-}
-
-.dark {
-  --terminal-bg: #08090c;
-  --terminal-card: #0e1117;
-  --terminal-border: #1a202c;
-  --matrix: #22c55e;
-  --matrix-glow: #00ff66;
-
-  --background: #08090c;
-  --foreground: #e2e8f0;
-  --card: #0e1117;
-  --card-foreground: #e2e8f0;
-  --popover: #0e1117;
-  --popover-foreground: #e2e8f0;
-  --primary: #22c55e;
-  --primary-foreground: #08090c;
-  --secondary: #12161f;
-  --secondary-foreground: #e2e8f0;
-  --muted: #12161f;
-  --muted-foreground: #64748b;
-  --accent: #112a1b;
-  --accent-foreground: #00ff66;
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
-  --border: #1a202c;
-  --input: #1a202c;
-  --ring: #22c55e;
-  --chart-1: #22c55e;
-  --chart-2: #15803d;
-  --chart-3: #166534;
-  --chart-4: #14532d;
-  --chart-5: #052e16;
-  --radius: 0.25rem;
-  --sidebar: #0e1117;
-  --sidebar-foreground: #e2e8f0;
-  --sidebar-primary: #22c55e;
-  --sidebar-primary-foreground: #08090c;
-  --sidebar-accent: #112a1b;
-  --sidebar-accent-foreground: #00ff66;
-  --sidebar-border: #1a202c;
-  --sidebar-ring: #22c55e;
-
-  /* Tab text colors */
-  --tab-text: #94a3b8;
-  --tab-text-hover: #e2e8f0;
-
-  /* Slate colors for dark theme */
-  --slate-100: #f1f5f9;
-  --slate-200: #e2e8f0;
-  --slate-300: #cbd5e1;
-  --slate-400: #94a3b8;
-  --slate-500: #64748b;
-  --slate-600: #475569;
-  --slate-700: #334155;
-}
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-  html {
-    @apply font-sans;
-  }
 }
 
 /* Cyber Matrix Background Overlays */
@@ -323,38 +336,7 @@ body {
   z-index: 10000;
 }
 
-/* Global Light Theme Contrast Fixes */
-:root:not(.dark) {
-  /* Override text colors to ensure high contrast in light mode */
-  .text-white {
-    color: var(--foreground) !important;
-  }
-  .text-slate-100,
-  .text-slate-200 {
-    color: var(--foreground) !important;
-  }
-  .text-slate-300 {
-    color: #334155 !important; /* slate-700 */
-  }
-  .text-slate-400 {
-    color: #475569 !important; /* slate-600 */
-  }
-  .text-slate-500 {
-    color: #64748b !important; /* slate-500 */
-  }
-  .text-slate-600 {
-    color: #475569 !important; /* slate-600 */
-  }
-  
-  /* Placeholders */
-  .placeholder-slate-600::placeholder,
-  .placeholder-slate-700::placeholder {
-    color: #94a3b8 !important; /* slate-400 */
-  }
-
-  /* Adjust selections */
-  ::selection {
-    background-color: #dcfce7; /* light green accent selection */
-    color: #15803d;
-  }
+/* Disable CSS transitions during View Transitions to prevent flickering */
+html.theme-transitioning * {
+  transition: none !important;
 }

@@ -24,7 +24,7 @@ export function Sidebar(props: SidebarProps) {
 				<nav className="scrollbar-thin mb-4 select-none space-y-6">
 					{Object.entries(categories).map(([categoryName, toolList]) => (
 						<div key={categoryName} className="space-y-2">
-							<h4 className="px-2 font-bold text-[10px] text-slate-600 uppercase tracking-widest">
+							<h4 className="px-2 font-bold text-slate-600 text-xs uppercase tracking-widest">
 								{categoryName}
 							</h4>
 							<div className="space-y-0.5">

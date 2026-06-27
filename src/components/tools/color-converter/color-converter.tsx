@@ -1,6 +1,5 @@
-import { Pipette, Upload } from 'lucide-react'
-import type React from 'react'
-import { useEffect, useRef, useState } from 'react'
+import { Pipette } from 'lucide-react'
+import { useState } from 'react'
 import { Pane } from '@/components/tools/shared/pane'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -23,9 +22,6 @@ export default function ColorConverter() {
 	const [history, setHistory] = useState<ColorHistoryItem[]>([
 		{ hex: '#22c55e', rgb: 'rgb(34, 197, 94)' },
 	])
-	const [imageSrc, setImageSrc] = useState<string | null>(null)
-	const canvasRef = useRef<HTMLCanvasElement>(null)
-	const fileInputRef = useRef<HTMLInputElement>(null)
 
 	// Check native Eyedropper API support
 	const hasNativeEyedropper = typeof window !== 'undefined' && 'EyeDropper' in window
@@ -64,47 +60,6 @@ export default function ColorConverter() {
 		}
 	}
 
-	const handleFileChange = (file: File) => {
-		const reader = new FileReader()
-		reader.onload = (e) => {
-			setImageSrc(e.target?.result as string)
-		}
-		reader.readAsDataURL(file)
-	}
-
-	const handleImageClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
-		const canvas = canvasRef.current
-		if (!canvas) return
-		const ctx = canvas.getContext('2d')
-		if (!ctx) return
-
-		const rect = canvas.getBoundingClientRect()
-		const scaleX = canvas.width / rect.width
-		const scaleY = canvas.height / rect.height
-
-		const x = (e.clientX - rect.left) * scaleX
-		const y = (e.clientY - rect.top) * scaleY
-
-		const pixel = ctx.getImageData(x, y, 1, 1).data
-		updateAllFromRgb(pixel[0], pixel[1], pixel[2])
-	}
-
-	useEffect(() => {
-		if (imageSrc && canvasRef.current) {
-			const canvas = canvasRef.current
-			const ctx = canvas.getContext('2d')
-			if (!ctx) return
-
-			const img = new window.Image()
-			img.onload = () => {
-				canvas.width = img.width
-				canvas.height = img.height
-				ctx.drawImage(img, 0, 0)
-			}
-			img.src = imageSrc
-		}
-	}, [imageSrc])
-
 	return (
 		<div className="flex flex-col gap-6 lg:flex-row lg:items-start">
 			{/* Left Column: Canvas, Picker, Eyedropper, Image Pick */}
@@ -120,7 +75,7 @@ export default function ColorConverter() {
 					<div className="w-full">
 						<label
 							htmlFor="color-picker"
-							className="mb-1 block text-center font-bold text-[10px] text-slate-500 uppercase"
+							className="mb-1 block text-center font-bold text-slate-500 text-xs uppercase"
 						>
 							Pick Color
 						</label>
@@ -145,7 +100,7 @@ export default function ColorConverter() {
 					<div className="border-terminal-border border-t pt-4">
 						{hasNativeEyedropper ? (
 							<div className="flex flex-col gap-2">
-								<span className="font-bold text-[10px] text-slate-300 uppercase">
+								<span className="font-bold text-slate-300 text-xs uppercase">
 									Native Screen Eyedropper
 								</span>
 
@@ -157,49 +112,10 @@ export default function ColorConverter() {
 								</Button>
 							</div>
 						) : (
-							<p className="text-[10px] text-slate-500 leading-relaxed">
+							<p className="text-slate-500 text-xs leading-relaxed">
 								Your browser does not support the native screen Eyedropper API. You can upload an
 								image file below to pick colors.
 							</p>
-						)}
-					</div>
-
-					{/* Image Fallback color picker */}
-					<div className="flex flex-1 flex-col justify-between space-y-4 border-terminal-border border-t pt-4">
-						<div className="flex flex-col gap-2">
-							<span className="font-bold text-[10px] text-slate-300 uppercase">
-								Upload Image to Pick Colors
-							</span>
-							<button
-								type="button"
-								onClick={() => fileInputRef.current?.click()}
-								className="flex h-20 w-full cursor-pointer flex-col items-center justify-center rounded border border-terminal-border border-dashed bg-terminal-bg/40 p-3 transition-all hover:border-matrix/40 hover:bg-terminal-bg/80 focus:outline-none focus:ring-1 focus:ring-matrix/50"
-							>
-								<input
-									type="file"
-									ref={fileInputRef}
-									className="hidden"
-									accept="image/*"
-									onChange={(e) => {
-										const file = e.target.files?.[0]
-										if (file) handleFileChange(file)
-									}}
-								/>
-								<Upload className="mb-1 h-4 w-4 text-slate-500" />
-								<span className="font-bold text-[9px] text-slate-500 uppercase">
-									Click to browse image
-								</span>
-							</button>
-						</div>
-
-						{imageSrc && (
-							<div className="relative max-h-40 overflow-auto rounded border border-terminal-border bg-terminal-bg p-1.5">
-								<canvas
-									ref={canvasRef}
-									onClick={handleImageClick}
-									className="mx-auto h-auto max-w-full cursor-crosshair object-contain"
-								/>
-							</div>
 						)}
 					</div>
 				</div>
@@ -241,8 +157,10 @@ export default function ColorConverter() {
 											className="h-5 w-5 shrink-0 rounded border border-terminal-border/60"
 											style={{ backgroundColor: item.hex }}
 										/>
-										<div className="min-w-0 flex-1 font-mono text-[9px]">
-											<div className="truncate font-bold text-white uppercase">{item.hex}</div>
+										<div className="min-w-0 flex-1">
+											<div className="truncate font-mono text-foreground text-xs uppercase">
+												{item.hex}
+											</div>
 										</div>
 									</button>
 								))}

@@ -243,7 +243,7 @@ export default function JwtCodec() {
 										</>
 									)}
 								</div>
-								<div className="grid grid-cols-2 gap-2 border-terminal-border border-t pt-2 text-[11px] text-slate-400">
+								<div className="grid grid-cols-2 gap-2 border-terminal-border border-t pt-2 text-slate-400 text-xs">
 									<div>
 										<span className="font-bold text-slate-500">ALGORITHM:</span> {tokenStatus.alg}
 									</div>
@@ -271,7 +271,7 @@ export default function JwtCodec() {
 								<div className="space-y-1">
 									<label
 										htmlFor="dec-secret"
-										className="font-bold text-[10px] text-slate-500 uppercase"
+										className="font-bold text-slate-500 text-xs uppercase"
 									>
 										Verification Key / Secret
 									</label>
@@ -281,10 +281,10 @@ export default function JwtCodec() {
 										value={decodeSecret}
 										onChange={(e) => setDecodeSecret(e.target.value)}
 										placeholder="Enter secret to verify signature..."
-										className="h-8 border-terminal-border font-mono text-white text-xs"
+										className="h-8 border-terminal-border font-mono text-foreground text-xs"
 									/>
 								</div>
-								<div className="flex items-center gap-2 border-terminal-border border-t pt-2 font-bold text-[11px]">
+								<div className="flex items-center gap-2 border-terminal-border border-t pt-2 font-bold text-xs">
 									{signatureStatus === 'valid' && (
 										<>
 											<ShieldCheck className="h-4 w-4 text-matrix" />
@@ -340,7 +340,7 @@ export default function JwtCodec() {
 								<span className="mb-2 block font-bold text-slate-300 text-xs uppercase tracking-wider">
 									Signature Block (Base64URL)
 								</span>
-								<div className="break-all rounded border border-terminal-border bg-terminal-bg/40 p-2 font-mono text-[10px] text-slate-500">
+								<div className="break-all rounded border border-terminal-border bg-terminal-bg/40 p-2 font-mono text-slate-500 text-xs">
 									{signaturePart}
 								</div>
 							</BorderBox>
@@ -412,7 +412,7 @@ export default function JwtCodec() {
 											value={encodeSecret}
 											onChange={(e) => setEncodeSecret(e.target.value)}
 											placeholder="Secret key..."
-											className="h-8 border-terminal-border font-mono text-white text-xs"
+											className="h-8 border-terminal-border font-mono text-foreground text-xs"
 										/>
 									</div>
 								)}

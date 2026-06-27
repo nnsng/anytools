@@ -35,7 +35,7 @@ export function CategorySection({ title, tools }: CategorySectionProps) {
 											'w-5 h-5 text-slate-400 group-hover:text-matrix group-hover:scale-105 transition-transform text-glow',
 									})}
 								</div>
-								<h3 className="font-bold font-mono text-sm text-white transition-colors group-hover:text-matrix-glow">
+								<h3 className="font-bold font-mono text-foreground text-sm transition-colors group-hover:text-matrix-glow">
 									{tool.name}
 								</h3>
 							</div>
@@ -44,7 +44,7 @@ export function CategorySection({ title, tools }: CategorySectionProps) {
 							</p>
 						</div>
 
-						<div className="mt-5 flex items-center justify-between border-terminal-border/40 border-t pt-3 font-mono text-[10px] text-slate-500 group-hover:text-slate-300">
+						<div className="mt-5 flex items-center justify-between border-terminal-border/40 border-t pt-3 font-mono text-slate-500 text-xs group-hover:text-slate-300">
 							<span className="uppercase tracking-wider">{tool.category}</span>
 							<span className="flex items-center gap-0.5 font-bold text-matrix/80 group-hover:text-matrix-glow">
 								LAUNCH{' '}

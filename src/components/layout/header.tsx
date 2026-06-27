@@ -25,7 +25,7 @@ export function Header(props: HeaderProps) {
 
 				<Link
 					to="/"
-					className="group flex items-center gap-2.5 text-slate-900 transition-colors hover:text-matrix-glow dark:text-white dark:hover:text-matrix-glow"
+					className="group flex items-center gap-2.5 text-slate-900 transition-colors hover:text-matrix-glow dark:text-foreground dark:hover:text-matrix-glow"
 				>
 					<Terminal className="h-6 w-6 text-glow text-matrix transition-transform group-hover:scale-105" />
 					<span className="font-bold text-base uppercase tracking-wider md:text-lg">
@@ -37,7 +37,7 @@ export function Header(props: HeaderProps) {
 
 			<div className="flex flex-row gap-2">
 				<CommandPalette />
-				<ThemeButton className="hidden" />
+				<ThemeButton />
 			</div>
 		</header>
 	)

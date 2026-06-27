@@ -30,13 +30,13 @@ export function RegexMatches({ matches, className }: RegexMatchesProps) {
 								key={`${match.index}-${match.text}`}
 								className="space-y-2 bg-terminal-bg/60 p-3 text-xs transition-colors hover:border-matrix/30"
 							>
-								<div className="flex items-center justify-between border-terminal-border border-b pb-1 font-bold text-[10px] text-slate-500">
+								<div className="flex items-center justify-between border-terminal-border border-b pb-1 font-bold text-slate-500 text-xs">
 									<span>MATCH #{i + 1}</span>
 									<span>INDEX: {match.index}</span>
 								</div>
 
 								<div>
-									<span className="font-bold text-[9px] text-slate-500 uppercase">
+									<span className="font-bold text-[10px] text-slate-500 uppercase">
 										Matched String:
 									</span>
 									<span className="break-all rounded bg-matrix/5 px-1 py-0.5 font-bold text-matrix">
@@ -46,7 +46,7 @@ export function RegexMatches({ matches, className }: RegexMatchesProps) {
 
 								{match.groups.length > 0 && (
 									<div className="space-y-1">
-										<span className="block font-bold text-[9px] text-slate-500 uppercase">
+										<span className="block font-bold text-[10px] text-slate-500 uppercase">
 											Groups:
 										</span>
 										<div className="space-y-1 border-terminal-border border-l pl-2">

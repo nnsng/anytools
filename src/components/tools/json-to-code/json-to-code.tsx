@@ -51,12 +51,12 @@ export default function JsonToCode() {
 				downloadFileName={`${interfaceName || 'models'}.ts`}
 				actions={
 					<div className="flex items-center gap-2 font-mono">
-						<span className="font-bold text-[10px] text-slate-500 uppercase">Root:</span>
+						<span className="font-bold text-slate-500 text-xs uppercase">Root:</span>
 						<Input
 							type="text"
 							value={interfaceName}
 							onChange={(e) => setInterfaceName(e.target.value)}
-							className="h-8 w-32 border-terminal-border font-mono text-white text-xs"
+							className="h-8 w-32 border-terminal-border font-mono text-foreground text-xs"
 						/>
 					</div>
 				}

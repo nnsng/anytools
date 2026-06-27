@@ -84,18 +84,18 @@ export function EncodeTab({ onFileChange, className }: EncodeTabProps) {
 					</label>
 
 					{imageFile && (
-						<div className="space-y-1 rounded border border-terminal-border bg-terminal-bg p-3 text-[11px] text-slate-400">
+						<div className="space-y-1 rounded border border-terminal-border bg-terminal-bg p-3 text-slate-400 text-xs">
 							<div>
-								FILENAME: <span className="font-bold text-white">{imageFile.name}</span>
+								FILENAME: <span className="font-bold text-foreground">{imageFile.name}</span>
 							</div>
 							<div>
 								FILESIZE:{' '}
-								<span className="font-bold text-white">
+								<span className="font-bold text-foreground">
 									{(imageFile.size / 1024).toFixed(2)} KB
 								</span>
 							</div>
 							<div>
-								TYPE: <span className="font-bold text-white">{imageFile.type}</span>
+								TYPE: <span className="font-bold text-foreground">{imageFile.type}</span>
 							</div>
 						</div>
 					)}

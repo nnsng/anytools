@@ -1,5 +1,6 @@
 import { Moon, Sun } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { flushSync } from 'react-dom'
 import { cn } from '@/lib/utils'
 
 type Theme = 'light' | 'dark'
@@ -10,25 +11,40 @@ type ThemeButtonProps = {
 
 export function ThemeButton({ className }: ThemeButtonProps) {
 	const [theme, setTheme] = useState<Theme>(() => {
-		// if (typeof window !== 'undefined') {
-		// 	const saved = localStorage.getItem('theme')
-		// 	if (saved === 'light' || saved === 'dark') return saved
-		// }
-		return 'dark'
+		const savedTheme = localStorage.getItem('theme')
+		if (savedTheme === 'light' || savedTheme === 'dark') return savedTheme
+		return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
 	})
 
 	useEffect(() => {
-		const root = window.document.documentElement
-		if (theme === 'dark') {
-			root.classList.add('dark')
-		} else {
-			root.classList.remove('dark')
-		}
+		document.documentElement.classList.toggle('dark', theme === 'dark')
 		localStorage.setItem('theme', theme)
 	}, [theme])
 
-	const toggleTheme = () => {
-		setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))
+	const toggleTheme = async () => {
+		const newTheme = theme === 'dark' ? 'light' : 'dark'
+
+		if (!document.startViewTransition) {
+			setTheme(newTheme)
+			return
+		}
+
+		// Disable CSS transitions on all elements during the view transition to prevent flickering
+		document.documentElement.classList.add('theme-transitioning')
+
+		// Use View Transition API for smooth cross-fade
+		const transition = document.startViewTransition(() => {
+			flushSync(() => {
+				setTheme(newTheme)
+			})
+		})
+
+		// Re-enable CSS transitions after the view transition animation finishes
+		try {
+			await transition.finished
+		} finally {
+			document.documentElement.classList.remove('theme-transitioning')
+		}
 	}
 
 	const Icon = theme === 'dark' ? Sun : Moon

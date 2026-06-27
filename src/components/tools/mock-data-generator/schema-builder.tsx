@@ -120,7 +120,7 @@ export function SchemaBuilder(props: SchemaBuilderProps) {
 								<Button
 									variant="outline"
 									size="sm"
-									className="h-8 rounded-r-none border-r-0 px-2.5 text-slate-400 hover:text-white"
+									className="h-8 rounded-r-none border-r-0 px-2.5 text-slate-400 hover:text-foreground"
 									onClick={() => onCountChange(Math.max(1, count - 1))}
 								>
 									-
@@ -138,7 +138,7 @@ export function SchemaBuilder(props: SchemaBuilderProps) {
 								<Button
 									variant="outline"
 									size="sm"
-									className="h-8 rounded-l-none border-l-0 px-2.5 text-slate-400 hover:text-white"
+									className="h-8 rounded-l-none border-l-0 px-2.5 text-slate-400 hover:text-foreground"
 									onClick={() => onCountChange(Math.min(500, count + 1))}
 								>
 									+
@@ -151,7 +151,7 @@ export function SchemaBuilder(props: SchemaBuilderProps) {
 									key={preset}
 									variant={count === preset ? 'default' : 'outline'}
 									size="sm"
-									className="h-7 px-2 text-[10px]"
+									className="h-7 px-2 text-xs"
 									onClick={() => onCountChange(preset)}
 								>
 									{preset}
@@ -194,7 +194,7 @@ export function SchemaBuilder(props: SchemaBuilderProps) {
 									<SelectContent className="max-h-60 border-terminal-border bg-terminal-card font-mono text-xs">
 										{MOCK_FIELD_GROUPS.map((group) => (
 											<SelectGroup key={group.label}>
-												<SelectLabel className="font-bold text-[10px] text-slate-500 uppercase">
+												<SelectLabel className="font-bold text-slate-500 text-xs uppercase">
 													{group.label}
 												</SelectLabel>
 												{group.types.map((opt) => (

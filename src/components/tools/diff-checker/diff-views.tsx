@@ -15,7 +15,7 @@ export function InlineDiffView({ diffs, className }: DiffViewProps) {
 	return (
 		<pre
 			className={cn(
-				'min-h-75 select-text whitespace-pre-wrap break-all rounded border border-terminal-border bg-slate-950 p-4 text-slate-300 text-sm',
+				'min-h-75 select-text whitespace-pre-wrap break-all rounded border border-terminal-border bg-muted/50 p-4 text-slate-300 text-sm',
 				className,
 			)}
 		>
@@ -81,7 +81,7 @@ export function SideBySideView({ diffs, className }: DiffViewProps) {
 						Original (Text A)
 					</span>
 				</div>
-				<pre className="scrollbar-thin max-h-100 grow select-text overflow-y-auto whitespace-pre-wrap break-all bg-slate-950 p-4 font-mono text-slate-400 text-sm">
+				<pre className="scrollbar-thin max-h-100 grow select-text overflow-y-auto whitespace-pre-wrap break-all bg-muted/50 p-4 font-mono text-slate-400 text-sm">
 					{leftPane}
 				</pre>
 			</BorderBox>
@@ -92,7 +92,7 @@ export function SideBySideView({ diffs, className }: DiffViewProps) {
 						Modified (Text B)
 					</span>
 				</div>
-				<pre className="scrollbar-thin max-h-100 grow select-text overflow-y-auto whitespace-pre-wrap break-all bg-slate-950 p-4 font-mono text-slate-200 text-sm">
+				<pre className="scrollbar-thin max-h-100 grow select-text overflow-y-auto whitespace-pre-wrap break-all bg-muted/50 p-4 font-mono text-slate-200 text-sm">
 					{rightPane}
 				</pre>
 			</BorderBox>
