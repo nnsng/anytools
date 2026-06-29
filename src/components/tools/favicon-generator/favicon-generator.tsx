@@ -13,9 +13,10 @@ import {
 } from '@/components/ui/select'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
-type TabType = 'image' | 'text' | (string & {})
-type ShapeType = 'circle' | 'square' | 'rounded' | 'transparent' | (string & {})
-type ImageFit = 'contain' | 'cover' | 'stretch' | (string & {})
+type TabType = 'image' | 'text'
+type ShapeType = 'circle' | 'square' | 'rounded' | 'transparent'
+type ImageFit = 'contain' | 'cover' | 'stretch'
+type FontFamily = 'sans-serif' | 'serif' | 'monospace'
 
 export default function FaviconGenerator() {
 	const [activeTab, setActiveTab] = useState<TabType>('image')
@@ -32,7 +33,7 @@ export default function FaviconGenerator() {
 	// Text state
 	const [text, setText] = useState<string>('GO')
 	const [textColor, setTextColor] = useState<string>('#000000')
-	const [fontFamily, setFontFamily] = useState<string>('sans-serif')
+	const [fontFamily, setFontFamily] = useState<FontFamily>('sans-serif')
 
 	// Canvas refs
 	const canvas16Ref = useRef<HTMLCanvasElement>(null)

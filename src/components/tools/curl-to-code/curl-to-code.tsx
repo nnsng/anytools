@@ -10,7 +10,7 @@ import {
 import { APP_NAME } from '@/constants/app'
 import { generateAxios, generateFetch, parseCurl } from './curl-parsers'
 
-type TabType = 'fetch' | 'axios' | (string & {})
+type TabType = 'fetch' | 'axios'
 
 const options = [
 	{ value: 'fetch', label: 'Fetch API' },

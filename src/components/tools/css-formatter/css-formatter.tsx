@@ -9,7 +9,7 @@ import {
 	SelectValue,
 } from '@/components/ui/select'
 
-type Indent = '2' | '4' | 'minify' | (string & {})
+type Indent = '2' | '4' | 'minify'
 
 const indentOptions: Array<{ value: Indent; label: string }> = [
 	{ value: '2', label: '2 Spaces' },

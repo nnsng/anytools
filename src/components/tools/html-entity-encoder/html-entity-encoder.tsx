@@ -26,12 +26,14 @@ const decodeHtml = (str: string): string => {
 	return doc.documentElement.textContent || ''
 }
 
-export default function HtmlEncoder() {
+type ActiveTab = 'encode' | 'decode'
+
+export default function HtmlEntityEncoder() {
 	const [input, setInput] = useState<string>(
-		'<div class="container">\n  <h1>Hello World & welcome!</h1>\n  <p>Cost: $10 & "tax"</p>\n</div>',
+		'<div>\n  <p>Hello & "Welcome" to the <b>HTML Entity Encoder</b>!</p>\n  <p>Try converting some characters like: ©, ®, €, or £.</p>\n</div>',
 	)
 	const [output, setOutput] = useState<string>('')
-	const [activeTab, setActiveTab] = useState<string>('encode')
+	const [activeTab, setActiveTab] = useState<ActiveTab>('encode')
 
 	useEffect(() => {
 		const handleConvert = (val: string, mode: string) => {
@@ -49,7 +51,7 @@ export default function HtmlEncoder() {
 		handleConvert(input, activeTab)
 	}, [input, activeTab])
 
-	const handleTabChange = (newTab: string) => {
+	const handleTabChange = (newTab: ActiveTab) => {
 		setActiveTab(newTab)
 		if (output) {
 			setInput(output)

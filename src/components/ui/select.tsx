@@ -3,8 +3,22 @@ import { Select as SelectPrimitive } from 'radix-ui'
 import type * as React from 'react'
 import { cn } from '@/lib/utils'
 
-function Select({ ...props }: React.ComponentProps<typeof SelectPrimitive.Root>) {
-	return <SelectPrimitive.Root data-slot="select" {...props} />
+type SelectProps<T extends string> = Omit<
+	React.ComponentProps<typeof SelectPrimitive.Root>,
+	'value' | 'defaultValue' | 'onValueChange'
+> & {
+	value?: T
+	defaultValue?: T
+	onValueChange?: (value: T) => void
+}
+
+function Select<T extends string>({ ...props }: SelectProps<T>) {
+	return (
+		<SelectPrimitive.Root
+			data-slot="select"
+			{...(props as React.ComponentProps<typeof SelectPrimitive.Root>)}
+		/>
+	)
 }
 
 function SelectGroup({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.Group>) {
@@ -95,11 +109,13 @@ function SelectLabel({ className, ...props }: React.ComponentProps<typeof Select
 	)
 }
 
-function SelectItem({
+function SelectItem<T extends string>({
 	className,
 	children,
 	...props
-}: React.ComponentProps<typeof SelectPrimitive.Item>) {
+}: Omit<React.ComponentProps<typeof SelectPrimitive.Item>, 'value'> & {
+	value: T
+}) {
 	return (
 		<SelectPrimitive.Item
 			data-slot="select-item"
@@ -107,7 +123,7 @@ function SelectItem({
 				"relative flex w-full cursor-default select-none items-center gap-1.5 rounded-md py-1 pr-8 pl-1.5 text-sm outline-hidden focus:bg-accent focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
 				className,
 			)}
-			{...props}
+			{...(props as React.ComponentProps<typeof SelectPrimitive.Item>)}
 		>
 			<span className="pointer-events-none absolute right-2 flex size-4 items-center justify-center">
 				<SelectPrimitive.ItemIndicator>

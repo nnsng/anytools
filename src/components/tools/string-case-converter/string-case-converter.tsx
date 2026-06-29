@@ -29,7 +29,6 @@ type Case =
 	| 'kebab'
 	| 'pascal'
 	| 'constant'
-	| (string & {})
 
 const casingOptions: Array<{ value: Case; label: string; fn: (input: string) => string }> = [
 	{ value: 'lower', label: 'lowercase', fn: toLowerCase },

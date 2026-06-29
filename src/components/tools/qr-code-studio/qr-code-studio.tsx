@@ -14,15 +14,17 @@ import {
 } from '@/components/ui/select'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
-type TabType = 'generate' | 'scan' | (string & {})
+type TabType = 'generate' | 'scan'
+type SizeType = '128' | '256' | '384' | '512'
+type ErrorLevelType = 'L' | 'M' | 'Q' | 'H'
 
 export default function QrCodeTool() {
 	const [activeTab, setActiveTab] = useState<TabType>('generate')
 
 	// Generator State
 	const [text, setText] = useState<string>(() => window.location.origin)
-	const [size, setSize] = useState<string>('256')
-	const [errorLevel, setErrorLevel] = useState<string>('M')
+	const [size, setSize] = useState<SizeType>('256')
+	const [errorLevel, setErrorLevel] = useState<ErrorLevelType>('M')
 	const [fgColor, setFgColor] = useState<string>('#00ff66')
 	const [bgColor, setBgColor] = useState<string>('#000000')
 	const [_copied, _setCopied] = useState<boolean>(false)
@@ -43,7 +45,7 @@ export default function QrCodeTool() {
 		const options = {
 			width: parseInt(size, 10),
 			margin: 2,
-			errorCorrectionLevel: errorLevel as 'L' | 'M' | 'Q' | 'H',
+			errorCorrectionLevel: errorLevel,
 			color: {
 				dark: fgColor,
 				light: bgColor,

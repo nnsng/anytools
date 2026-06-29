@@ -22,14 +22,16 @@ const utf8Atob = (str: string): string => {
 	)
 }
 
+type ActiveTab = 'encode' | 'decode'
+
 export default function Base64String() {
 	const [input, setInput] = useState<string>(`Welcome to ${APP_NAME}!`)
 	const [output, setOutput] = useState<string>('')
 	const [error, setError] = useState<string | null>(null)
-	const [activeTab, setActiveTab] = useState<string>('encode')
+	const [activeTab, setActiveTab] = useState<ActiveTab>('encode')
 
 	useEffect(() => {
-		const handleConvert = (val: string, mode: string) => {
+		const handleConvert = (val: string, mode: ActiveTab) => {
 			if (!val) {
 				setOutput('')
 				setError(null)
@@ -65,7 +67,7 @@ export default function Base64String() {
 	}, [input, activeTab])
 
 	// Swap input and output on tab switch
-	const handleTabChange = (newTab: string) => {
+	const handleTabChange = (newTab: ActiveTab) => {
 		setActiveTab(newTab)
 		if (output && !error) {
 			setInput(output)

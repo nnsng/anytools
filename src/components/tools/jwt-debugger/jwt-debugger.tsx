@@ -14,7 +14,8 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { base64urlDecode, base64urlEncode, signJwt } from './helpers'
 
-type TabType = 'decode' | 'encode' | (string & {})
+type TabType = 'decode' | 'encode'
+type EncodeAlg = 'HS256' | 'HS384' | 'HS512' | 'none'
 
 export default function JwtCodec() {
 	const [activeTab, setActiveTab] = useState<TabType>('decode')
@@ -54,7 +55,7 @@ export default function JwtCodec() {
 		),
 	)
 	const [encodeSecret, setEncodeSecret] = useState<string>('your-256-bit-secret')
-	const [encodeAlg, setEncodeAlg] = useState<string>('HS256')
+	const [encodeAlg, setEncodeAlg] = useState<EncodeAlg>('HS256')
 	const [encodedResult, setEncodedResult] = useState<string>('')
 	const [encodeError, setEncodeError] = useState<string | null>(null)
 

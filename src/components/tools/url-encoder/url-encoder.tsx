@@ -9,8 +9,8 @@ import {
 } from '@/components/ui/select'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
-type ActiveTab = 'encode' | 'decode' | (string & {})
-type EncodeMode = 'component' | 'full' | (string & {})
+type ActiveTab = 'encode' | 'decode'
+type EncodeMode = 'component' | 'full'
 
 export default function UrlEncoder() {
 	const [input, setInput] = useState<string>(
@@ -22,7 +22,7 @@ export default function UrlEncoder() {
 	const [encodeMode, setEncodeMode] = useState<EncodeMode>('component')
 
 	useEffect(() => {
-		const handleConvert = (val: string, mode: EncodeMode, type: ActiveTab) => {
+		const handleConvert = (val: string, mode: ActiveTab, type: EncodeMode) => {
 			if (!val) {
 				setOutput('')
 				setError(null)

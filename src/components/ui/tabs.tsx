@@ -4,17 +4,22 @@ import type * as React from 'react'
 
 import { cn } from '@/lib/utils'
 
-function Tabs({
-	className,
-	orientation = 'horizontal',
-	...props
-}: React.ComponentProps<typeof TabsPrimitive.Root>) {
+type TabsProps<T extends string> = Omit<
+	React.ComponentProps<typeof TabsPrimitive.Root>,
+	'value' | 'defaultValue' | 'onValueChange'
+> & {
+	value?: T
+	defaultValue?: T
+	onValueChange?: (value: T) => void
+}
+
+function Tabs<T extends string>({ className, orientation = 'horizontal', ...props }: TabsProps<T>) {
 	return (
 		<TabsPrimitive.Root
 			data-slot="tabs"
 			data-orientation={orientation}
 			className={cn('group/tabs flex gap-2 data-horizontal:flex-col', className)}
-			{...props}
+			{...(props as React.ComponentProps<typeof TabsPrimitive.Root>)}
 		/>
 	)
 }
@@ -51,7 +56,12 @@ function TabsList({
 	)
 }
 
-function TabsTrigger({ className, ...props }: React.ComponentProps<typeof TabsPrimitive.Trigger>) {
+function TabsTrigger<T extends string>({
+	className,
+	...props
+}: Omit<React.ComponentProps<typeof TabsPrimitive.Trigger>, 'value'> & {
+	value: T
+}) {
 	return (
 		<TabsPrimitive.Trigger
 			data-slot="tabs-trigger"
@@ -62,17 +72,22 @@ function TabsTrigger({ className, ...props }: React.ComponentProps<typeof TabsPr
 				'after:absolute after:bg-foreground after:opacity-0 after:transition-opacity group-data-horizontal/tabs:after:inset-x-0 group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-right-1 group-data-horizontal/tabs:after:-bottom-1.25 group-data-horizontal/tabs:after:h-0.5 group-data-vertical/tabs:after:w-0.5 group-data-[variant=line]/tabs-list:data-active:after:opacity-100',
 				className,
 			)}
-			{...props}
+			{...(props as React.ComponentProps<typeof TabsPrimitive.Trigger>)}
 		/>
 	)
 }
 
-function TabsContent({ className, ...props }: React.ComponentProps<typeof TabsPrimitive.Content>) {
+function TabsContent<T extends string>({
+	className,
+	...props
+}: Omit<React.ComponentProps<typeof TabsPrimitive.Content>, 'value'> & {
+	value: T
+}) {
 	return (
 		<TabsPrimitive.Content
 			data-slot="tabs-content"
 			className={cn('flex-1 text-sm outline-none', className)}
-			{...props}
+			{...(props as React.ComponentProps<typeof TabsPrimitive.Content>)}
 		/>
 	)
 }

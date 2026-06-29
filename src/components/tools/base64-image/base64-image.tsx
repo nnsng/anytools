@@ -3,8 +3,10 @@ import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { DecodeTab } from './decode-tab'
 import { EncodeTab } from './encode-tab'
 
+type ActiveTab = 'encode' | 'decode'
+
 export default function Base64Image() {
-	const [activeTab, setActiveTab] = useState<string>('encode')
+	const [activeTab, setActiveTab] = useState<ActiveTab>('encode')
 
 	return (
 		<div className="flex flex-col gap-4">

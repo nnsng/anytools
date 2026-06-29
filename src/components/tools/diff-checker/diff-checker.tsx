@@ -16,6 +16,8 @@ const viewOptions = [
 	{ value: 'side-by-side', label: 'Side by Side' },
 ]
 
+type DiffMode = 'inline' | 'side-by-side'
+
 export default function DiffChecker() {
 	const [textA, setTextA] = useState<string>(
 		'const user = {\n  name: "Neo",\n  role: "The One",\n  skills: ["Kung Fu", "Flight"]\n};\nconsole.log(user);',
@@ -23,7 +25,7 @@ export default function DiffChecker() {
 	const [textB, setTextB] = useState<string>(
 		'const user = {\n  name: "Thomas Anderson",\n  role: "Developer",\n  skills: ["Kung Fu", "Flight", "Hacking"],\n  status: "active"\n};\nconsole.log(user);',
 	)
-	const [diffMode, setDiffMode] = useState<string>('inline')
+	const [diffMode, setDiffMode] = useState<DiffMode>('inline')
 
 	const [diffs, setDiffs] = useState<[number, string][]>([])
 

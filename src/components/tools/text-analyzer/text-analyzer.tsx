@@ -3,7 +3,31 @@ import { BorderBox } from '@/components/tools/shared'
 import { EditorPane } from '@/components/tools/shared/editor-pane'
 import { APP_NAME } from '@/constants/app'
 
-function calculateStats(text: string) {
+type LetterFrequency = {
+	char: string
+	count: number
+	pct: number
+}
+type WordFrequency = {
+	word: string
+	count: number
+	pct: number
+}
+
+type Stats = {
+	charsWithSpaces: number
+	charsNoSpaces: number
+	words: number
+	sentences: number
+	paragraphs: number
+	lines: number
+	readTime: number
+	speakTime: number
+	letterFreq: LetterFrequency[]
+	wordFreq: WordFrequency[]
+}
+
+function calculateStats(text: string): Stats {
 	if (!text) {
 		return {
 			charsWithSpaces: 0,
@@ -14,8 +38,8 @@ function calculateStats(text: string) {
 			lines: 0,
 			readTime: 0,
 			speakTime: 0,
-			letterFreq: [] as { char: string; count: number; pct: number }[],
-			wordFreq: [] as { word: string; count: number; pct: number }[],
+			letterFreq: [],
+			wordFreq: [],
 		}
 	}
 

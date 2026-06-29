@@ -9,13 +9,16 @@ import {
 	SelectValue,
 } from '@/components/ui/select'
 
+type SortOrder = 'none' | 'asc' | 'desc'
+type Separator = 'newline' | 'comma' | 'semicolon'
+
 function deduplicate(
 	text: string,
 	caseSensitive: boolean,
 	trimWhitespace: boolean,
 	removeEmpty: boolean,
-	sortOrder: string,
-	separator: string,
+	sortOrder: SortOrder,
+	separator: Separator,
 ): string {
 	if (!text) return ''
 
@@ -70,8 +73,8 @@ export default function Dedupe() {
 	const [caseSensitive, setCaseSensitive] = useState<boolean>(true)
 	const [trimWhitespace, setTrimWhitespace] = useState<boolean>(true)
 	const [removeEmpty, setRemoveEmpty] = useState<boolean>(true)
-	const [sortOrder, setSortOrder] = useState<string>('none')
-	const [separator, setSeparator] = useState<string>('newline')
+	const [sortOrder, setSortOrder] = useState<SortOrder>('none')
+	const [separator, setSeparator] = useState<Separator>('newline')
 
 	useEffect(() => {
 		const result = deduplicate(
