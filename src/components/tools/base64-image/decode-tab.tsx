@@ -70,6 +70,7 @@ export function DecodeTab({ className }: DecodeTabProps) {
 			{/* Image Preview */}
 			<Pane
 				title="Decoded Image Preview"
+				dotClassName="bg-blue-500"
 				actions={
 					decodedSrc && (
 						<Button

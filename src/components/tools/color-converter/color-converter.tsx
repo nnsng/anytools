@@ -137,7 +137,7 @@ export default function ColorConverter() {
 				/>
 
 				{/* Eyedropper History */}
-				<Pane title="Color History">
+				<Pane title="Color History" dotClassName="bg-blue-500">
 					<div className="flex flex-col p-6">
 						{history.length === 0 ? (
 							<div className="py-2 text-center text-slate-600 text-xs">No history.</div>
