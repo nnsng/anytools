@@ -61,6 +61,7 @@ export function EncodeTab({ onFileChange, className }: EncodeTabProps) {
 					>
 						<input
 							type="file"
+							aria-label="Image file"
 							ref={fileInputRef}
 							className="hidden"
 							accept="image/*"

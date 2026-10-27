@@ -62,6 +62,7 @@ export function Sidebar(props: SidebarProps) {
 				<button
 					type="button"
 					onClick={() => setSidebarOpen(false)}
+					aria-label="Close navigation menu"
 					className="fixed inset-0 top-13.25 z-20 bg-black/60 backdrop-blur-xs lg:hidden"
 				/>
 			)}

@@ -216,6 +216,7 @@ export function SchemaBuilder(props: SchemaBuilderProps) {
 									className="h-8 w-8 p-0 text-slate-500 hover:text-red-500"
 									onClick={() => onRemoveField(idx)}
 									title="Remove field"
+									aria-label="Remove field"
 								>
 									<Trash2 className="h-3.5 w-3.5" />
 								</Button>

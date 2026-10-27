@@ -1,64 +1,76 @@
 # Coding Conventions
 
-Rules below are derived from how the codebase is already written. Formatting and basic lint rules are enforced by `vp check` and the pre-commit hook; this file covers what tooling does not.
+Formatting and basic lint rules are enforced by `vp check` and the pre-commit hook; this file covers what tooling does not.
 
 ## Tooling
 
 - Format/lint config lives in `vite.config.ts` (`fmt`, `lint`, `staged`). Do not add separate config files.
-- Run `pnpm check` before committing. Don't suppress a rule without a reason: `// oxlint-disable-next-line <rule> -- why`.
-- Import via the `@/*` alias; avoid `../../` that leaves a tool folder.
+- Run `pnpm check` and `pnpm test` before committing. Suppress a rule only with a reason: `// oxlint-disable-next-line <rule> -- why`.
+- Import through the `@/*` alias; use `./` only inside the same tool folder.
 
 ## Folder structure
 
 ```
 src/components/tools/<tool-id>/
-  index.ts          export { default } from './<tool-id>'   (required for React.lazy)
+  index.ts          export { default } from './<tool-id>'   (loaded by import.meta.glob)
   <tool-id>.tsx     top-level component, default export
   <part>.tsx        sub-components, named exports
-  use-<name>.ts(x)  hooks specific to the tool
+  use-<name>.ts     hooks specific to the tool (.tsx only if it contains JSX)
   utils.ts          pure logic (parse/convert/format), no React
+  utils.test.ts     tests for utils.ts, beside the file
   types.ts          types shared inside the tool
+  constants.ts      option lists and constants
+  samples.ts        sample inputs
 ```
 
-- A tool folder never imports from another tool folder. Shared UI goes to `tools/shared/`, shared logic to `src/lib/`.
-- `components/ui/` is shadcn-generated primitives only; no tool-specific code.
-- Folder and file names: kebab-case. One component per file, file named after the component.
+- A tool folder never imports from another tool folder. Cross-tool UI goes in `tools/shared/`, hooks in `src/hooks/`, pure functions in `src/lib/`.
+- `components/ui/` holds shadcn primitives only; no tool-specific code.
+- Banned helper file names: `helpers`, `<tool>-utils`, `converter`, `parsers`, `generator`. Use `utils.ts`.
 
-## Naming and exports
+## Naming
 
-- Components: PascalCase. Hooks: `useX`. Constants: `UPPER_SNAKE_CASE`. Everything else: camelCase.
-- Default export only for the tool entry component (needed by `React.lazy`). Everything else uses named exports.
-- Props type: `type XProps = {...}` declared above the component, not inline.
-- Use `type`, not `interface`, unless declaration merging is needed.
-- No `any`. If unavoidable, use `unknown` and narrow; otherwise disable the rule with a reason.
+- **Files and folders**: kebab-case (TanStack route files `__root.tsx`, `$toolId.tsx` excepted). A component file is named after its component (`editor-pane.tsx` → `EditorPane`). A tool folder name equals its id in the registry.
+- **Identifiers**: components and types PascalCase; functions and variables camelCase; hooks `useX`; module constants `UPPER_SNAKE_CASE` (`INDENT_OPTIONS`, `COPY_RESET_MS`); string-literal unions instead of enums.
+- **Types**: `type`, not `interface`, no `I` prefix; props are `<Component>Props`.
+- **Component names match the file**: the default export of `jwt-debugger.tsx` is `JwtDebugger`, not `JwtCodec`.
+- **Booleans**: `is/has/can/should` prefix (`isOpen`, `isCopied`, `hasError`). Option flags inside a settings object may stay nouns (`uppercase`).
+- **Handlers**: props `onX`, internal handlers `handleX`.
+- **Functions**: verbs (`parseJwt`, `buildIco`, `formatCss`); converters `xToY`.
+- **Exports**: named everywhere; default only for the tool entry component.
 
 ## React
 
-- Keep components focused: **~150 lines max**. When a component needs more than ~6 `useState`, extract a hook (`use-<name>.ts`) or split into sub-components.
-- Derive values during render or with `useMemo`; don't mirror props/derived data into state with an effect.
-- Async work in `useEffect` must guard against stale results (cancel flag or `AbortController`) and must be `void`-ed explicitly if not awaited.
+- Components stay focused: about 150 lines max. More than ~6 `useState` means extract a hook, group state in one object/reducer, or split into sub-components.
+- Derive values with `useMemo` (+ `useDeferredValue` for expensive ones); never mirror derived data into state through an effect.
+- Async work in effects needs a cancel flag or `AbortController`; mark intentionally un-awaited promises with `void`.
+- Heavy or CPU-bound work (regex, large diffs) runs in a Web Worker with a timeout or is debounced.
+- Heavy dependencies are loaded on demand with `import()` (see `jsqr` in QR studio).
 - List `key`s are stable ids, not array indexes, unless the list is static.
-- Business logic never lives in JSX handlers: handlers call functions from `utils.ts`.
+- Logic lives in `utils.ts`, not in handlers or JSX.
 
 ## Styling
 
 - Tailwind only; compose classes with `cn()`.
-- Use theme tokens (`text-foreground`, `text-muted-foreground`, `bg-terminal-*`, `text-matrix`) instead of raw palette colors such as `text-slate-500`, so light/dark themes both work.
+- Prefer semantic tokens (`text-foreground`, `text-muted-foreground`, `text-destructive`, `bg-terminal-*`, `text-matrix`). The `slate-100…700` shades are remapped per theme in `styles.css`, so they are theme-safe; other palette colors (`red-*`, `yellow-*`) are not, so use them only for status accents.
 - Repeated class strings (3+ uses) become a component or a `cva` variant.
 
 ## Errors and side effects
 
-- Tool input is user-typed and often invalid: parse functions return a result (`{ ok, value | error }`) or throw a typed error that the component turns into UI. No `console.*` for expected failures; show them in the tool.
-- Browser APIs (clipboard, file reading, `localStorage`) are wrapped once in a shared helper/hook, not re-implemented per tool. Wrap `localStorage` access in try/catch.
-- Everything stays client-side. Never send user input to a network endpoint.
+- Expected failures (bad user input) are returned as `{ output, error }` (`runConversion` in `src/lib/convert.ts`) and shown in the tool, not logged.
+- Browser APIs go through shared helpers: clipboard → `useCopyToClipboard`, files → `src/lib/file.ts`. Wrap `localStorage` access in try/catch.
+- Everything stays client-side; never send user input to a network endpoint.
 
 ## Security
 
-- Any HTML rendered with `dangerouslySetInnerHTML` must be sanitized first, or rendered in a sandboxed iframe (as `html-sandbox` does). Don't write a lint-disable comment claiming content is sanitized unless it is.
+- HTML rendered with `dangerouslySetInnerHTML` must be sanitized (DOMPurify) first. User-authored HTML/JS runs only in a sandboxed iframe without `allow-same-origin`.
+- Use `crypto.getRandomValues` / `crypto.randomUUID` for anything random that users may rely on.
 
-## Adding a tool (checklist)
+## Accessibility
 
-1. Create the folder per the structure above.
-2. Add an entry to `TOOLS` in `src/utils/tools-registry.ts`.
-3. Add the `React.lazy` import and `TOOL_COMPONENTS` entry in `src/routes/tools/$toolId.tsx` (same id).
-4. Put pure logic in `utils.ts` and cover it with a `utils.test.ts` (`pnpm vp test run <file>`).
+- Icon-only buttons need `aria-label`; form controls need a `<label htmlFor>` or `aria-label`; error messages use `role="alert"`; decorative elements are `aria-hidden`.
+
+## Adding a tool
+
+1. Create the folder per the structure above (`index.ts` re-exporting the default component).
+2. Add an entry to `TOOLS` in `src/utils/tools-registry.ts`; the id must equal the folder name. `src/utils/tool-components.ts` finds the component automatically and `tools-registry.test.ts` fails if the folder is missing.
+3. Put pure logic in `utils.ts` with a `utils.test.ts` (`pnpm vp test run <file>`).

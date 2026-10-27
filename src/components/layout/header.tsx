@@ -20,6 +20,8 @@ export function Header(props: HeaderProps) {
 				<button
 					type="button"
 					onClick={() => setSidebarOpen(!sidebarOpen)}
+					aria-label="Toggle navigation menu"
+					aria-expanded={sidebarOpen}
 					className="hover:border-terminal-border hover:text-matrix-glow rounded border border-transparent p-1 text-slate-400 transition-colors lg:hidden"
 				>
 					<Menu className="h-5 w-5" />
