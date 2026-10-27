@@ -1,9 +1,9 @@
 import { Check, Copy } from 'lucide-react'
-import { useState } from 'react'
 
 import { Pane } from '@/components/tools/shared/pane'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard'
 
 import { cmykToRgb, hexToRgb, hslToRgb, parseCmyk, parseHsl, parseRgb } from './color-utils'
 
@@ -30,7 +30,7 @@ export function ColorFields({
 	setCmyk,
 	updateAllFromRgb,
 }: ColorFieldsProps) {
-	const [copiedField, setCopiedField] = useState<string | null>(null)
+	const { copiedKey: copiedField, copy } = useCopyToClipboard()
 
 	const handleHexChange = (val: string) => {
 		setHex(val)
@@ -64,15 +64,7 @@ export function ColorFields({
 		}
 	}
 
-	const handleCopy = async (field: string, text: string) => {
-		try {
-			await navigator.clipboard.writeText(text)
-			setCopiedField(field)
-			setTimeout(() => setCopiedField(null), 2000)
-		} catch (err) {
-			console.error(err)
-		}
-	}
+	const handleCopy = (field: string, text: string) => copy(text, field)
 
 	return (
 		<Pane title="Color Format Translations">

@@ -1,4 +1,3 @@
-import jsQR from 'jsqr'
 import { Check, Copy, Download, Upload } from 'lucide-react'
 import QRCode from 'qrcode'
 import { useEffect, useRef, useState } from 'react'
@@ -14,6 +13,19 @@ import {
 	SelectValue,
 } from '@/components/ui/select'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard'
+import { readFileAsDataUrl } from '@/lib/file'
+
+const MAX_SCAN_DIMENSION = 1024
+
+function loadImage(src: string): Promise<HTMLImageElement> {
+	return new Promise((resolve, reject) => {
+		const img = new Image()
+		img.onload = () => resolve(img)
+		img.onerror = () => reject(new Error('Failed to load image'))
+		img.src = src
+	})
+}
 
 type TabType = 'generate' | 'scan'
 type SizeType = '128' | '256' | '384' | '512'
@@ -28,14 +40,13 @@ export default function QrCodeTool() {
 	const [errorLevel, setErrorLevel] = useState<ErrorLevelType>('M')
 	const [fgColor, setFgColor] = useState<string>('#00ff66')
 	const [bgColor, setBgColor] = useState<string>('#000000')
-	const [_copied, _setCopied] = useState<boolean>(false)
 	const [genError, setGenError] = useState<string | null>(null)
 	const [canvasElement, setCanvasElement] = useState<HTMLCanvasElement | null>(null)
 
 	// Scanner State
 	const [scanResult, setScanResult] = useState<string>('')
 	const [scanError, setScanError] = useState<string | null>(null)
-	const [scanCopied, setScanCopied] = useState<boolean>(false)
+	const { isCopied: scanCopied, copy } = useCopyToClipboard()
 	const fileInputRef = useRef<HTMLInputElement>(null)
 	const [scannedImageSrc, setScannedImageSrc] = useState<string | null>(null)
 
@@ -72,62 +83,49 @@ export default function QrCodeTool() {
 		link.click()
 	}
 
-	// Handle Copy of Text
-	const handleCopyText = async (val: string, setCopyState: (v: boolean) => void) => {
-		if (!val) return
-		try {
-			await navigator.clipboard.writeText(val)
-			setCopyState(true)
-			setTimeout(() => setCopyState(false), 2000)
-		} catch (err) {
-			console.error(err)
-		}
-	}
-
 	// Handle Scan Upload
-	const handleScanUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const file = e.target.files?.[0]
+	const handleScanUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+		const input = e.target
+		const file = input.files?.[0]
 		if (!file) return
 
 		setScanResult('')
 		setScanError(null)
 
-		const reader = new FileReader()
-		reader.onload = (event) => {
-			const dataUrl = event.target?.result as string
+		try {
+			const dataUrl = await readFileAsDataUrl(file)
 			setScannedImageSrc(dataUrl)
 
-			const img = new Image()
-			img.onload = () => {
-				const canvas = document.createElement('canvas')
-				const ctx = canvas.getContext('2d')
-				if (!ctx) {
-					setScanError('Failed to get 2D context from canvas.')
-					return
-				}
-
-				canvas.width = img.width
-				canvas.height = img.height
-				ctx.drawImage(img, 0, 0)
-
-				const imageData = ctx.getImageData(0, 0, img.width, img.height)
-				const code = jsQR(imageData.data, imageData.width, imageData.height, {
-					inversionAttempts: 'dontInvert',
-				})
-
-				if (code) {
-					setScanResult(code.data)
-					setScanError(null)
-				} else {
-					setScanError('Could not find any readable QR code in this image.')
-				}
+			const img = await loadImage(dataUrl)
+			// Large photos freeze the main thread in getImageData/jsQR, so cap the scan size
+			const scale = Math.min(1, MAX_SCAN_DIMENSION / Math.max(img.width, img.height))
+			const canvas = document.createElement('canvas')
+			canvas.width = Math.round(img.width * scale)
+			canvas.height = Math.round(img.height * scale)
+			const ctx = canvas.getContext('2d')
+			if (!ctx) {
+				setScanError('Failed to get 2D context from canvas.')
+				return
 			}
-			img.onerror = () => {
-				setScanError('Failed to load image.')
+			ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+
+			const { default: jsQR } = await import('jsqr')
+			const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+			const code = jsQR(imageData.data, imageData.width, imageData.height, {
+				inversionAttempts: 'dontInvert',
+			})
+
+			if (code) {
+				setScanResult(code.data)
+			} else {
+				setScanError('Could not find any readable QR code in this image.')
 			}
-			img.src = dataUrl
+		} catch {
+			setScanError('Failed to load image.')
+		} finally {
+			// allow re-selecting the same file
+			input.value = ''
 		}
-		reader.readAsDataURL(file)
 	}
 
 	return (
@@ -341,7 +339,7 @@ export default function QrCodeTool() {
 										<Button
 											variant="ghost"
 											size="sm"
-											onClick={() => handleCopyText(scanResult, setScanCopied)}
+											onClick={() => copy(scanResult)}
 											className="absolute top-2 right-2 h-7 w-7 p-0"
 										>
 											{scanCopied ? (

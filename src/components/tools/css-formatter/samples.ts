@@ -1,0 +1,1 @@
+export const SAMPLE = `/* CSS Demo */\nbody { background-color: #08090c; color: #ffffff; font-family: sans-serif; }\n.card { margin: 2rem auto; padding: 1.5rem; border: 1px solid rgba(34, 197, 94, 0.2); border-radius: 4px; max-width: 500px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); }\n.card h1 { font-size: 1.5rem; margin-bottom: 1rem; color: #22c55e; }`
