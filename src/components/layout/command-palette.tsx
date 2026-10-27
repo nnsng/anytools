@@ -50,7 +50,7 @@ export function CommandPalette({ className }: CommandPaletteProps) {
 	}
 
 	const handleSelect = (toolId: string) => {
-		navigate({ to: '/tools/$toolId', params: { toolId } })
+		void navigate({ to: '/tools/$toolId', params: { toolId } })
 		handleClose()
 	}
 

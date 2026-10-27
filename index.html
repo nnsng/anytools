@@ -1,9 +1,21 @@
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<script>
+			// Apply the saved theme before first paint to avoid a flash of the wrong theme
+			try {
+				var saved = localStorage.getItem('theme')
+				var isDark =
+					saved === 'dark' ||
+					(saved !== 'light' && !window.matchMedia('(prefers-color-scheme: light)').matches)
+				document.documentElement.classList.toggle('dark', isDark)
+			} catch (e) {
+				document.documentElement.classList.add('dark')
+			}
+		</script>
 		<title>Anytools - Developer Utilities Suite</title>
 	</head>
 	<body>

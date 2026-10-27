@@ -1,12 +1,12 @@
-import { TanStackDevtools } from '@tanstack/react-devtools'
 import { createRootRoute, Outlet } from '@tanstack/react-router'
-import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
-import { useState } from 'react'
+import { lazy, Suspense, useState } from 'react'
 
 import { Header, Sidebar } from '@/components/layout'
 import { ThemeProvider } from '@/contexts/theme-context'
 
 import '../styles.css'
+
+const Devtools = import.meta.env.DEV ? lazy(() => import('@/components/layout/devtools')) : null
 
 export const Route = createRootRoute({
 	component: RootComponent,
@@ -33,17 +33,11 @@ function RootComponent() {
 					</main>
 				</div>
 
-				<TanStackDevtools
-					config={{
-						position: 'bottom-right',
-					}}
-					plugins={[
-						{
-							name: 'TanStack Router',
-							render: <TanStackRouterDevtoolsPanel />,
-						},
-					]}
-				/>
+				{Devtools && (
+					<Suspense fallback={null}>
+						<Devtools />
+					</Suspense>
+				)}
 			</div>
 		</ThemeProvider>
 	)

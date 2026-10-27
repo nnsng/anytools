@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, type ErrorComponentProps } from '@tanstack/react-router'
 import { Loader2 } from 'lucide-react'
 import React, { useEffect } from 'react'
 
@@ -62,8 +62,39 @@ const TOOL_COMPONENTS: Record<string, React.ComponentType> = {
 	dedupe: Dedupe,
 }
 
+function ToolError({ error, reset }: ErrorComponentProps) {
+	return (
+		<div
+			role="alert"
+			className="border-destructive/30 bg-destructive/10 mx-auto my-12 max-w-2xl rounded border p-8 text-center font-mono"
+		>
+			<h2 className="text-destructive mb-4 text-xl font-bold">ERROR: MODULE_CRASHED</h2>
+			<p className="text-muted-foreground mb-6 text-sm">
+				{error instanceof Error ? error.message : String(error)}
+			</p>
+			<div className="flex justify-center gap-3">
+				<button
+					type="button"
+					onClick={reset}
+					className="border-destructive/50 text-destructive cursor-pointer rounded border px-4 py-2 text-xs"
+				>
+					Retry
+				</button>
+				<button
+					type="button"
+					onClick={() => window.location.reload()}
+					className="border-terminal-border text-muted-foreground cursor-pointer rounded border px-4 py-2 text-xs"
+				>
+					Reload page
+				</button>
+			</div>
+		</div>
+	)
+}
+
 export const Route = createFileRoute('/tools/$toolId')({
 	component: ToolContainer,
+	errorComponent: ToolError,
 })
 
 function ToolContainer() {
@@ -92,8 +123,7 @@ function ToolContainer() {
 		)
 	}
 
-	const Component =
-		TOOL_COMPONENTS[tool.id] || (() => <ToolStub toolId={tool.id} name={tool.name} />)
+	const Component = TOOL_COMPONENTS[tool.id]
 
 	return (
 		<div className="animate-fade-in mx-auto flex w-full max-w-7xl flex-1 flex-col gap-4 p-4 md:p-6 lg:h-full lg:min-h-0 lg:p-8">
@@ -123,7 +153,7 @@ function ToolContainer() {
 						</div>
 					}
 				>
-					<Component />
+					{Component ? <Component /> : <ToolStub toolId={tool.id} name={tool.name} />}
 				</React.Suspense>
 			</div>
 		</div>

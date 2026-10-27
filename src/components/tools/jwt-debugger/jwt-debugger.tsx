@@ -146,7 +146,7 @@ export default function JwtCodec() {
 			const headerStr = base64urlDecode(parts[0])
 			const parsedHeader = JSON.parse(headerStr)
 			alg = parsedHeader.alg || ''
-		} catch (_e) {
+		} catch {
 			setSignatureStatus('unchecked')
 			return
 		}
@@ -179,7 +179,7 @@ export default function JwtCodec() {
 				parsed.alg = encodeAlg
 				setHeaderJson(JSON.stringify(parsed, null, 2))
 			}
-		} catch (_e) {
+		} catch {
 			// ignore malformed JSON temporarily while typing
 		}
 	}, [encodeAlg, headerJson])
