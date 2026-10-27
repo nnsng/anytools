@@ -1,3 +1,4 @@
+import { format } from 'date-fns'
 import { useMemo, useState } from 'react'
 
 import { DateToEpoch } from './date-to-epoch'
@@ -8,8 +9,8 @@ import { convertDate, convertEpoch, currentEpochSeconds } from './utils'
 export default function TimestampConverter() {
 	const [inputEpoch, setInputEpoch] = useState<string>(() => currentEpochSeconds().toString())
 	const [inputDate, setInputDate] = useState<string>(() =>
-		new Date().toISOString().substring(0, 16),
-	) // YYYY-MM-DDTHH:MM
+		format(new Date(), "yyyy-MM-dd'T'HH:mm:ss"),
+	)
 
 	const { results: epochResults, error: epochError } = useMemo(
 		() => convertEpoch(inputEpoch),
