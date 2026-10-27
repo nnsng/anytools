@@ -1,6 +1,7 @@
 import { Pane } from '@/components/tools/shared/pane'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { ERROR_BOX_CLASS } from '@/lib/styles'
 import { cn } from '@/lib/utils'
 
 type RegexFlags = {
@@ -25,7 +26,7 @@ export function RegexInput(props: RegexInputProps) {
 	const { pattern, setPattern, flags, handleFlagToggle, regexError, className } = props
 
 	return (
-		<Pane title="RegExp Expression" className={className}>
+		<Pane title="RegExp Expression" className={cn('shrink-0', className)}>
 			<div className="space-y-4 p-6">
 				<div className="flex flex-col items-stretch gap-4 md:flex-row">
 					<div className="border-terminal-border bg-terminal-bg flex flex-1 items-center rounded-sm border px-3">
@@ -66,11 +67,7 @@ export function RegexInput(props: RegexInputProps) {
 					</div>
 				</div>
 
-				{regexError && (
-					<p className="rounded border border-red-500/20 bg-red-950/20 p-2 text-xs text-red-400">
-						{regexError}
-					</p>
-				)}
+				{regexError && <p className={cn(ERROR_BOX_CLASS, 'p-2 text-xs')}>{regexError}</p>}
 			</div>
 		</Pane>
 	)
