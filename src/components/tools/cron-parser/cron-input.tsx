@@ -26,6 +26,7 @@ export function CronInput(props: CronInputProps) {
 				<div className="flex flex-col items-stretch gap-4 md:flex-row">
 					<div className="grow">
 						<Input
+							aria-label="Cron expression"
 							value={cronString}
 							onChange={(e) => setCronString(e.target.value)}
 							placeholder="e.g. * * * * *"
