@@ -1,5 +1,5 @@
 import { diff_match_patch as DiffMatchPatch } from 'diff-match-patch'
-import { useEffect, useState } from 'react'
+import { useDeferredValue, useMemo, useState } from 'react'
 
 import { Pane } from '@/components/tools/shared'
 import { EditorPane } from '@/components/tools/shared/editor-pane'
@@ -20,6 +20,10 @@ const viewOptions = [
 
 type DiffMode = 'inline' | 'side-by-side'
 
+const dmp = new DiffMatchPatch()
+// Bound worst-case diff time (seconds) so huge inputs fall back to a coarser diff
+dmp.Diff_Timeout = 0.5
+
 export default function DiffChecker() {
 	const [textA, setTextA] = useState<string>(
 		'const user = {\n  name: "Neo",\n  role: "The One",\n  skills: ["Kung Fu", "Flight"]\n};\nconsole.log(user);',
@@ -29,14 +33,14 @@ export default function DiffChecker() {
 	)
 	const [diffMode, setDiffMode] = useState<DiffMode>('inline')
 
-	const [diffs, setDiffs] = useState<[number, string][]>([])
+	const deferredA = useDeferredValue(textA)
+	const deferredB = useDeferredValue(textB)
 
-	useEffect(() => {
-		const dmp = new DiffMatchPatch()
-		const computedDiffs = dmp.diff_main(textA, textB)
+	const diffs = useMemo(() => {
+		const computedDiffs = dmp.diff_main(deferredA, deferredB)
 		dmp.diff_cleanupSemantic(computedDiffs)
-		setDiffs(computedDiffs)
-	}, [textA, textB])
+		return computedDiffs
+	}, [deferredA, deferredB])
 
 	const DiffComponent = diffMode === 'inline' ? InlineDiffView : SideBySideView
 

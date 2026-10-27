@@ -1,67 +1,60 @@
 import { CronExpressionParser } from 'cron-parser'
-import { useCallback, useEffect, useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { CronBreakdown } from './cron-breakdown'
 import { CronInput } from './cron-input'
 import { CronSchedule } from './cron-schedule'
 import { describeCronPart } from './cron-utils'
 
+type CronExplanation = {
+	minute: string
+	hour: string
+	dayOfMonth: string
+	month: string
+	dayOfWeek: string
+}
+
+type CronResult = {
+	error: string | null
+	nextRuns: string[]
+	explanation: CronExplanation | null
+}
+
+const NEXT_RUN_COUNT = 5
+
+function parseCron(expression: string): CronResult {
+	const expr = expression.trim()
+	if (!expr) return { error: null, nextRuns: [], explanation: null }
+
+	try {
+		const interval = CronExpressionParser.parse(expr)
+		const nextRuns = Array.from({ length: NEXT_RUN_COUNT }, () => interval.next().toString())
+
+		const parts = expr.split(/\s+/)
+		const explanation =
+			parts.length >= 5
+				? {
+						minute: describeCronPart(parts[0], 'minute'),
+						hour: describeCronPart(parts[1], 'hour'),
+						dayOfMonth: describeCronPart(parts[2], 'day of month'),
+						month: describeCronPart(parts[3], 'month'),
+						dayOfWeek: describeCronPart(parts[4], 'day of week'),
+					}
+				: null
+
+		return { error: null, nextRuns, explanation }
+	} catch (err) {
+		return {
+			error: err instanceof Error ? err.message : 'Invalid cron expression',
+			nextRuns: [],
+			explanation: null,
+		}
+	}
+}
+
 export default function CronParser() {
 	const [cronString, setCronString] = useState<string>('* * * * *')
-	const [error, setError] = useState<string | null>(null)
-	const [nextRuns, setNextRuns] = useState<string[]>([])
-	const [explanation, setExplanation] = useState<{
-		minute: string
-		hour: string
-		dayOfMonth: string
-		month: string
-		dayOfWeek: string
-	} | null>(null)
-
-	const parseCron = useCallback((expression: string) => {
-		const expr = expression.trim()
-		if (!expr) {
-			setError(null)
-			setNextRuns([])
-			setExplanation(null)
-			return
-		}
-
-		try {
-			// Parse expression
-			const interval = CronExpressionParser.parse(expr)
-			setError(null)
-
-			// Calculate next 5 runs
-			const runs: string[] = []
-			for (let i = 0; i < 5; i++) {
-				runs.push(interval.next().toString())
-			}
-			setNextRuns(runs)
-
-			// Break down columns
-			const parts = expr.split(/\s+/)
-			if (parts.length >= 5) {
-				setExplanation({
-					minute: describeCronPart(parts[0], 'minute'),
-					hour: describeCronPart(parts[1], 'hour'),
-					dayOfMonth: describeCronPart(parts[2], 'day of month'),
-					month: describeCronPart(parts[3], 'month'),
-					dayOfWeek: describeCronPart(parts[4], 'day of week'),
-				})
-			} else {
-				setExplanation(null)
-			}
-		} catch (err) {
-			setError(err instanceof Error ? err.message : 'Invalid cron expression')
-			setNextRuns([])
-			setExplanation(null)
-		}
-	}, [])
-
-	useEffect(() => {
-		parseCron(cronString)
-	}, [cronString, parseCron])
+	const { error, nextRuns, explanation } = useMemo(() => parseCron(cronString), [cronString])
 
 	return (
 		<div className="flex flex-1 flex-col gap-6">

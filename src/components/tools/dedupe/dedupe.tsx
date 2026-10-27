@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useDeferredValue, useMemo, useState } from 'react'
 
 import { CodeBlock, EditorPane, Pane } from '@/components/tools/shared'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -10,84 +10,25 @@ import {
 	SelectValue,
 } from '@/components/ui/select'
 
-type SortOrder = 'none' | 'asc' | 'desc'
-type Separator = 'newline' | 'comma' | 'semicolon'
-
-function deduplicate(
-	text: string,
-	caseSensitive: boolean,
-	trimWhitespace: boolean,
-	removeEmpty: boolean,
-	sortOrder: SortOrder,
-	separator: Separator,
-): string {
-	if (!text) return ''
-
-	let items: string[] = []
-	if (separator === 'comma') {
-		items = text.split(',')
-	} else if (separator === 'semicolon') {
-		items = text.split(';')
-	} else {
-		items = text.split(/\r?\n/)
-	}
-
-	if (trimWhitespace) {
-		items = items.map((item) => item.trim())
-	}
-
-	if (removeEmpty) {
-		items = items.filter((item) => item.length > 0)
-	}
-
-	const seen = new Set<string>()
-	const result: string[] = []
-
-	for (const item of items) {
-		const key = caseSensitive ? item : item.toLowerCase()
-		if (!seen.has(key)) {
-			seen.add(key)
-			result.push(item)
-		}
-	}
-
-	if (sortOrder === 'asc') {
-		result.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }))
-	} else if (sortOrder === 'desc') {
-		result.sort((a, b) => b.localeCompare(a, undefined, { sensitivity: 'base' }))
-	}
-
-	if (separator === 'comma') {
-		return result.join(', ')
-	}
-	if (separator === 'semicolon') {
-		return result.join('; ')
-	}
-	return result.join('\n')
-}
+import { deduplicate, type Separator, type SortOrder } from './utils'
 
 export default function Dedupe() {
 	const [input, setInput] = useState<string>(
 		'apple\nBanana\napple\norange\nbanana\n  orange  \n\npear',
 	)
-	const [output, setOutput] = useState<string>('')
 	const [caseSensitive, setCaseSensitive] = useState<boolean>(true)
 	const [trimWhitespace, setTrimWhitespace] = useState<boolean>(true)
 	const [removeEmpty, setRemoveEmpty] = useState<boolean>(true)
 	const [sortOrder, setSortOrder] = useState<SortOrder>('none')
 	const [separator, setSeparator] = useState<Separator>('newline')
 
-	useEffect(() => {
-		const result = deduplicate(
-			input,
-			caseSensitive,
-			trimWhitespace,
-			removeEmpty,
-			sortOrder,
-			separator,
-		)
-		setOutput(result)
-	}, [input, caseSensitive, trimWhitespace, removeEmpty, sortOrder, separator])
+	const deferredInput = useDeferredValue(input)
+
+	const output = useMemo(
+		() =>
+			deduplicate(deferredInput, caseSensitive, trimWhitespace, removeEmpty, sortOrder, separator),
+		[deferredInput, caseSensitive, trimWhitespace, removeEmpty, sortOrder, separator],
+	)
 
 	return (
 		<div className="flex flex-1 flex-col gap-6">
