@@ -2,6 +2,7 @@ import { createFileRoute, type ErrorComponentProps } from '@tanstack/react-route
 import { Loader2 } from 'lucide-react'
 import React, { useEffect } from 'react'
 
+import { NotFound } from '@/components/layout'
 import { ToolStub } from '@/components/tools/shared/tool-stub'
 import { APP_NAME } from '@/constants/app'
 import { getToolComponent } from '@/utils/tool-components'
@@ -57,17 +58,13 @@ function ToolContainer() {
 
 	if (!tool) {
 		return (
-			<div className="mx-auto my-12 max-w-2xl rounded border border-red-500/30 bg-red-950/20 p-8 text-center font-mono">
-				<h2 className="mb-4 text-xl font-bold text-red-500">ERROR 404: MODULE_NOT_FOUND</h2>
-				<p className="mb-6 text-sm text-slate-400">
+			<NotFound>
+				<p>
 					The requested system utility{' '}
 					<code className="rounded bg-red-900/30 px-1 py-0.5 text-red-300">{toolId}</code> is not
 					registered in the system index.
 				</p>
-				<div className="inline-block rounded border border-red-500/50 bg-red-900/20 px-4 py-2 text-xs text-red-400">
-					$ cd /bin && ./run {toolId} --verbose
-				</div>
-			</div>
+			</NotFound>
 		)
 	}
 

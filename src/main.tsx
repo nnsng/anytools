@@ -1,12 +1,15 @@
 import { createRouter, RouterProvider } from '@tanstack/react-router'
 import ReactDOM from 'react-dom/client'
 
+import { NotFound } from '@/components/layout'
+
 import { routeTree } from './routeTree.gen'
 
 const router = createRouter({
 	routeTree,
 	defaultPreload: 'intent',
 	scrollRestoration: true,
+	defaultNotFoundComponent: () => <NotFound />,
 })
 
 declare module '@tanstack/react-router' {
