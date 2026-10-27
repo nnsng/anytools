@@ -22,8 +22,6 @@ The workspace is packed with multiple essential tools categorized for everyday d
 ### ⚙️ Development Utilities
 
 - **Cron Parser:** Decode complex cron job expressions into clear, readable schedules with upcoming execution lists.
-- **cURL-to-Code:** Translate raw bash `curl` requests into modern JavaScript `fetch` or Axios promises instantly.
-- **JSON-to-TypeScript:** Generate complete TS type declarations and interfaces straight from an active JSON payload.
 - **JWT Debugger:** Decode token headers, payloads, signatures, and verify lifetime periods completely client-side.
 - **Diff Checker:** Compare two blocks of code or text files side-by-side with clear color-coded inline adjustments.
 - **Regex Tester:** Draft, debug, and test active regular expressions with syntax highlighting against matching content.
