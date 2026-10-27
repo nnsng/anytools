@@ -12,6 +12,8 @@ The workspace is packed with multiple essential tools categorized for everyday d
 - **URL Encoder & Decoder:** Securely parse and format deep link query parameters.
 - **HTML Entity Encoder:** Safely escape special characters to avoid cross-site scripting issues.
 - **String Case Converter:** Instantly switch text cases between camelCase, snake_case, PascalCase, kebab-case, etc.
+- **Timestamp Converter:** Convert Unix epoch timestamps to readable dates and back, with a live epoch clock.
+- **Color Converter:** Convert colors between HEX, RGB, HSL and CMYK with a picker and eyedropper.
 - **Text Analyzer:** Count characters, words, sentences, and run structural readability statistics on paragraphs.
 
 ### 🧹 Code Formatters
@@ -29,6 +31,7 @@ The workspace is packed with multiple essential tools categorized for everyday d
 ### 🎨 Generators & Studios
 
 - **Mock Data Generator:** Rapidly craft mock schemas, JSON objects, and dummy database entities using Faker.js.
+- **UUID Generator:** Generate v1 and v4 UUIDs in bulk.
 - **Secure Password Generator:** Create highly customized, cryptographic-grade password phrases.
 - **Favicon Generator:** Build optimized, multi-sized web favicons and standard `.ico` bundles from images.
 - **QR Code Studio:** Generate dynamic, high-resolution QR codes with customizable colors, sizing, and error-correction levels.
@@ -56,7 +59,7 @@ The workspace is packed with multiple essential tools categorized for everyday d
 
 ### Prerequisites
 
-Ensure you have [Node.js](https://nodejs.org/) (v22.18+ or v24.11+, required by Vite+) and [pnpm](https://pnpm.io/) installed on your machine.
+Ensure you have [Node.js](https://nodejs.org/) (v22.18+ or v24.11+, required by Vite+; `.nvmrc` pins 24) and [pnpm](https://pnpm.io/) installed on your machine.
 
 ### Installation
 
@@ -109,10 +112,4 @@ pnpm test
 
 ## 🌐 Deploying to Vercel
 
-This project includes a native `vercel.json` rewrite schema suited for Single Page Application (SPA) routing, allowing nested TanStack routes to re-route correctly directly in the client:
-
-```json
-{
-	"rewrites": [{ "source": "/(.*)", "destination": "/" }]
-}
-```
+[vercel.json](vercel.json) configures the build (`pnpm build`, output `dist/`), a rewrite of every path to `index.html` so nested TanStack routes work as a single-page app, long-lived caching for `/assets/*`, and security headers (`X-Content-Type-Options`, `Referrer-Policy`, `X-Frame-Options`, `Permissions-Policy`).
