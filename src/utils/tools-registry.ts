@@ -17,6 +17,7 @@ import {
 	Link,
 	type LucideIcon,
 	Palette,
+	Pilcrow,
 	QrCode,
 	Shield,
 	Type,
@@ -162,6 +163,14 @@ export const TOOLS: ToolMetadata[] = [
 		category: 'Generators',
 		icon: Key,
 		tags: ['password', 'generator', 'random'],
+	},
+	{
+		id: 'lorem-ipsum',
+		name: 'Lorem Ipsum Generator',
+		description: 'Generate placeholder paragraphs, sentences or words.',
+		category: 'Generators',
+		icon: Pilcrow,
+		tags: ['lorem', 'ipsum', 'placeholder', 'text', 'dummy', 'generator'],
 	},
 	{
 		id: 'mock-data-generator',
