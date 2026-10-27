@@ -60,7 +60,7 @@ export default function NumberBaseConverter() {
 	}
 
 	return (
-		<Pane title="Number Base Converter">
+		<Pane title="Number Base Converter" className="h-fit">
 			<div className="flex flex-col gap-6 p-6">
 				<div className="space-y-4">
 					{fields.map((field) => {

@@ -182,7 +182,7 @@ export default function LoremIpsum() {
 				readOnly={true}
 				allowDownload={true}
 				downloadFileName={options.format === 'html' ? 'lorem-ipsum.html' : 'lorem-ipsum.txt'}
-				className="min-h-80 lg:flex-7"
+				className="min-h-120 lg:flex-7"
 			/>
 		</div>
 	)

@@ -13,6 +13,9 @@ The workspace is packed with multiple essential tools categorized for everyday d
 - **HTML Entity Encoder:** Safely escape special characters to avoid cross-site scripting issues.
 - **String Case Converter:** Instantly switch text cases between camelCase, snake_case, PascalCase, kebab-case, etc.
 - **Timestamp Converter:** Convert Unix epoch timestamps to readable dates and back, with a live epoch clock.
+- **Number Base Converter:** Convert integers between binary, octal, decimal, hex and any base up to 36, with exact big-number support.
+- **JSON ⇄ CSV:** Convert between JSON and CSV with delimiter, header, nested-object flattening and type inference options.
+- **JSON ⇄ YAML:** Convert between JSON and YAML, with line and column positions for YAML syntax errors.
 - **Color Converter:** Convert colors between HEX, RGB, HSL and CMYK with a picker and eyedropper.
 - **Text Analyzer:** Count characters, words, sentences, and run structural readability statistics on paragraphs.
 
@@ -26,11 +29,13 @@ The workspace is packed with multiple essential tools categorized for everyday d
 - **Cron Parser:** Decode complex cron job expressions into clear, readable schedules with upcoming execution lists.
 - **JWT Debugger:** Decode token headers, payloads, signatures, and verify lifetime periods completely client-side.
 - **Diff Checker:** Compare two blocks of code or text files side-by-side with clear color-coded inline adjustments.
+- **CSS Generator:** Build multi-layer box shadows, linear/radial/conic gradients and fluid `clamp()` sizes with a live preview.
 - **Regex Tester:** Draft, debug, and test active regular expressions with syntax highlighting against matching content.
 
 ### 🎨 Generators & Studios
 
 - **Mock Data Generator:** Rapidly craft mock schemas, JSON objects, and dummy database entities using Faker.js.
+- **Lorem Ipsum Generator:** Generate placeholder paragraphs, sentences or words as plain text or HTML.
 - **UUID Generator:** Generate v1 and v4 UUIDs in bulk.
 - **Secure Password Generator:** Create highly customized, cryptographic-grade password phrases.
 - **Favicon Generator:** Build optimized, multi-sized web favicons and standard `.ico` bundles from images.
