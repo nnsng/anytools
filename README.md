@@ -115,6 +115,6 @@ This project includes a native `vercel.json` rewrite schema suited for Single Pa
 
 ```json
 {
-	"rewrites": [{ "source": "/(.*)", "destination": "/" }]
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
 }
 ```

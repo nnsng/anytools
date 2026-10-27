@@ -16,6 +16,13 @@ const config = defineConfig({
 		ignorePatterns: ['src/routeTree.gen.ts', 'src/styles.css'],
 		sortImports: {},
 		sortTailwindcss: { functions: ['clsx', 'cn'] },
+		// Non-code files keep the 2-space indent their tooling generates
+		overrides: [
+			{
+				files: ['*.json', '*.jsonc', '*.html', '*.md', '*.yaml', '*.yml'],
+				options: { useTabs: false, tabWidth: 2 },
+			},
+		],
 	},
 	lint: {
 		ignorePatterns: ['src/routeTree.gen.ts'],

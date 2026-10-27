@@ -1,15 +1,15 @@
 {
-	"short_name": "Anytools",
-	"name": "Anytools - Developer Utilities Suite",
-	"icons": [
-		{
-			"src": "favicon.svg",
-			"sizes": "any",
-			"type": "image/svg+xml"
-		}
-	],
-	"start_url": ".",
-	"display": "standalone",
-	"theme_color": "#08090c",
-	"background_color": "#08090c"
+  "short_name": "Anytools",
+  "name": "Anytools - Developer Utilities Suite",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#08090c",
+  "background_color": "#08090c"
 }
