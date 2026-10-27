@@ -2,6 +2,7 @@ import {
 	Binary,
 	Braces,
 	CalendarRange,
+	Calculator,
 	Clock,
 	Code2,
 	CopyMinus,
@@ -89,6 +90,14 @@ export const TOOLS: ToolMetadata[] = [
 		category: 'Converters & Encoders',
 		icon: Palette,
 		tags: ['color', 'converter', 'picker', 'hex', 'rgb'],
+	},
+	{
+		id: 'number-base-converter',
+		name: 'Number Base Converter',
+		description: 'Convert integers between binary, octal, decimal, hex and any base up to 36.',
+		category: 'Converters & Encoders',
+		icon: Calculator,
+		tags: ['number', 'base', 'binary', 'hex', 'octal', 'decimal', 'radix', 'converter'],
 	},
 
 	// ==========================================
