@@ -20,6 +20,7 @@ import {
 	Pilcrow,
 	QrCode,
 	Shield,
+	Table,
 	Type,
 } from 'lucide-react'
 
@@ -99,6 +100,14 @@ export const TOOLS: ToolMetadata[] = [
 		category: 'Converters & Encoders',
 		icon: Calculator,
 		tags: ['number', 'base', 'binary', 'hex', 'octal', 'decimal', 'radix', 'converter'],
+	},
+	{
+		id: 'json-csv',
+		name: 'JSON ⇄ CSV',
+		description: 'Convert between JSON and CSV with delimiter, header and type options.',
+		category: 'Converters & Encoders',
+		icon: Table,
+		tags: ['json', 'csv', 'converter', 'table', 'spreadsheet', 'excel'],
 	},
 
 	// ==========================================
