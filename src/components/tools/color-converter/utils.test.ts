@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vite-plus/test'
 
-import { hexToRgb, parseCmyk, parseRgb, rgbToHex } from './utils'
+import { hexToRgb } from '@/lib/color'
+
+import { parseCmyk, parseRgb, rgbToHex } from './utils'
 
 describe('color utils', () => {
 	it('parses 3 and 6 digit hex', () => {

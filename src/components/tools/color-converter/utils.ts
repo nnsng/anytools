@@ -1,22 +1,3 @@
-export function hexToRgb(h: string): { r: number; g: number; b: number } | null {
-	const cleanHex = h.replace('#', '').trim()
-	if (cleanHex.length !== 3 && cleanHex.length !== 6) return null
-
-	let r = 0,
-		g = 0,
-		b = 0
-	if (cleanHex.length === 3) {
-		r = parseInt(cleanHex.charAt(0).repeat(2), 16)
-		g = parseInt(cleanHex.charAt(1).repeat(2), 16)
-		b = parseInt(cleanHex.charAt(2).repeat(2), 16)
-	} else {
-		r = parseInt(cleanHex.substring(0, 2), 16)
-		g = parseInt(cleanHex.substring(2, 4), 16)
-		b = parseInt(cleanHex.substring(4, 6), 16)
-	}
-	return { r, g, b }
-}
-
 export function rgbToHsl(r: number, g: number, b: number) {
 	r /= 255
 	g /= 255

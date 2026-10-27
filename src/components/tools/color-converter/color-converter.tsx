@@ -4,9 +4,10 @@ import { useState } from 'react'
 import { Pane } from '@/components/tools/shared/pane'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { hexToRgb } from '@/lib/color'
 
 import { ColorFields } from './color-fields'
-import { hexToRgb, rgbToCmyk, rgbToHex, rgbToHsl } from './utils'
+import { rgbToCmyk, rgbToHex, rgbToHsl } from './utils'
 
 type ColorHistoryItem = {
 	hex: string
