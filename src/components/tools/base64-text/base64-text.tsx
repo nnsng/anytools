@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useDeferredValue, useMemo, useState } from 'react'
 
 import { EditorPane } from '@/components/tools/shared/editor-pane'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { APP_NAME } from '@/constants/app'
+import { runConversion } from '@/lib/convert'
 
 const utf8Btoa = (str: string): string => {
 	return btoa(
@@ -25,55 +26,28 @@ const utf8Atob = (str: string): string => {
 
 type ActiveTab = 'encode' | 'decode'
 
-export default function Base64String() {
+export default function Base64Text() {
 	const [input, setInput] = useState<string>(`Welcome to ${APP_NAME}!`)
-	const [output, setOutput] = useState<string>('')
-	const [error, setError] = useState<string | null>(null)
 	const [activeTab, setActiveTab] = useState<ActiveTab>('encode')
 
-	useEffect(() => {
-		const handleConvert = (val: string, mode: ActiveTab) => {
-			if (!val) {
-				setOutput('')
-				setError(null)
-				return
-			}
+	const deferredInput = useDeferredValue(input)
 
-			try {
-				if (mode === 'encode') {
-					const encoded = utf8Btoa(val)
-					setOutput(encoded)
-					setError(null)
-				} else {
-					// Basic check for base64 characters
-					const cleanVal = val.trim().replace(/\s/g, '')
-					if (!/^[A-Za-z0-9+/=]*$/.test(cleanVal)) {
-						throw new Error('Invalid Base64 characters detected')
-					}
-					const decoded = utf8Atob(cleanVal)
-					setOutput(decoded)
-					setError(null)
-				}
-			} catch (err) {
-				setError(
-					err instanceof Error
-						? err.message
-						: 'Decryption/decoding failed. Make sure the input is a valid Base64 string.',
-				)
-				setOutput('')
+	const { output, error } = useMemo(() => {
+		if (!deferredInput) return { output: '', error: null }
+		return runConversion(() => {
+			if (activeTab === 'encode') return utf8Btoa(deferredInput)
+			const cleanValue = deferredInput.trim().replace(/\s/g, '')
+			if (!/^[A-Za-z0-9+/=]*$/.test(cleanValue)) {
+				throw new Error('Invalid Base64 characters detected')
 			}
-		}
-
-		handleConvert(input, activeTab)
-	}, [input, activeTab])
+			return utf8Atob(cleanValue)
+		}, 'Decryption/decoding failed. Make sure the input is a valid Base64 string.')
+	}, [deferredInput, activeTab])
 
 	// Swap input and output on tab switch
 	const handleTabChange = (newTab: ActiveTab) => {
 		setActiveTab(newTab)
-		if (output && !error) {
-			setInput(output)
-			setOutput(input)
-		}
+		if (output && !error) setInput(output)
 	}
 
 	return (

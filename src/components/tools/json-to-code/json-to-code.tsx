@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useDeferredValue, useMemo, useState } from 'react'
 
 import { CodeBlock, EditorPane } from '@/components/tools/shared'
 import { Input } from '@/components/ui/input'
+import { runConversion } from '@/lib/convert'
 
 import { generateTsInterfaces } from './ts-generator'
 
@@ -10,28 +11,16 @@ export default function JsonToCode() {
 		`{\n  "id": 101,\n  "title": "Inception",\n  "released": true,\n  "ratings": [8.8, 9.0, 8.5],\n  "director": {\n    "name": "Christopher Nolan",\n    "age": 53\n  },\n  "cast": [\n    {\n      "actor": "Leonardo DiCaprio",\n      "character": "Cobb"\n    }\n  ]\n}`,
 	)
 	const [interfaceName, setInterfaceName] = useState<string>('Movie')
-	const [codeOutput, setCodeOutput] = useState<string>('')
-	const [error, setError] = useState<string | null>(null)
 
-	useEffect(() => {
-		if (!jsonInput.trim()) {
-			setCodeOutput('')
-			setError(null)
-			return
-		}
+	const deferredJson = useDeferredValue(jsonInput)
 
-		try {
+	const { output: codeOutput, error } = useMemo(() => {
+		if (!deferredJson.trim()) return { output: '', error: null }
+		return runConversion(() => {
 			const formattedName = interfaceName.trim().replace(/[^a-zA-Z0-9]/g, '') || 'RootObject'
-			const generated = generateTsInterfaces(jsonInput, formattedName)
-			setCodeOutput(generated)
-			setError(null)
-		} catch (err) {
-			setError(
-				err instanceof Error ? err.message : 'Failed to parse JSON. Please check your syntax.',
-			)
-			setCodeOutput('')
-		}
-	}, [jsonInput, interfaceName])
+			return generateTsInterfaces(deferredJson, formattedName)
+		}, 'Failed to parse JSON. Please check your syntax.')
+	}, [deferredJson, interfaceName])
 
 	return (
 		<div className="flex flex-col gap-6 lg:flex-row">

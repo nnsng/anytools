@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useDeferredValue, useMemo, useState } from 'react'
 
 import { EditorPane } from '@/components/tools/shared/editor-pane'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -33,31 +33,18 @@ export default function HtmlEntityEncoder() {
 	const [input, setInput] = useState<string>(
 		'<div>\n  <p>Hello & "Welcome" to the <b>HTML Entity Encoder</b>!</p>\n  <p>Try converting some characters like: ©, ®, €, or £.</p>\n</div>',
 	)
-	const [output, setOutput] = useState<string>('')
 	const [activeTab, setActiveTab] = useState<ActiveTab>('encode')
 
-	useEffect(() => {
-		const handleConvert = (val: string, mode: string) => {
-			if (!val) {
-				setOutput('')
-				return
-			}
+	const deferredInput = useDeferredValue(input)
 
-			if (mode === 'encode') {
-				setOutput(encodeHtml(val))
-			} else {
-				setOutput(decodeHtml(val))
-			}
-		}
-		handleConvert(input, activeTab)
-	}, [input, activeTab])
+	const output = useMemo(() => {
+		if (!deferredInput) return ''
+		return activeTab === 'encode' ? encodeHtml(deferredInput) : decodeHtml(deferredInput)
+	}, [deferredInput, activeTab])
 
 	const handleTabChange = (newTab: ActiveTab) => {
 		setActiveTab(newTab)
-		if (output) {
-			setInput(output)
-			setOutput(input)
-		}
+		if (output) setInput(output)
 	}
 
 	return (

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useDeferredValue, useMemo, useState } from 'react'
 
 import { EditorPane } from '@/components/tools/shared/editor-pane'
 import {
@@ -9,6 +9,7 @@ import {
 	SelectValue,
 } from '@/components/ui/select'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { runConversion } from '@/lib/convert'
 
 type ActiveTab = 'encode' | 'decode'
 type EncodeMode = 'component' | 'full'
@@ -17,44 +18,28 @@ export default function UrlEncoder() {
 	const [input, setInput] = useState<string>(
 		`${window.location.origin}/search?q=developer tools&category=converters`,
 	)
-	const [output, setOutput] = useState<string>('')
-	const [error, setError] = useState<string | null>(null)
 	const [activeTab, setActiveTab] = useState<ActiveTab>('encode')
 	const [encodeMode, setEncodeMode] = useState<EncodeMode>('component')
 
-	useEffect(() => {
-		const handleConvert = (val: string, mode: ActiveTab, type: EncodeMode) => {
-			if (!val) {
-				setOutput('')
-				setError(null)
-				return
-			}
+	const deferredInput = useDeferredValue(input)
 
-			try {
-				if (mode === 'encode') {
-					const encoded = type === 'component' ? encodeURIComponent(val) : encodeURI(val)
-					setOutput(encoded)
-					setError(null)
-				} else {
-					const decoded = type === 'component' ? decodeURIComponent(val) : decodeURI(val)
-					setOutput(decoded)
-					setError(null)
-				}
-			} catch (err) {
-				setError(err instanceof Error ? err.message : 'URL conversion failed. Verify input syntax.')
-				setOutput('')
+	const { output, error } = useMemo(() => {
+		if (!deferredInput) return { output: '', error: null }
+		return runConversion(() => {
+			if (activeTab === 'encode') {
+				return encodeMode === 'component'
+					? encodeURIComponent(deferredInput)
+					: encodeURI(deferredInput)
 			}
-		}
-
-		handleConvert(input, activeTab, encodeMode)
-	}, [input, activeTab, encodeMode])
+			return encodeMode === 'component'
+				? decodeURIComponent(deferredInput)
+				: decodeURI(deferredInput)
+		}, 'URL conversion failed. Verify input syntax.')
+	}, [deferredInput, activeTab, encodeMode])
 
 	const handleTabChange = (newTab: ActiveTab) => {
 		setActiveTab(newTab)
-		if (output && !error) {
-			setInput(output)
-			setOutput(input)
-		}
+		if (output && !error) setInput(output)
 	}
 
 	return (

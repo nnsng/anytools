@@ -29,10 +29,17 @@ type FormatterToolProps = {
 	/** File extension for downloads, without the dot. */
 	extension: string
 	sample: string
+	outputPlaceholder?: string
 	format: (input: string, indent: Indent) => string
 }
 
-export function FormatterTool({ language, extension, sample, format }: FormatterToolProps) {
+export function FormatterTool({
+	language,
+	extension,
+	sample,
+	outputPlaceholder,
+	format,
+}: FormatterToolProps) {
 	const [input, setInput] = useState(sample)
 	const [indent, setIndent] = useState<Indent>('2')
 	const deferredInput = useDeferredValue(input)
@@ -91,7 +98,7 @@ export function FormatterTool({ language, extension, sample, format }: Formatter
 				}
 				className="flex-1"
 			>
-				<CodeBlock className="flex-1" value={output} />
+				<CodeBlock className="flex-1" value={output} placeholder={outputPlaceholder} />
 			</EditorPane>
 		</div>
 	)

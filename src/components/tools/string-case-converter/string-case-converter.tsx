@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useDeferredValue, useMemo, useState } from 'react'
 
 import { CodeBlock, EditorPane } from '@/components/tools/shared'
 import {
@@ -46,20 +46,14 @@ const casingOptions: Array<{ value: Case; label: string; fn: (input: string) => 
 
 export default function StringCaseConverter() {
 	const [input, setInput] = useState<string>('Welcome to the developer utilities suite!')
-	const [output, setOutput] = useState<string>('')
 	const [casingType, setCasingType] = useState<Case>('upper')
 
-	useEffect(() => {
-		if (!input.trim()) {
-			setOutput('')
-			return
-		}
+	const deferredInput = useDeferredValue(input)
 
-		const option = casingOptions.find((o) => o.value === casingType)
-		if (option) {
-			setOutput(option.fn(input))
-		}
-	}, [input, casingType])
+	const output = useMemo(() => {
+		if (!deferredInput.trim()) return ''
+		return casingOptions.find((option) => option.value === casingType)?.fn(deferredInput) ?? ''
+	}, [deferredInput, casingType])
 
 	return (
 		<div className="flex flex-1 flex-col gap-6 lg:flex-row">
