@@ -1,19 +1,29 @@
 import { Pause, Play, RefreshCw } from 'lucide-react'
+import { useEffect, useState } from 'react'
 
 import { BorderBox } from '@/components/tools/shared'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
+import { currentEpochSeconds } from './utils'
+
 type LiveClockProps = {
-	liveEpoch: number
-	isLiveActive: boolean
-	setIsLiveActive: (val: boolean) => void
 	setInputToCurrent: () => void
 	className?: string
 }
 
 export function LiveClock(props: LiveClockProps) {
-	const { liveEpoch, isLiveActive, setIsLiveActive, setInputToCurrent, className } = props
+	const { setInputToCurrent, className } = props
+
+	// Owning the ticking state here keeps the 1s re-render inside this leaf component
+	const [liveEpoch, setLiveEpoch] = useState<number>(currentEpochSeconds)
+	const [isLiveActive, setIsLiveActive] = useState<boolean>(true)
+
+	useEffect(() => {
+		if (!isLiveActive) return
+		const interval = setInterval(() => setLiveEpoch(currentEpochSeconds()), 1000)
+		return () => clearInterval(interval)
+	}, [isLiveActive])
 
 	return (
 		<BorderBox
