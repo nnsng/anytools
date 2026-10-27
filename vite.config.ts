@@ -38,15 +38,15 @@ const config = defineConfig({
 		viteReact(),
 	]),
 	build: {
-		chunkSizeWarningLimit: 1000,
+		chunkSizeWarningLimit: 500,
 		rollupOptions: {
 			output: {
 				manualChunks(id) {
-					if (id.includes('@faker-js')) {
-						return 'faker-vendor'
+					if (/node_modules\/(react|react-dom|scheduler)\//.test(id)) {
+						return 'react-vendor'
 					}
-					if (id.includes('node_modules/react') || id.includes('@tanstack')) {
-						return 'core-vendor'
+					if (/node_modules\/@tanstack\/(react-router|router-core|history)\//.test(id)) {
+						return 'router-vendor'
 					}
 				},
 			},
