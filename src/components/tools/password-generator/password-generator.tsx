@@ -78,6 +78,7 @@ export default function PasswordGenerator() {
 									</Button>
 									<Input
 										type="number"
+										aria-label="Password length"
 										min={MIN_LENGTH}
 										max={MAX_LENGTH}
 										value={options.length}

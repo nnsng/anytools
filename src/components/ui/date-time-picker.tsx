@@ -77,6 +77,7 @@ export function DateTimePicker({ value, onChange, disabled, className }: DateTim
 				<Clock className="pointer-events-none absolute top-1/2 left-2.5 h-4 w-4 -translate-y-1/2" />
 				<Input
 					type="time"
+					aria-label="Time"
 					step="1"
 					disabled={disabled || !date || Number.isNaN(date.getTime())}
 					className="bg-background block w-32.5 appearance-none pl-9 [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"

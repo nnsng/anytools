@@ -32,6 +32,7 @@ export function RegexInput(props: RegexInputProps) {
 						<span className="mr-2 font-bold text-slate-500">/</span>
 						<Input
 							type="text"
+							aria-label="Regular expression"
 							value={pattern}
 							onChange={(e) => setPattern(e.target.value)}
 							placeholder="e.g. ([a-zA-Z]+)"

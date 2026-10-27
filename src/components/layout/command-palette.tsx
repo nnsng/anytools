@@ -60,10 +60,11 @@ export function CommandPalette({ className }: CommandPaletteProps) {
 				<button
 					type="button"
 					onClick={() => setOpen(true)}
+					aria-label="Jump to module"
 					className="border-terminal-border bg-terminal-bg hover:border-matrix/40 flex cursor-pointer items-center gap-2 rounded border px-3 py-1.5 font-mono text-xs text-slate-500 transition-all duration-150"
 				>
 					<Search className="h-3.5 w-3.5" />
-					<span className="hidden sm:inline">Search modules...</span>
+					<span className="hidden sm:inline">Jump to module...</span>
 					<kbd className="border-terminal-border bg-terminal-card hidden rounded border px-1.5 py-0.5 text-xs text-slate-400 lg:block">
 						{isMac ? '⌘K' : 'Ctrl+K'}
 					</kbd>
@@ -76,7 +77,7 @@ export function CommandPalette({ className }: CommandPaletteProps) {
 				title="System Registry Index"
 				className="sm:max-w-2xl"
 			>
-				<CommandInput placeholder="Search modules (e.g. base64, unix, diff)..." />
+				<CommandInput placeholder="Jump to a module (e.g. base64, unix, diff)..." />
 				<CommandList>
 					<CommandEmpty>No matching modules found.</CommandEmpty>
 					<CommandGroup heading="System Registry Index">
