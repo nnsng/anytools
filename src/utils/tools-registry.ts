@@ -17,6 +17,7 @@ import {
 	Key,
 	Link,
 	type LucideIcon,
+	Paintbrush,
 	Palette,
 	Pilcrow,
 	QrCode,
@@ -249,6 +250,14 @@ export const TOOLS: ToolMetadata[] = [
 		category: 'Dev Utilities',
 		icon: Code2,
 		tags: ['regex', 'tester', 'match', 'pattern'],
+	},
+	{
+		id: 'css-generator',
+		name: 'CSS Generator',
+		description: 'Build box shadows, gradients and fluid clamp() sizes with a live preview.',
+		category: 'Dev Utilities',
+		icon: Paintbrush,
+		tags: ['css', 'box-shadow', 'shadow', 'gradient', 'clamp', 'rem', 'px', 'fluid', 'generator'],
 	},
 	{
 		id: 'text-analyzer',
