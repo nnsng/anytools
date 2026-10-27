@@ -31,7 +31,7 @@ export function DateToEpoch({
 						Input Date/Time
 					</label>
 					<DateTimePicker value={inputDate} onChange={(value) => handleConvertDate(value)} />
-					{dateError && <p className="text-xs text-red-400">{dateError}</p>}
+					{dateError && <p className="text-xs text-red-700 dark:text-red-400">{dateError}</p>}
 				</div>
 
 				{dateResults && (

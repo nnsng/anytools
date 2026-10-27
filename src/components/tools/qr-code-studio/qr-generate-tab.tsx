@@ -181,7 +181,7 @@ export function QrGenerateTab() {
 				<div className="flex flex-col items-center justify-center p-6">
 					<div className="border-terminal-border bg-terminal-bg/30 relative flex flex-1 items-center justify-center rounded border p-8">
 						{error ? (
-							<div role="alert" className="text-center text-xs text-red-400">
+							<div role="alert" className="text-center text-xs text-red-700 dark:text-red-400">
 								{error}
 							</div>
 						) : (

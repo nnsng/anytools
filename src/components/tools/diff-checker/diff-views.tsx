@@ -26,7 +26,7 @@ export function InlineDiffView({ diffs, className }: DiffViewProps) {
 					return (
 						<span
 							key={`${idx}-del`}
-							className="border border-red-500/20 bg-red-950 px-0.5 text-red-400 line-through"
+							className="border border-red-300 bg-red-100 px-0.5 text-red-700 line-through dark:border-red-500/20 dark:bg-red-950 dark:text-red-400"
 						>
 							{text}
 						</span>
@@ -35,7 +35,7 @@ export function InlineDiffView({ diffs, className }: DiffViewProps) {
 				return (
 					<span
 						key={`${idx}-ins`}
-						className="border-matrix/20 text-matrix-glow border bg-green-950 px-0.5 font-bold"
+						className="dark:border-matrix/20 dark:text-matrix-glow border border-green-300 bg-green-100 px-0.5 font-bold text-green-800 dark:bg-green-950"
 					>
 						{text}
 					</span>
@@ -57,7 +57,7 @@ export function SideBySideView({ diffs, className }: DiffViewProps) {
 			leftPane.push(
 				<span
 					key={`l-${idx}-del`}
-					className="block border border-red-500/20 bg-red-950 px-0.5 text-red-400 md:inline"
+					className="block border border-red-300 bg-red-100 px-0.5 text-red-700 md:inline dark:border-red-500/20 dark:bg-red-950 dark:text-red-400"
 				>
 					{text}
 				</span>,
@@ -66,7 +66,7 @@ export function SideBySideView({ diffs, className }: DiffViewProps) {
 			rightPane.push(
 				<span
 					key={`r-${idx}-ins`}
-					className="border-matrix/20 text-matrix-glow block border bg-green-950 px-0.5 font-bold md:inline"
+					className="dark:border-matrix/20 dark:text-matrix-glow block border border-green-300 bg-green-100 px-0.5 font-bold text-green-800 md:inline dark:bg-green-950"
 				>
 					{text}
 				</span>,

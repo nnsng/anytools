@@ -61,8 +61,10 @@ function ToolContainer() {
 			<NotFound>
 				<p>
 					The requested system utility{' '}
-					<code className="rounded bg-red-900/30 px-1 py-0.5 text-red-300">{toolId}</code> is not
-					registered in the system index.
+					<code className="rounded bg-red-200 px-1 py-0.5 text-red-800 dark:bg-red-900/30 dark:text-red-300">
+						{toolId}
+					</code>{' '}
+					is not registered in the system index.
 				</p>
 			</NotFound>
 		)

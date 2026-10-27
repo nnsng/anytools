@@ -102,7 +102,7 @@ export function EncodeTab({ onFileChange, className }: EncodeTabProps) {
 						</div>
 					)}
 
-					{encodeError && <p className="text-xs text-red-400">{encodeError}</p>}
+					{encodeError && <p className="text-xs text-red-700 dark:text-red-400">{encodeError}</p>}
 				</div>
 			</Pane>
 
