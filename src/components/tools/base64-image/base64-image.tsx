@@ -1,5 +1,7 @@
 import { useState } from 'react'
+
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+
 import { DecodeTab } from './decode-tab'
 import { EncodeTab } from './encode-tab'
 

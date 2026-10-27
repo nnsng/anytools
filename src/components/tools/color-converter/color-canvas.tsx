@@ -1,5 +1,6 @@
 import { Input } from '@/components/ui/input'
-import { hexToRgb } from './color-utils'
+
+import { hexToRgb } from './utils'
 
 type ColorCanvasProps = {
 	hex: string
@@ -8,25 +9,25 @@ type ColorCanvasProps = {
 
 export function ColorCanvas({ hex, onColorChange }: ColorCanvasProps) {
 	return (
-		<div className="flex flex-col items-center justify-between gap-6 rounded-sm border border-terminal-border bg-terminal-card/60 p-6 lg:col-span-4">
-			<span className="flex items-center gap-2 self-start font-bold text-slate-300 text-xs uppercase tracking-wider">
-				<span className="h-1.5 w-1.5 rounded-full bg-matrix" />
+		<div className="border-terminal-border bg-terminal-card/60 flex flex-col items-center justify-between gap-6 rounded-sm border p-6 lg:col-span-4">
+			<span className="flex items-center gap-2 self-start text-xs font-bold tracking-wider text-slate-300 uppercase">
+				<span className="bg-matrix h-1.5 w-1.5 rounded-full" />
 				Color Canvas
 			</span>
 
 			<div
-				className="h-32 w-32 rounded border border-terminal-border shadow-[0_0_20px_rgba(0,0,0,0.4)]"
+				className="border-terminal-border h-32 w-32 rounded border shadow-[0_0_20px_rgba(0,0,0,0.4)]"
 				style={{ backgroundColor: hex }}
 			/>
 
 			<div className="w-full">
 				<label
 					htmlFor="color-picker"
-					className="mb-1 block text-center font-bold text-slate-500 text-xs uppercase"
+					className="mb-1 block text-center text-xs font-bold text-slate-500 uppercase"
 				>
 					Pick Color
 				</label>
-				<div className="relative h-10 w-full cursor-pointer overflow-hidden rounded border border-terminal-border bg-terminal-bg/50 transition-colors hover:border-matrix/40">
+				<div className="border-terminal-border bg-terminal-bg/50 hover:border-matrix/40 relative h-10 w-full cursor-pointer overflow-hidden rounded border transition-colors">
 					<Input
 						id="color-picker"
 						type="color"
@@ -37,7 +38,7 @@ export function ColorCanvas({ hex, onColorChange }: ColorCanvasProps) {
 						}}
 						className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
 					/>
-					<div className="pointer-events-none absolute inset-0 flex select-none items-center justify-center font-bold text-slate-400 text-xs">
+					<div className="pointer-events-none absolute inset-0 flex items-center justify-center text-xs font-bold text-slate-400 select-none">
 						LAUNCH COLOR PICKER
 					</div>
 				</div>

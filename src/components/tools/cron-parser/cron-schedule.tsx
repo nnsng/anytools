@@ -15,12 +15,12 @@ export function CronSchedule({ nextRuns, className }: CronScheduleProps) {
 						{nextRuns.map((run, idx) => (
 							<BorderBox key={run} className="flex items-center justify-between p-3 text-xs">
 								<span className="font-bold text-slate-500">RUN #{idx + 1}</span>
-								<span className="select-all font-mono font-semibold text-slate-200">{run}</span>
+								<span className="font-mono font-semibold text-slate-200 select-all">{run}</span>
 							</BorderBox>
 						))}
 					</div>
 				) : (
-					<div className="py-8 text-center text-slate-600 text-xs">
+					<div className="py-8 text-center text-xs text-slate-600">
 						No active schedules calculated.
 					</div>
 				)}

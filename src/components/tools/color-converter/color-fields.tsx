@@ -1,9 +1,11 @@
 import { Check, Copy } from 'lucide-react'
-import { useState } from 'react'
+
 import { Pane } from '@/components/tools/shared/pane'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { cmykToRgb, hexToRgb, hslToRgb, parseCmyk, parseHsl, parseRgb } from './color-utils'
+import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard'
+
+import { cmykToRgb, hexToRgb, hslToRgb, parseCmyk, parseHsl, parseRgb } from './utils'
 
 type ColorFieldsProps = {
 	hex: string
@@ -28,7 +30,7 @@ export function ColorFields({
 	setCmyk,
 	updateAllFromRgb,
 }: ColorFieldsProps) {
-	const [copiedField, setCopiedField] = useState<string | null>(null)
+	const { copiedKey: copiedField, copy } = useCopyToClipboard()
 
 	const handleHexChange = (val: string) => {
 		setHex(val)
@@ -62,15 +64,7 @@ export function ColorFields({
 		}
 	}
 
-	const handleCopy = async (field: string, text: string) => {
-		try {
-			await navigator.clipboard.writeText(text)
-			setCopiedField(field)
-			setTimeout(() => setCopiedField(null), 2000)
-		} catch (err) {
-			console.error(err)
-		}
-	}
+	const handleCopy = (field: string, text: string) => copy(text, field)
 
 	return (
 		<Pane title="Color Format Translations">
@@ -78,7 +72,7 @@ export function ColorFields({
 				<div className="space-y-4">
 					{/* HEX */}
 					<div className="grid grid-cols-1 items-center gap-2 md:grid-cols-12">
-						<label htmlFor="input-hex" className="font-bold text-slate-400 text-xs md:col-span-2">
+						<label htmlFor="input-hex" className="text-xs font-bold text-slate-400 md:col-span-2">
 							HEX
 						</label>
 						<div className="md:col-span-8">
@@ -96,7 +90,7 @@ export function ColorFields({
 								onClick={() => handleCopy('hex', hex)}
 							>
 								{copiedField === 'hex' ? (
-									<Check className="h-3.5 w-3.5 text-matrix" />
+									<Check className="text-matrix h-3.5 w-3.5" />
 								) : (
 									<Copy className="h-3.5 w-3.5" />
 								)}
@@ -107,7 +101,7 @@ export function ColorFields({
 
 					{/* RGB */}
 					<div className="grid grid-cols-1 items-center gap-2 md:grid-cols-12">
-						<label htmlFor="input-rgb" className="font-bold text-slate-400 text-xs md:col-span-2">
+						<label htmlFor="input-rgb" className="text-xs font-bold text-slate-400 md:col-span-2">
 							RGB
 						</label>
 						<div className="md:col-span-8">
@@ -125,7 +119,7 @@ export function ColorFields({
 								onClick={() => handleCopy('rgb', rgb)}
 							>
 								{copiedField === 'rgb' ? (
-									<Check className="h-3.5 w-3.5 text-matrix" />
+									<Check className="text-matrix h-3.5 w-3.5" />
 								) : (
 									<Copy className="h-3.5 w-3.5" />
 								)}
@@ -136,7 +130,7 @@ export function ColorFields({
 
 					{/* HSL */}
 					<div className="grid grid-cols-1 items-center gap-2 md:grid-cols-12">
-						<label htmlFor="input-hsl" className="font-bold text-slate-400 text-xs md:col-span-2">
+						<label htmlFor="input-hsl" className="text-xs font-bold text-slate-400 md:col-span-2">
 							HSL
 						</label>
 						<div className="md:col-span-8">
@@ -154,7 +148,7 @@ export function ColorFields({
 								onClick={() => handleCopy('hsl', hsl)}
 							>
 								{copiedField === 'hsl' ? (
-									<Check className="h-3.5 w-3.5 text-matrix" />
+									<Check className="text-matrix h-3.5 w-3.5" />
 								) : (
 									<Copy className="h-3.5 w-3.5" />
 								)}
@@ -165,7 +159,7 @@ export function ColorFields({
 
 					{/* CMYK */}
 					<div className="grid grid-cols-1 items-center gap-2 md:grid-cols-12">
-						<label htmlFor="input-cmyk" className="font-bold text-slate-400 text-xs md:col-span-2">
+						<label htmlFor="input-cmyk" className="text-xs font-bold text-slate-400 md:col-span-2">
 							CMYK
 						</label>
 						<div className="md:col-span-8">
@@ -183,7 +177,7 @@ export function ColorFields({
 								onClick={() => handleCopy('cmyk', cmyk)}
 							>
 								{copiedField === 'cmyk' ? (
-									<Check className="h-3.5 w-3.5 text-matrix" />
+									<Check className="text-matrix h-3.5 w-3.5" />
 								) : (
 									<Copy className="h-3.5 w-3.5" />
 								)}

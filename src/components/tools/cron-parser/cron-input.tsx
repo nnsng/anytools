@@ -48,15 +48,15 @@ export function CronInput(props: CronInputProps) {
 					</div>
 				</div>
 
-				<div className="flex flex-col items-center justify-between gap-4 border-terminal-border border-t pt-4 sm:flex-row">
+				<div className="border-terminal-border flex flex-col items-center justify-between gap-4 border-t pt-4 sm:flex-row">
 					<div className="flex items-center gap-2">
-						<span className="font-bold text-slate-500 text-xs">Expression string:</span>
-						<span className="rounded bg-terminal-bg px-2.5 py-1 font-bold text-matrix text-sm">
+						<span className="text-xs font-bold text-slate-500">Expression string:</span>
+						<span className="bg-terminal-bg text-matrix rounded px-2.5 py-1 text-sm font-bold">
 							{cronString}
 						</span>
 					</div>
 					{error && (
-						<p className="rounded border border-red-500/20 bg-red-950/20 p-2 text-red-400 text-xs">
+						<p className="rounded border border-red-500/20 bg-red-950/20 p-2 text-xs text-red-400">
 							Error: {error}
 						</p>
 					)}

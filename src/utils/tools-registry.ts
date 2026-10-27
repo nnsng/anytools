@@ -261,8 +261,9 @@ export const TOOLS: ToolMetadata[] = [
 export const groupToolsByCategory = (tools: ToolMetadata[]) => {
 	return tools.reduce(
 		(categories, tool) => {
-			categories[tool.category] ??= []
-			categories[tool.category].push(tool)
+			const group = categories[tool.category] ?? []
+			group.push(tool)
+			categories[tool.category] = group
 			return categories
 		},
 		{} as Record<string, ToolMetadata[]>,

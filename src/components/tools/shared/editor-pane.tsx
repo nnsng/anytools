@@ -1,9 +1,13 @@
 import { Check, Copy, Download, Trash2, Upload } from 'lucide-react'
 import type React from 'react'
-import { useRef, useState } from 'react'
+import { useMemo, useRef } from 'react'
+
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard'
+import { downloadBlob, readFileAsText } from '@/lib/file'
 import { cn } from '@/lib/utils'
+
 import { CodeBlock } from './code-block'
 import { Pane } from './pane'
 
@@ -38,49 +42,39 @@ export function EditorPane(props: EditorPaneProps) {
 		children,
 	} = props
 
-	const [copied, setCopied] = useState(false)
+	const { isCopied, copy } = useCopyToClipboard()
 	const fileInputRef = useRef<HTMLInputElement>(null)
 
 	const handleDownload = () => {
 		if (!value) return
-		const blob = new Blob([value], { type: 'text/plain;charset=utf-8' })
-		const url = URL.createObjectURL(blob)
-		const link = document.createElement('a')
-		link.href = url
-		link.download = downloadFileName
-		link.click()
-		URL.revokeObjectURL(url)
+		downloadBlob(new Blob([value], { type: 'text/plain;charset=utf-8' }), downloadFileName)
 	}
 
-	const handleCopy = async () => {
-		if (!value) return
-		try {
-			await navigator.clipboard.writeText(value)
-			setCopied(true)
-			setTimeout(() => setCopied(false), 2000)
-		} catch (err) {
-			console.error('Failed to copy text: ', err)
-		}
-	}
+	const handleCopy = () => copy(value)
 
 	const handleClear = () => {
 		if (onChange) onChange('')
 	}
 
-	const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const file = e.target.files?.[0]
+	const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+		const input = e.target
+		const file = input.files?.[0]
 		if (!file || !onChange) return
-		const reader = new FileReader()
-		reader.onload = (event) => {
-			if (event.target?.result) {
-				onChange(event.target.result as string)
-			}
+		try {
+			onChange(await readFileAsText(file))
+		} finally {
+			// allow re-uploading the same file
+			input.value = ''
 		}
-		reader.readAsText(file)
 	}
 
 	const characterCount = value.length
-	const lineCount = value ? value.split('\n').length : 0
+	const lineCount = useMemo(() => {
+		if (!value) return 0
+		let count = 1
+		for (let i = value.indexOf('\n'); i !== -1; i = value.indexOf('\n', i + 1)) count++
+		return count
+	}, [value])
 
 	const editorActions = (
 		<div className="flex items-center gap-1">
@@ -93,6 +87,8 @@ export function EditorPane(props: EditorPaneProps) {
 						ref={fileInputRef}
 						onChange={handleFileUpload}
 						className="hidden"
+						tabIndex={-1}
+						aria-hidden="true"
 						accept=".txt,.json,.xml,.csv,.html,.js,.css,.md"
 					/>
 					<Button
@@ -101,6 +97,7 @@ export function EditorPane(props: EditorPaneProps) {
 						className="h-8 w-8 p-0"
 						onClick={() => fileInputRef.current?.click()}
 						title="Upload file"
+						aria-label="Upload file"
 					>
 						<Upload className="h-3.5 w-3.5" />
 					</Button>
@@ -114,9 +111,10 @@ export function EditorPane(props: EditorPaneProps) {
 					className="h-8 w-8 p-0"
 					onClick={handleCopy}
 					title="Copy to clipboard"
+					aria-label="Copy to clipboard"
 				>
-					{copied ? (
-						<Check className="h-3.5 w-3.5 text-matrix" />
+					{isCopied ? (
+						<Check className="text-matrix h-3.5 w-3.5" />
 					) : (
 						<Copy className="h-3.5 w-3.5" />
 					)}
@@ -130,6 +128,7 @@ export function EditorPane(props: EditorPaneProps) {
 					className="h-8 w-8 p-0"
 					onClick={handleDownload}
 					title="Download as file"
+					aria-label="Download as file"
 				>
 					<Download className="h-3.5 w-3.5" />
 				</Button>
@@ -142,6 +141,7 @@ export function EditorPane(props: EditorPaneProps) {
 					className="h-8 w-8 p-0 hover:border-red-500/20 hover:text-red-500"
 					onClick={handleClear}
 					title="Clear input"
+					aria-label="Clear input"
 				>
 					<Trash2 className="h-3.5 w-3.5" />
 				</Button>
@@ -157,7 +157,7 @@ export function EditorPane(props: EditorPaneProps) {
 			className={className}
 			dotClassName={readOnly ? 'bg-blue-500' : ''}
 			footer={
-				<div className="flex select-none items-center justify-between px-4 py-1.5 font-mono text-slate-500 text-xs">
+				<div className="flex items-center justify-between px-4 py-1.5 font-mono text-xs text-slate-500 select-none">
 					<span>LINES: {lineCount}</span>
 					<span>CHARS: {characterCount}</span>
 				</div>
@@ -169,12 +169,13 @@ export function EditorPane(props: EditorPaneProps) {
 					<div className="flex flex-1 flex-col overflow-auto font-mono text-sm">{children}</div>
 				) : (
 					<textarea
+						aria-label={title}
 						value={value}
 						onChange={(e) => onChange?.(e.target.value)}
 						placeholder={placeholder}
 						readOnly={readOnly}
 						className={cn(
-							'scrollbar-thin w-full flex-1 resize-none bg-transparent p-4 font-mono text-foreground text-sm placeholder:text-muted-foreground focus:outline-none',
+							'text-foreground placeholder:text-muted-foreground w-full flex-1 resize-none scrollbar-thin bg-transparent p-4 font-mono text-sm focus:outline-none',
 							error && 'border border-red-500/20 focus:border-red-500/40',
 						)}
 					/>
@@ -183,7 +184,7 @@ export function EditorPane(props: EditorPaneProps) {
 				{error && (
 					<CodeBlock
 						value={error}
-						className="absolute right-0 bottom-0 left-0 overflow-y-auto border-red-500/20 border-t bg-red-950/40 p-3 text-red-400 text-xs"
+						className="absolute right-0 bottom-0 left-0 overflow-y-auto border-t border-red-500/20 bg-red-950/40 p-3 text-xs text-red-400"
 					/>
 				)}
 			</div>

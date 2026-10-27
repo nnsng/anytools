@@ -18,7 +18,7 @@ export function parseCurl(curl: string): ParsedCurl {
 
 	const methodMatch = cleanCurl.match(/(?:-X|--request)\s+([A-Z]+)/)
 	if (methodMatch) {
-		method = methodMatch[1]
+		method = methodMatch[1] ?? method
 	} else if (
 		cleanCurl.includes('-d ') ||
 		cleanCurl.includes('--data') ||
@@ -75,7 +75,7 @@ export function generateAxios(parsed: ParsedCurl): string {
 		method: string
 		url: string
 		headers?: Record<string, string>
-		// biome-ignore lint/suspicious/noExplicitAny: dynamic payload body
+		// oxlint-disable-next-line typescript/no-explicit-any -- dynamic payload body
 		data?: any
 	} = {
 		method: parsed.method.toLowerCase(),

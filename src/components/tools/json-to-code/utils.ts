@@ -1,7 +1,7 @@
 const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
 
 function parseValueType(
-	// biome-ignore lint/suspicious/noExplicitAny: JSON values are dynamically typed
+	// oxlint-disable-next-line typescript/no-explicit-any -- JSON values are dynamically typed
 	val: any,
 	keyName: string,
 	interfaces: string[],
@@ -35,7 +35,7 @@ function parseValueType(
 	return 'any'
 }
 
-// biome-ignore lint/suspicious/noExplicitAny: JSON values are dynamically typed
+// oxlint-disable-next-line typescript/no-explicit-any -- JSON values are dynamically typed
 function buildInterface(obj: any, name: string, interfaces: string[]) {
 	const keys = Object.keys(obj)
 	let interfaceStr = `interface ${name} {\n`

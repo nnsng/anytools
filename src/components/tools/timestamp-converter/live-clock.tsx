@@ -1,26 +1,37 @@
 import { Pause, Play, RefreshCw } from 'lucide-react'
+import { useEffect, useState } from 'react'
+
 import { BorderBox } from '@/components/tools/shared'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
+import { currentEpochSeconds } from './utils'
+
 type LiveClockProps = {
-	liveEpoch: number
-	isLiveActive: boolean
-	setIsLiveActive: (val: boolean) => void
 	setInputToCurrent: () => void
 	className?: string
 }
 
 export function LiveClock(props: LiveClockProps) {
-	const { liveEpoch, isLiveActive, setIsLiveActive, setInputToCurrent, className } = props
+	const { setInputToCurrent, className } = props
+
+	// Owning the ticking state here keeps the 1s re-render inside this leaf component
+	const [liveEpoch, setLiveEpoch] = useState<number>(currentEpochSeconds)
+	const [isLiveActive, setIsLiveActive] = useState<boolean>(true)
+
+	useEffect(() => {
+		if (!isLiveActive) return
+		const interval = setInterval(() => setLiveEpoch(currentEpochSeconds()), 1000)
+		return () => clearInterval(interval)
+	}, [isLiveActive])
 
 	return (
 		<BorderBox
 			className={cn('flex flex-col items-center justify-between gap-2 lg:flex-row', className)}
 		>
 			<div className="flex items-center gap-4">
-				<div className="text-slate-500 text-xs uppercase tracking-wider">LIVE EPOCH CLOCK:</div>
-				<div className="font-bold text-matrix text-xl tabular-nums">{liveEpoch}</div>
+				<div className="text-xs tracking-wider text-slate-500 uppercase">LIVE EPOCH CLOCK:</div>
+				<div className="text-matrix text-xl font-bold tabular-nums">{liveEpoch}</div>
 			</div>
 			<div className="flex items-center gap-2">
 				<Button

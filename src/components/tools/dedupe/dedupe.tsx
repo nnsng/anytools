@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useDeferredValue, useMemo, useState } from 'react'
+
 import { CodeBlock, EditorPane, Pane } from '@/components/tools/shared'
 import { Checkbox } from '@/components/ui/checkbox'
 import {
@@ -9,84 +10,25 @@ import {
 	SelectValue,
 } from '@/components/ui/select'
 
-type SortOrder = 'none' | 'asc' | 'desc'
-type Separator = 'newline' | 'comma' | 'semicolon'
-
-function deduplicate(
-	text: string,
-	caseSensitive: boolean,
-	trimWhitespace: boolean,
-	removeEmpty: boolean,
-	sortOrder: SortOrder,
-	separator: Separator,
-): string {
-	if (!text) return ''
-
-	let items: string[] = []
-	if (separator === 'comma') {
-		items = text.split(',')
-	} else if (separator === 'semicolon') {
-		items = text.split(';')
-	} else {
-		items = text.split(/\r?\n/)
-	}
-
-	if (trimWhitespace) {
-		items = items.map((item) => item.trim())
-	}
-
-	if (removeEmpty) {
-		items = items.filter((item) => item.length > 0)
-	}
-
-	const seen = new Set<string>()
-	const result: string[] = []
-
-	for (const item of items) {
-		const key = caseSensitive ? item : item.toLowerCase()
-		if (!seen.has(key)) {
-			seen.add(key)
-			result.push(item)
-		}
-	}
-
-	if (sortOrder === 'asc') {
-		result.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }))
-	} else if (sortOrder === 'desc') {
-		result.sort((a, b) => b.localeCompare(a, undefined, { sensitivity: 'base' }))
-	}
-
-	if (separator === 'comma') {
-		return result.join(', ')
-	}
-	if (separator === 'semicolon') {
-		return result.join('; ')
-	}
-	return result.join('\n')
-}
+import { deduplicate, type Separator, type SortOrder } from './utils'
 
 export default function Dedupe() {
 	const [input, setInput] = useState<string>(
 		'apple\nBanana\napple\norange\nbanana\n  orange  \n\npear',
 	)
-	const [output, setOutput] = useState<string>('')
 	const [caseSensitive, setCaseSensitive] = useState<boolean>(true)
 	const [trimWhitespace, setTrimWhitespace] = useState<boolean>(true)
 	const [removeEmpty, setRemoveEmpty] = useState<boolean>(true)
 	const [sortOrder, setSortOrder] = useState<SortOrder>('none')
 	const [separator, setSeparator] = useState<Separator>('newline')
 
-	useEffect(() => {
-		const result = deduplicate(
-			input,
-			caseSensitive,
-			trimWhitespace,
-			removeEmpty,
-			sortOrder,
-			separator,
-		)
-		setOutput(result)
-	}, [input, caseSensitive, trimWhitespace, removeEmpty, sortOrder, separator])
+	const deferredInput = useDeferredValue(input)
+
+	const output = useMemo(
+		() =>
+			deduplicate(deferredInput, caseSensitive, trimWhitespace, removeEmpty, sortOrder, separator),
+		[deferredInput, caseSensitive, trimWhitespace, removeEmpty, sortOrder, separator],
+	)
 
 	return (
 		<div className="flex flex-1 flex-col gap-6">
@@ -101,7 +43,7 @@ export default function Dedupe() {
 						/>
 						<label
 							htmlFor="case-sensitive"
-							className="cursor-pointer select-none font-semibold text-slate-300 hover:text-foreground"
+							className="hover:text-foreground cursor-pointer font-semibold text-slate-300 select-none"
 						>
 							Case Sensitive
 						</label>
@@ -115,7 +57,7 @@ export default function Dedupe() {
 						/>
 						<label
 							htmlFor="trim-whitespace"
-							className="cursor-pointer select-none font-semibold text-slate-300 hover:text-foreground"
+							className="hover:text-foreground cursor-pointer font-semibold text-slate-300 select-none"
 						>
 							Trim Whitespace
 						</label>
@@ -129,19 +71,19 @@ export default function Dedupe() {
 						/>
 						<label
 							htmlFor="remove-empty"
-							className="cursor-pointer select-none font-semibold text-slate-300 hover:text-foreground"
+							className="hover:text-foreground cursor-pointer font-semibold text-slate-300 select-none"
 						>
 							Remove Empty Lines
 						</label>
 					</div>
 
 					<div className="flex items-center gap-2 lg:ml-auto">
-						<span className="font-bold text-slate-500 text-xs uppercase">Separator:</span>
+						<span className="text-xs font-bold text-slate-500 uppercase">Separator:</span>
 						<Select value={separator} onValueChange={setSeparator}>
-							<SelectTrigger className="h-8 w-32 border-terminal-border bg-terminal-bg font-mono text-foreground text-xs">
+							<SelectTrigger className="border-terminal-border bg-terminal-bg text-foreground h-8 w-32 font-mono text-xs">
 								<SelectValue />
 							</SelectTrigger>
-							<SelectContent className="border-terminal-border bg-terminal-card font-mono text-foreground text-xs">
+							<SelectContent className="border-terminal-border bg-terminal-card text-foreground font-mono text-xs">
 								<SelectItem value="newline">New Line</SelectItem>
 								<SelectItem value="comma">Comma (,)</SelectItem>
 								<SelectItem value="semicolon">Semicolon (;)</SelectItem>
@@ -150,12 +92,12 @@ export default function Dedupe() {
 					</div>
 
 					<div className="flex items-center gap-2">
-						<span className="font-bold text-slate-500 text-xs uppercase">Sort:</span>
+						<span className="text-xs font-bold text-slate-500 uppercase">Sort:</span>
 						<Select value={sortOrder} onValueChange={setSortOrder}>
-							<SelectTrigger className="h-8 w-32 border-terminal-border bg-terminal-bg font-mono text-foreground text-xs">
+							<SelectTrigger className="border-terminal-border bg-terminal-bg text-foreground h-8 w-32 font-mono text-xs">
 								<SelectValue />
 							</SelectTrigger>
-							<SelectContent className="border-terminal-border bg-terminal-card font-mono text-foreground text-xs">
+							<SelectContent className="border-terminal-border bg-terminal-card text-foreground font-mono text-xs">
 								<SelectItem value="none">None</SelectItem>
 								<SelectItem value="asc">Ascending</SelectItem>
 								<SelectItem value="desc">Descending</SelectItem>

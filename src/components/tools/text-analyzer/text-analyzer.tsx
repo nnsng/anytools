@@ -1,4 +1,5 @@
 import { useState } from 'react'
+
 import { BorderBox } from '@/components/tools/shared'
 import { EditorPane } from '@/components/tools/shared/editor-pane'
 import { APP_NAME } from '@/constants/app'
@@ -133,44 +134,44 @@ export default function TextAnalyzer() {
 			/>
 
 			{/* Metrics Dashboard */}
-			<div className="scrollbar-thin flex flex-col gap-6">
+			<div className="flex scrollbar-thin flex-col gap-6">
 				{/* Basic Counters */}
 				<BorderBox className="grid grid-cols-3 gap-4 p-4">
 					<BorderBox className="bg-terminal-bg p-3 text-center">
-						<span className="block text-slate-500 text-xs uppercase">Words</span>
-						<span className="font-bold text-lg text-matrix">{stats.words}</span>
+						<span className="block text-xs text-slate-500 uppercase">Words</span>
+						<span className="text-matrix text-lg font-bold">{stats.words}</span>
 					</BorderBox>
 					<BorderBox className="bg-terminal-bg p-3 text-center">
-						<span className="block text-slate-500 text-xs uppercase">Characters</span>
-						<span className="font-bold text-foreground text-lg">{stats.charsWithSpaces}</span>
+						<span className="block text-xs text-slate-500 uppercase">Characters</span>
+						<span className="text-foreground text-lg font-bold">{stats.charsWithSpaces}</span>
 					</BorderBox>
 					<BorderBox className="bg-terminal-bg p-3 text-center">
-						<span className="block text-slate-500 text-xs uppercase">No Space</span>
-						<span className="font-bold text-foreground text-lg">{stats.charsNoSpaces}</span>
+						<span className="block text-xs text-slate-500 uppercase">No Space</span>
+						<span className="text-foreground text-lg font-bold">{stats.charsNoSpaces}</span>
 					</BorderBox>
 					<BorderBox className="bg-terminal-bg p-3 text-center">
-						<span className="block text-slate-500 text-xs uppercase">Sentences</span>
-						<span className="font-bold text-foreground text-lg">{stats.sentences}</span>
+						<span className="block text-xs text-slate-500 uppercase">Sentences</span>
+						<span className="text-foreground text-lg font-bold">{stats.sentences}</span>
 					</BorderBox>
 					<BorderBox className="bg-terminal-bg p-3 text-center">
-						<span className="block text-slate-500 text-xs uppercase">Paragraphs</span>
-						<span className="font-bold text-foreground text-lg">{stats.paragraphs}</span>
+						<span className="block text-xs text-slate-500 uppercase">Paragraphs</span>
+						<span className="text-foreground text-lg font-bold">{stats.paragraphs}</span>
 					</BorderBox>
 					<BorderBox className="bg-terminal-bg p-3 text-center">
-						<span className="block text-slate-500 text-xs uppercase">Lines</span>
-						<span className="font-bold text-foreground text-lg">{stats.lines}</span>
+						<span className="block text-xs text-slate-500 uppercase">Lines</span>
+						<span className="text-foreground text-lg font-bold">{stats.lines}</span>
 					</BorderBox>
 				</BorderBox>
 
 				{/* Time Estimations */}
 				<BorderBox className="grid grid-cols-2 gap-4 p-4">
 					<BorderBox className="bg-terminal-bg p-3 text-center">
-						<span className="block text-slate-500 text-xs uppercase">Reading Time</span>
-						<span className="font-bold text-base text-matrix-glow">{stats.readTime} min</span>
+						<span className="block text-xs text-slate-500 uppercase">Reading Time</span>
+						<span className="text-matrix-glow text-base font-bold">{stats.readTime} min</span>
 					</BorderBox>
 					<BorderBox className="bg-terminal-bg p-3 text-center">
-						<span className="block text-slate-500 text-xs uppercase">Speaking Time</span>
-						<span className="font-bold text-base text-matrix-glow">{stats.speakTime} min</span>
+						<span className="block text-xs text-slate-500 uppercase">Speaking Time</span>
+						<span className="text-matrix-glow text-base font-bold">{stats.speakTime} min</span>
 					</BorderBox>
 				</BorderBox>
 			</div>

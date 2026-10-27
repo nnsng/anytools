@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useDeferredValue, useMemo, useState } from 'react'
+
 import { CodeBlock, EditorPane } from '@/components/tools/shared'
 import {
 	Select,
@@ -8,7 +9,8 @@ import {
 	SelectValue,
 } from '@/components/ui/select'
 import { APP_NAME } from '@/constants/app'
-import { generateAxios, generateFetch, parseCurl } from './curl-parsers'
+
+import { generateAxios, generateFetch, parseCurl } from './utils'
 
 type TabType = 'fetch' | 'axios'
 
@@ -22,30 +24,21 @@ export default function CurlToCode() {
 		`curl -X POST "https://api.${APP_NAME.toLowerCase()}.dev/v1/data" \\\n  -H "Content-Type: application/json" \\\n  -H "Authorization: Bearer token123" \\\n  -d '{"name": "Neo", "status": "active"}'`,
 	)
 	const [activeTab, setActiveTab] = useState<TabType>('fetch')
-	const [codeOutput, setCodeOutput] = useState<string>('')
-	const [error, setError] = useState<string | null>(null)
 
-	useEffect(() => {
-		if (!curlInput.trim()) {
-			setCodeOutput('')
-			setError(null)
-			return
-		}
+	const deferredCurl = useDeferredValue(curlInput)
 
+	const { output: codeOutput, error } = useMemo(() => {
+		if (!deferredCurl.trim()) return { output: '', error: null }
 		try {
-			const parsed = parseCurl(curlInput)
-			setError(null)
-
-			if (activeTab === 'fetch') {
-				setCodeOutput(generateFetch(parsed))
-			} else if (activeTab === 'axios') {
-				setCodeOutput(generateAxios(parsed))
+			const parsed = parseCurl(deferredCurl)
+			return {
+				output: activeTab === 'fetch' ? generateFetch(parsed) : generateAxios(parsed),
+				error: null,
 			}
 		} catch {
-			setError('cURL parse failed. Check string structure.')
-			setCodeOutput('')
+			return { output: '', error: 'cURL parse failed. Check string structure.' }
 		}
-	}, [curlInput, activeTab])
+	}, [deferredCurl, activeTab])
 
 	return (
 		<div className="flex flex-col gap-6 lg:flex-row">
@@ -67,7 +60,7 @@ export default function CurlToCode() {
 				downloadFileName="request.js"
 				actions={
 					<Select value={activeTab} onValueChange={setActiveTab}>
-						<SelectTrigger className="h-8 border-terminal-border font-mono text-xs">
+						<SelectTrigger className="border-terminal-border h-8 font-mono text-xs">
 							<SelectValue />
 						</SelectTrigger>
 						<SelectContent className="border-terminal-border bg-terminal-card font-mono text-xs">

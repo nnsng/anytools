@@ -1,35 +1,26 @@
-import { useEffect, useState } from 'react'
+import { useDeferredValue, useMemo, useState } from 'react'
+
 import { CodeBlock, EditorPane } from '@/components/tools/shared'
 import { Input } from '@/components/ui/input'
-import { generateTsInterfaces } from './ts-generator'
+import { runConversion } from '@/lib/convert'
+
+import { generateTsInterfaces } from './utils'
 
 export default function JsonToCode() {
 	const [jsonInput, setJsonInput] = useState<string>(
 		`{\n  "id": 101,\n  "title": "Inception",\n  "released": true,\n  "ratings": [8.8, 9.0, 8.5],\n  "director": {\n    "name": "Christopher Nolan",\n    "age": 53\n  },\n  "cast": [\n    {\n      "actor": "Leonardo DiCaprio",\n      "character": "Cobb"\n    }\n  ]\n}`,
 	)
 	const [interfaceName, setInterfaceName] = useState<string>('Movie')
-	const [codeOutput, setCodeOutput] = useState<string>('')
-	const [error, setError] = useState<string | null>(null)
 
-	useEffect(() => {
-		if (!jsonInput.trim()) {
-			setCodeOutput('')
-			setError(null)
-			return
-		}
+	const deferredJson = useDeferredValue(jsonInput)
 
-		try {
+	const { output: codeOutput, error } = useMemo(() => {
+		if (!deferredJson.trim()) return { output: '', error: null }
+		return runConversion(() => {
 			const formattedName = interfaceName.trim().replace(/[^a-zA-Z0-9]/g, '') || 'RootObject'
-			const generated = generateTsInterfaces(jsonInput, formattedName)
-			setCodeOutput(generated)
-			setError(null)
-		} catch (err) {
-			setError(
-				err instanceof Error ? err.message : 'Failed to parse JSON. Please check your syntax.',
-			)
-			setCodeOutput('')
-		}
-	}, [jsonInput, interfaceName])
+			return generateTsInterfaces(deferredJson, formattedName)
+		}, 'Failed to parse JSON. Please check your syntax.')
+	}, [deferredJson, interfaceName])
 
 	return (
 		<div className="flex flex-col gap-6 lg:flex-row">
@@ -51,12 +42,12 @@ export default function JsonToCode() {
 				downloadFileName={`${interfaceName || 'models'}.ts`}
 				actions={
 					<div className="flex items-center gap-2 font-mono">
-						<span className="font-bold text-slate-500 text-xs uppercase">Root:</span>
+						<span className="text-xs font-bold text-slate-500 uppercase">Root:</span>
 						<Input
 							type="text"
 							value={interfaceName}
 							onChange={(e) => setInterfaceName(e.target.value)}
-							className="h-8 w-32 border-terminal-border font-mono text-foreground text-xs"
+							className="border-terminal-border text-foreground h-8 w-32 font-mono text-xs"
 						/>
 					</div>
 				}

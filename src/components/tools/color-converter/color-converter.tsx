@@ -1,10 +1,12 @@
 import { Pipette } from 'lucide-react'
 import { useState } from 'react'
+
 import { Pane } from '@/components/tools/shared/pane'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+
 import { ColorFields } from './color-fields'
-import { hexToRgb, rgbToCmyk, rgbToHex, rgbToHsl } from './color-utils'
+import { hexToRgb, rgbToCmyk, rgbToHex, rgbToHsl } from './utils'
 
 type ColorHistoryItem = {
 	hex: string
@@ -47,7 +49,7 @@ export default function ColorConverter() {
 	const handleLaunchNativeEyedropper = async () => {
 		if (!hasNativeEyedropper) return
 		try {
-			// biome-ignore lint/suspicious/noExplicitAny: EyeDropper is a new window API not in default types yet
+			// oxlint-disable-next-line typescript/no-explicit-any -- EyeDropper is a new window API not in default types yet
 			const dropper = new (window as any).EyeDropper()
 			const result = await dropper.open()
 			if (result.sRGBHex) {
@@ -67,7 +69,7 @@ export default function ColorConverter() {
 				<div className="flex flex-col gap-6 p-6">
 					{/* Active Color Preview */}
 					<div
-						className="mx-auto h-28 w-28 rounded border border-terminal-border shadow-[0_0_20px_rgba(0,0,0,0.4)]"
+						className="border-terminal-border mx-auto h-28 w-28 rounded border shadow-[0_0_20px_rgba(0,0,0,0.4)]"
 						style={{ backgroundColor: hex }}
 					/>
 
@@ -75,11 +77,11 @@ export default function ColorConverter() {
 					<div className="w-full">
 						<label
 							htmlFor="color-picker"
-							className="mb-1 block text-center font-bold text-slate-500 text-xs uppercase"
+							className="mb-1 block text-center text-xs font-bold text-slate-500 uppercase"
 						>
 							Pick Color
 						</label>
-						<div className="relative h-9 w-full cursor-pointer overflow-hidden rounded border border-terminal-border bg-terminal-bg/50 transition-colors hover:border-matrix/40">
+						<div className="border-terminal-border bg-terminal-bg/50 hover:border-matrix/40 relative h-9 w-full cursor-pointer overflow-hidden rounded border transition-colors">
 							<Input
 								id="color-picker"
 								type="color"
@@ -90,7 +92,7 @@ export default function ColorConverter() {
 								}}
 								className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
 							/>
-							<div className="pointer-events-none absolute inset-0 flex select-none items-center justify-center font-bold text-slate-400 text-xs">
+							<div className="pointer-events-none absolute inset-0 flex items-center justify-center text-xs font-bold text-slate-400 select-none">
 								LAUNCH COLOR PALETTE
 							</div>
 						</div>
@@ -100,7 +102,7 @@ export default function ColorConverter() {
 					<div className="border-terminal-border border-t pt-4">
 						{hasNativeEyedropper ? (
 							<div className="flex flex-col gap-2">
-								<span className="font-bold text-slate-300 text-xs uppercase">
+								<span className="text-xs font-bold text-slate-300 uppercase">
 									Native Screen Eyedropper
 								</span>
 
@@ -112,7 +114,7 @@ export default function ColorConverter() {
 								</Button>
 							</div>
 						) : (
-							<p className="text-slate-500 text-xs leading-relaxed">
+							<p className="text-xs leading-relaxed text-slate-500">
 								Your browser does not support the native screen Eyedropper API. You can upload an
 								image file below to pick colors.
 							</p>
@@ -140,7 +142,7 @@ export default function ColorConverter() {
 				<Pane title="Color History" dotClassName="bg-blue-500">
 					<div className="flex flex-col p-6">
 						{history.length === 0 ? (
-							<div className="py-2 text-center text-slate-600 text-xs">No history.</div>
+							<div className="py-2 text-center text-xs text-slate-600">No history.</div>
 						) : (
 							<div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
 								{history.map((item, idx) => (
@@ -151,14 +153,14 @@ export default function ColorConverter() {
 											const rgbVal = hexToRgb(item.hex)
 											if (rgbVal) updateAllFromRgb(rgbVal.r, rgbVal.g, rgbVal.b)
 										}}
-										className="flex items-center gap-2 rounded border border-terminal-border bg-terminal-bg/50 p-2 text-left transition-colors hover:border-matrix/30"
+										className="border-terminal-border bg-terminal-bg/50 hover:border-matrix/30 flex items-center gap-2 rounded border p-2 text-left transition-colors"
 									>
 										<div
-											className="h-5 w-5 shrink-0 rounded border border-terminal-border/60"
+											className="border-terminal-border/60 h-5 w-5 shrink-0 rounded border"
 											style={{ backgroundColor: item.hex }}
 										/>
 										<div className="min-w-0 flex-1">
-											<div className="truncate font-mono text-foreground text-xs uppercase">
+											<div className="text-foreground truncate font-mono text-xs uppercase">
 												{item.hex}
 											</div>
 										</div>

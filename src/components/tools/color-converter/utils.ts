@@ -6,9 +6,9 @@ export function hexToRgb(h: string): { r: number; g: number; b: number } | null 
 		g = 0,
 		b = 0
 	if (cleanHex.length === 3) {
-		r = parseInt(cleanHex[0] + cleanHex[0], 16)
-		g = parseInt(cleanHex[1] + cleanHex[1], 16)
-		b = parseInt(cleanHex[2] + cleanHex[2], 16)
+		r = parseInt(cleanHex.charAt(0).repeat(2), 16)
+		g = parseInt(cleanHex.charAt(1).repeat(2), 16)
+		b = parseInt(cleanHex.charAt(2).repeat(2), 16)
 	} else {
 		r = parseInt(cleanHex.substring(0, 2), 16)
 		g = parseInt(cleanHex.substring(2, 4), 16)
@@ -78,13 +78,17 @@ export function rgbToHex(r: number, g: number, b: number): string {
 	)
 }
 
+function toInt(values: string[], index: number): number {
+	return parseInt(values[index] ?? '0', 10)
+}
+
 export function parseRgb(str: string): { r: number; g: number; b: number } | null {
 	const match = str.match(/\b(\d{1,3})\b/g)
 	if (!match || match.length < 3) return null
 	return {
-		r: Math.min(255, parseInt(match[0], 10)),
-		g: Math.min(255, parseInt(match[1], 10)),
-		b: Math.min(255, parseInt(match[2], 10)),
+		r: Math.min(255, toInt(match, 0)),
+		g: Math.min(255, toInt(match, 1)),
+		b: Math.min(255, toInt(match, 2)),
 	}
 }
 
@@ -92,9 +96,9 @@ export function parseHsl(str: string): { h: number; s: number; l: number } | nul
 	const match = str.match(/\b(\d{1,3})\b/g)
 	if (!match || match.length < 3) return null
 	return {
-		h: Math.min(360, parseInt(match[0], 10)),
-		s: Math.min(100, parseInt(match[1], 10)),
-		l: Math.min(100, parseInt(match[2], 10)),
+		h: Math.min(360, toInt(match, 0)),
+		s: Math.min(100, toInt(match, 1)),
+		l: Math.min(100, toInt(match, 2)),
 	}
 }
 
@@ -102,10 +106,10 @@ export function parseCmyk(str: string): { c: number; m: number; y: number; k: nu
 	const match = str.match(/\b(\d{1,3})\b/g)
 	if (!match || match.length < 4) return null
 	return {
-		c: Math.min(100, parseInt(match[0], 10)),
-		m: Math.min(100, parseInt(match[1], 10)),
-		y: Math.min(100, parseInt(match[2], 10)),
-		k: Math.min(100, parseInt(match[3], 10)),
+		c: Math.min(100, toInt(match, 0)),
+		m: Math.min(100, toInt(match, 1)),
+		y: Math.min(100, toInt(match, 2)),
+		k: Math.min(100, toInt(match, 3)),
 	}
 }
 

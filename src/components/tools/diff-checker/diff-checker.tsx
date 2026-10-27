@@ -1,5 +1,6 @@
 import { diff_match_patch as DiffMatchPatch } from 'diff-match-patch'
-import { useEffect, useState } from 'react'
+import { useDeferredValue, useMemo, useState } from 'react'
+
 import { Pane } from '@/components/tools/shared'
 import { EditorPane } from '@/components/tools/shared/editor-pane'
 import {
@@ -9,6 +10,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select'
+
 import { InlineDiffView, SideBySideView } from './diff-views'
 
 const viewOptions = [
@@ -17,6 +19,10 @@ const viewOptions = [
 ]
 
 type DiffMode = 'inline' | 'side-by-side'
+
+const dmp = new DiffMatchPatch()
+// Bound worst-case diff time (seconds) so huge inputs fall back to a coarser diff
+dmp.Diff_Timeout = 0.5
 
 export default function DiffChecker() {
 	const [textA, setTextA] = useState<string>(
@@ -27,14 +33,14 @@ export default function DiffChecker() {
 	)
 	const [diffMode, setDiffMode] = useState<DiffMode>('inline')
 
-	const [diffs, setDiffs] = useState<[number, string][]>([])
+	const deferredA = useDeferredValue(textA)
+	const deferredB = useDeferredValue(textB)
 
-	useEffect(() => {
-		const dmp = new DiffMatchPatch()
-		const computedDiffs = dmp.diff_main(textA, textB)
+	const diffs = useMemo(() => {
+		const computedDiffs = dmp.diff_main(deferredA, deferredB)
 		dmp.diff_cleanupSemantic(computedDiffs)
-		setDiffs(computedDiffs)
-	}, [textA, textB])
+		return computedDiffs
+	}, [deferredA, deferredB])
 
 	const DiffComponent = diffMode === 'inline' ? InlineDiffView : SideBySideView
 
@@ -64,9 +70,9 @@ export default function DiffChecker() {
 				dotClassName="bg-blue-500"
 				actions={
 					<div className="flex items-center gap-2 font-mono">
-						<span className="font-bold text-slate-500 text-xs uppercase">View:</span>
+						<span className="text-xs font-bold text-slate-500 uppercase">View:</span>
 						<Select value={diffMode} onValueChange={setDiffMode}>
-							<SelectTrigger className="h-8 w-36 border-terminal-border bg-terminal-bg font-mono text-xs">
+							<SelectTrigger className="border-terminal-border bg-terminal-bg h-8 w-36 font-mono text-xs">
 								<SelectValue />
 							</SelectTrigger>
 							<SelectContent className="border-terminal-border bg-terminal-card font-mono text-xs">

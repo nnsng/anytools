@@ -1,4 +1,12 @@
-import { createContext, type PropsWithChildren, useContext, useEffect, useState } from 'react'
+import {
+	createContext,
+	type PropsWithChildren,
+	useCallback,
+	useContext,
+	useEffect,
+	useMemo,
+	useState,
+} from 'react'
 import { flushSync } from 'react-dom'
 
 type Theme = 'light' | 'dark'
@@ -8,21 +16,33 @@ type ContextValue = {
 	toggleTheme: () => void
 }
 
+const THEME_STORAGE_KEY = 'theme'
+
 const ThemeContext = createContext<ContextValue | null>(null)
 
-export function ThemeProvider({ children }: PropsWithChildren) {
-	const [theme, setTheme] = useState<Theme>(() => {
-		const savedTheme = localStorage.getItem('theme')
+function readInitialTheme(): Theme {
+	try {
+		const savedTheme = localStorage.getItem(THEME_STORAGE_KEY)
 		if (savedTheme === 'light' || savedTheme === 'dark') return savedTheme
-		return 'dark'
-	})
+	} catch {
+		// storage can be blocked (private mode, disabled site data)
+	}
+	return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
+}
+
+export function ThemeProvider({ children }: PropsWithChildren) {
+	const [theme, setTheme] = useState<Theme>(readInitialTheme)
 
 	useEffect(() => {
 		document.documentElement.classList.toggle('dark', theme === 'dark')
-		localStorage.setItem('theme', theme)
+		try {
+			localStorage.setItem(THEME_STORAGE_KEY, theme)
+		} catch {
+			// ignore: the theme still applies for this session
+		}
 	}, [theme])
 
-	const toggleTheme = async () => {
+	const toggleTheme = useCallback(async () => {
 		const newTheme = theme === 'dark' ? 'light' : 'dark'
 
 		if (!document.startViewTransition) {
@@ -46,9 +66,11 @@ export function ThemeProvider({ children }: PropsWithChildren) {
 		} finally {
 			document.documentElement.classList.remove('theme-transitioning')
 		}
-	}
+	}, [theme])
 
-	return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>
+	const value = useMemo(() => ({ theme, toggleTheme }), [theme, toggleTheme])
+
+	return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
 }
 
 export function useThemeContext() {

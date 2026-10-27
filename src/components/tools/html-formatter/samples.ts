@@ -1,0 +1,1 @@
+export const SAMPLE = `<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<title>Demo Page</title>\n<style>body { font-family: sans-serif; }</style>\n</head>\n<body>\n<div class="card"><h1>Hello World</h1><p>Formatting HTML templates has never been easier.</p></div>\n<script>console.log("Hello from script tag!");</script>\n</body>\n</html>`

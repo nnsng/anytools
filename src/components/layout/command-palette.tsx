@@ -1,6 +1,7 @@
 import { useNavigate } from '@tanstack/react-router'
 import { Search } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
+
 import {
 	CommandDialog,
 	CommandEmpty,
@@ -49,7 +50,7 @@ export function CommandPalette({ className }: CommandPaletteProps) {
 	}
 
 	const handleSelect = (toolId: string) => {
-		navigate({ to: '/tools/$toolId', params: { toolId } })
+		void navigate({ to: '/tools/$toolId', params: { toolId } })
 		handleClose()
 	}
 
@@ -59,11 +60,11 @@ export function CommandPalette({ className }: CommandPaletteProps) {
 				<button
 					type="button"
 					onClick={() => setOpen(true)}
-					className="flex cursor-pointer items-center gap-2 rounded border border-terminal-border bg-terminal-bg px-3 py-1.5 font-mono text-slate-500 text-xs transition-all duration-150 hover:border-matrix/40"
+					className="border-terminal-border bg-terminal-bg hover:border-matrix/40 flex cursor-pointer items-center gap-2 rounded border px-3 py-1.5 font-mono text-xs text-slate-500 transition-all duration-150"
 				>
 					<Search className="h-3.5 w-3.5" />
 					<span className="hidden sm:inline">Search modules...</span>
-					<kbd className="hidden rounded border border-terminal-border bg-terminal-card px-1.5 py-0.5 text-slate-400 text-xs lg:block">
+					<kbd className="border-terminal-border bg-terminal-card hidden rounded border px-1.5 py-0.5 text-xs text-slate-400 lg:block">
 						{isMac ? '⌘K' : 'Ctrl+K'}
 					</kbd>
 				</button>
@@ -91,8 +92,8 @@ export function CommandPalette({ className }: CommandPaletteProps) {
 										className: 'w-4 h-4 text-matrix text-glow',
 									})}
 									<div>
-										<div className="font-bold font-mono text-xs">{tool.name}</div>
-										<div className="text-slate-500 text-xs">{tool.description}</div>
+										<div className="font-mono text-xs font-bold">{tool.name}</div>
+										<div className="text-xs text-slate-500">{tool.description}</div>
 									</div>
 								</div>
 							</CommandItem>

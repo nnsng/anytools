@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useDeferredValue, useMemo, useState } from 'react'
+
 import { CodeBlock, EditorPane } from '@/components/tools/shared'
 import {
 	Select,
@@ -7,6 +8,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select'
+
 import {
 	toCamelCase,
 	toConstantCase,
@@ -17,7 +19,7 @@ import {
 	toSnakeCase,
 	toTitleCase,
 	toUpperCase,
-} from './converter'
+} from './utils'
 
 type Case =
 	| 'lower'
@@ -44,20 +46,14 @@ const casingOptions: Array<{ value: Case; label: string; fn: (input: string) => 
 
 export default function StringCaseConverter() {
 	const [input, setInput] = useState<string>('Welcome to the developer utilities suite!')
-	const [output, setOutput] = useState<string>('')
 	const [casingType, setCasingType] = useState<Case>('upper')
 
-	useEffect(() => {
-		if (!input.trim()) {
-			setOutput('')
-			return
-		}
+	const deferredInput = useDeferredValue(input)
 
-		const option = casingOptions.find((o) => o.value === casingType)
-		if (option) {
-			setOutput(option.fn(input))
-		}
-	}, [input, casingType])
+	const output = useMemo(() => {
+		if (!deferredInput.trim()) return ''
+		return casingOptions.find((option) => option.value === casingType)?.fn(deferredInput) ?? ''
+	}, [deferredInput, casingType])
 
 	return (
 		<div className="flex flex-1 flex-col gap-6 lg:flex-row">
@@ -78,9 +74,9 @@ export default function StringCaseConverter() {
 				downloadFileName="converted-text.txt"
 				actions={
 					<div className="flex items-center gap-2 font-mono">
-						<span className="font-bold text-slate-500 text-xs uppercase">Case:</span>
+						<span className="text-xs font-bold text-slate-500 uppercase">Case:</span>
 						<Select value={casingType} onValueChange={setCasingType}>
-							<SelectTrigger className="h-8 w-40 border-terminal-border bg-terminal-bg font-mono text-xs">
+							<SelectTrigger className="border-terminal-border bg-terminal-bg h-8 w-40 font-mono text-xs">
 								<SelectValue />
 							</SelectTrigger>
 							<SelectContent className="border-terminal-border bg-terminal-card font-mono text-xs">

@@ -1,10 +1,14 @@
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
+
 import { Pane } from '@/components/tools/shared'
 import { EditorPane } from '@/components/tools/shared/editor-pane'
 import { APP_NAME } from '@/constants/app'
 import { useThemeContext } from '@/contexts/theme-context'
+import { useDebouncedValue } from '@/hooks/use-debounced-value'
 
-export default function HtmlPreview() {
+const PREVIEW_DEBOUNCE_MS = 300
+
+export default function HtmlSandbox() {
 	const { theme } = useThemeContext()
 
 	const [input, setInput] = useState<string>(`<!DOCTYPE html>
@@ -77,23 +81,8 @@ export default function HtmlPreview() {
 </body>
 </html>`)
 
-	const [blobUrl, setBlobUrl] = useState<string>('')
-	const iframeRef = useRef<HTMLIFrameElement>(null)
-
-	useEffect(() => {
-		if (!input.trim()) {
-			setBlobUrl('')
-			return
-		}
-
-		const blob = new Blob([input], { type: 'text/html' })
-		const url = URL.createObjectURL(blob)
-		setBlobUrl(url)
-
-		return () => {
-			URL.revokeObjectURL(url)
-		}
-	}, [input])
+	// Re-rendering the iframe re-runs its scripts, so wait for typing to settle
+	const previewHtml = useDebouncedValue(input, PREVIEW_DEBOUNCE_MS)
 
 	return (
 		<div className="flex flex-col gap-6 lg:flex-row">
@@ -107,17 +96,17 @@ export default function HtmlPreview() {
 			/>
 
 			<Pane title="Live Preview (Sandboxed Frame)" dotClassName="bg-blue-500" className="flex-1">
-				<div className="relative min-h-50 flex-1 bg-background">
-					{blobUrl ? (
+				<div className="bg-background relative min-h-50 flex-1">
+					{previewHtml.trim() ? (
 						<iframe
-							ref={iframeRef}
-							src={blobUrl}
+							srcDoc={previewHtml}
 							title="HTML Sandbox Preview"
+							// no allow-same-origin: sandboxed scripts must not reach the app origin
 							sandbox="allow-scripts"
 							className="h-full w-full border-none bg-transparent"
 						/>
 					) : (
-						<div className="absolute inset-0 flex select-none items-center justify-center bg-terminal-bg font-mono text-slate-600 text-xs">
+						<div className="bg-terminal-bg absolute inset-0 flex items-center justify-center font-mono text-xs text-slate-600 select-none">
 							Waiting for HTML source input...
 						</div>
 					)}

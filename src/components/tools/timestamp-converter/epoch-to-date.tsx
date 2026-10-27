@@ -29,7 +29,7 @@ export function EpochToDate({
 		<Pane title="Epoch Timestamp to Date" className={className}>
 			<div className="flex flex-col space-y-6 p-6">
 				<div className="space-y-2">
-					<label htmlFor="input-epoch" className="text-slate-400 text-xs uppercase">
+					<label htmlFor="input-epoch" className="text-xs text-slate-400 uppercase">
 						Input Timestamp (Seconds / Millis)
 					</label>
 					<div className="flex gap-2">
@@ -43,36 +43,36 @@ export function EpochToDate({
 							Now
 						</Button>
 					</div>
-					{epochError && <p className="text-red-400 text-xs">{epochError}</p>}
+					{epochError && <p className="text-xs text-red-400">{epochError}</p>}
 				</div>
 
 				{epochResults && (
 					<div className="space-y-4 pt-2">
 						<div className="grid grid-cols-1 gap-3 text-sm">
-							<BorderBox className="flex flex-col gap-1 bg-terminal-bg p-3">
-								<span className="block text-slate-500 text-xs">ISO 8601</span>
-								<span className="select-all break-all font-mono text-slate-200">
+							<BorderBox className="bg-terminal-bg flex flex-col gap-1 p-3">
+								<span className="block text-xs text-slate-500">ISO 8601</span>
+								<span className="font-mono break-all text-slate-200 select-all">
 									{epochResults.iso}
 								</span>
 							</BorderBox>
 
-							<BorderBox className="flex flex-col gap-1 bg-terminal-bg p-3">
-								<span className="block text-slate-500 text-xs">UTC Date-Time</span>
-								<span className="select-all break-all font-mono text-slate-200">
+							<BorderBox className="bg-terminal-bg flex flex-col gap-1 p-3">
+								<span className="block text-xs text-slate-500">UTC Date-Time</span>
+								<span className="font-mono break-all text-slate-200 select-all">
 									{epochResults.utc}
 								</span>
 							</BorderBox>
 
-							<BorderBox className="flex flex-col gap-1 bg-terminal-bg p-3">
-								<span className="block text-slate-500 text-xs">Local Date-Time</span>
-								<span className="select-all break-all font-mono text-slate-200">
+							<BorderBox className="bg-terminal-bg flex flex-col gap-1 p-3">
+								<span className="block text-xs text-slate-500">Local Date-Time</span>
+								<span className="font-mono break-all text-slate-200 select-all">
 									{epochResults.local}
 								</span>
 							</BorderBox>
 
-							<BorderBox className="flex flex-col gap-1 bg-terminal-bg p-3">
-								<span className="block text-slate-500 text-xs">Relative Time</span>
-								<span className="font-mono font-semibold text-matrix">{epochResults.relative}</span>
+							<BorderBox className="bg-terminal-bg flex flex-col gap-1 p-3">
+								<span className="block text-xs text-slate-500">Relative Time</span>
+								<span className="text-matrix font-mono font-semibold">{epochResults.relative}</span>
 							</BorderBox>
 						</div>
 					</div>

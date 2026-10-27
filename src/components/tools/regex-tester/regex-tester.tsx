@@ -1,4 +1,6 @@
 import { useState } from 'react'
+
+import { HighlightedText } from './highlighted-text'
 import { RegexInput } from './regex-input'
 import { RegexMatches } from './regex-matches'
 import { RegexPanel } from './regex-panel'
@@ -20,7 +22,7 @@ export default function RegexTester() {
 		setFlags((prev) => ({ ...prev, [flag]: !prev[flag] }))
 	}
 
-	const { matches, regexError, highlightedNode } = useRegexMatcher(pattern, flags, subjectText)
+	const { matches, regexError } = useRegexMatcher(pattern, flags, subjectText)
 
 	return (
 		<div className="flex flex-col gap-6">
@@ -36,7 +38,7 @@ export default function RegexTester() {
 				<RegexPanel
 					subjectText={subjectText}
 					setSubjectText={setSubjectText}
-					highlightedNode={highlightedNode}
+					highlightedNode={<HighlightedText text={subjectText} matches={matches} />}
 					className="flex-2"
 				/>
 				<RegexMatches matches={matches} className="flex-1" />

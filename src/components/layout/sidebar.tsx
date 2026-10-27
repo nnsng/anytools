@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import React from 'react'
+
 import { cn } from '@/lib/utils'
 import { groupToolsByCategory, TOOLS } from '@/utils/tools-registry'
 
@@ -17,14 +18,14 @@ export function Sidebar(props: SidebarProps) {
 		<>
 			<aside
 				className={cn(
-					'fixed inset-y-0 top-13.25 left-0 z-30 w-67 transform overflow-y-auto border-terminal-border border-r bg-terminal-card p-4 transition-transform duration-200 ease-in-out lg:static lg:h-full lg:min-h-0 lg:translate-x-0',
+					'border-terminal-border bg-terminal-card fixed inset-y-0 top-13.25 left-0 z-30 w-67 transform overflow-y-auto border-r p-4 transition-transform duration-200 ease-in-out lg:static lg:h-full lg:min-h-0 lg:translate-x-0',
 					sidebarOpen ? 'translate-x-0' : '-translate-x-full',
 				)}
 			>
-				<nav className="scrollbar-thin mb-4 select-none space-y-6">
+				<nav className="mb-4 scrollbar-thin space-y-6 select-none">
 					{Object.entries(categories).map(([categoryName, toolList]) => (
 						<div key={categoryName} className="space-y-2">
-							<h4 className="px-2 font-bold text-slate-600 text-xs uppercase tracking-widest">
+							<h4 className="px-2 text-xs font-bold tracking-widest text-slate-600 uppercase">
 								{categoryName}
 							</h4>
 							<div className="space-y-0.5">
@@ -42,7 +43,7 @@ export function Sidebar(props: SidebarProps) {
 											className:
 												'text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-terminal-bg/50',
 										}}
-										className="flex items-center gap-3 rounded-xs border-transparent border-l-2 px-3 py-2 font-semibold text-xs transition-all duration-150"
+										className="flex items-center gap-3 rounded-xs border-l-2 border-transparent px-3 py-2 text-xs font-semibold transition-all duration-150"
 									>
 										{React.createElement(tool.icon, {
 											className: 'w-4 h-4 flex-shrink-0',
@@ -61,6 +62,7 @@ export function Sidebar(props: SidebarProps) {
 				<button
 					type="button"
 					onClick={() => setSidebarOpen(false)}
+					aria-label="Close navigation menu"
 					className="fixed inset-0 top-13.25 z-20 bg-black/60 backdrop-blur-xs lg:hidden"
 				/>
 			)}

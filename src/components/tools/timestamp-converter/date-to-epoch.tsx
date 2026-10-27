@@ -27,20 +27,20 @@ export function DateToEpoch({
 		<Pane title="Date to Epoch Timestamp" className={className}>
 			<div className="flex flex-col space-y-6 p-6">
 				<div className="space-y-2">
-					<label htmlFor="input-date" className="text-slate-400 text-xs uppercase">
+					<label htmlFor="input-date" className="text-xs text-slate-400 uppercase">
 						Input Date/Time
 					</label>
 					<DateTimePicker value={inputDate} onChange={(value) => handleConvertDate(value)} />
-					{dateError && <p className="text-red-400 text-xs">{dateError}</p>}
+					{dateError && <p className="text-xs text-red-400">{dateError}</p>}
 				</div>
 
 				{dateResults && (
 					<div className="space-y-4 pt-2">
 						<div className="grid grid-cols-1 gap-3 text-sm">
-							<BorderBox className="flex items-center justify-between bg-terminal-bg p-3">
+							<BorderBox className="bg-terminal-bg flex items-center justify-between p-3">
 								<div className="flex flex-col gap-1">
-									<span className="block text-slate-500 text-xs">Seconds (Epoch)</span>
-									<span className="select-all font-bold font-mono text-slate-200">
+									<span className="block text-xs text-slate-500">Seconds (Epoch)</span>
+									<span className="font-mono font-bold text-slate-200 select-all">
 										{dateResults.seconds}
 									</span>
 								</div>
@@ -53,10 +53,10 @@ export function DateToEpoch({
 								</Button>
 							</BorderBox>
 
-							<BorderBox className="flex items-center justify-between bg-terminal-bg p-3">
+							<BorderBox className="bg-terminal-bg flex items-center justify-between p-3">
 								<div className="flex flex-col gap-1">
-									<span className="block text-slate-500 text-xs">Milliseconds (Epoch)</span>
-									<span className="select-all font-bold font-mono text-slate-200">
+									<span className="block text-xs text-slate-500">Milliseconds (Epoch)</span>
+									<span className="font-mono font-bold text-slate-200 select-all">
 										{dateResults.millis}
 									</span>
 								</div>

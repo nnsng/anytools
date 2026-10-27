@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Search } from 'lucide-react'
 import { useEffect, useState } from 'react'
+
 import { CategorySection, HeroSection } from '@/components/dashboard'
 import { APP_NAME } from '@/constants/app'
 import { groupToolsByCategory, TOOLS } from '@/utils/tools-registry'
@@ -27,7 +28,7 @@ function Home() {
 	const categories = groupToolsByCategory(filteredTools)
 
 	return (
-		<div className="scrollbar-thin h-full w-full animate-fade-in overflow-y-auto font-mono">
+		<div className="animate-fade-in h-full w-full scrollbar-thin overflow-y-auto font-mono">
 			<div className="mx-auto max-w-7xl space-y-8 p-4 md:p-6 lg:p-8">
 				<HeroSection />
 
@@ -41,19 +42,19 @@ function Home() {
 						value={searchQuery}
 						onChange={(e) => setSearchQuery(e.target.value)}
 						placeholder="Filter utility modules instantly by name, feature, or keyword..."
-						className="w-full rounded border border-terminal-border bg-terminal-card py-3 pr-4 pl-12 text-foreground text-sm transition-all duration-150 placeholder:text-muted-foreground focus:border-matrix/80 focus:shadow-[0_0_12px_rgba(34,197,94,0.05)] focus:outline-none focus:ring-1 focus:ring-matrix/80"
+						className="border-terminal-border bg-terminal-card text-foreground placeholder:text-muted-foreground focus:border-matrix/80 focus:ring-matrix/80 w-full rounded border py-3 pr-4 pl-12 text-sm transition-all duration-150 focus:shadow-[0_0_12px_rgba(34,197,94,0.05)] focus:ring-1 focus:outline-none"
 					/>
 				</div>
 
 				{/* Grid of Sections */}
 				<div className="space-y-10">
 					{filteredTools.length === 0 ? (
-						<div className="rounded border border-terminal-border border-dashed py-12 text-center">
-							<div className="mb-2 text-slate-500 text-sm">No matching modules found.</div>
+						<div className="border-terminal-border rounded border border-dashed py-12 text-center">
+							<div className="mb-2 text-sm text-slate-500">No matching modules found.</div>
 							<button
 								type="button"
 								onClick={() => setSearchQuery('')}
-								className="border-matrix/30 border-b font-bold text-matrix text-xs hover:border-matrix hover:text-matrix-glow"
+								className="border-matrix/30 text-matrix hover:border-matrix hover:text-matrix-glow border-b text-xs font-bold"
 							>
 								Reset Search Filter
 							</button>

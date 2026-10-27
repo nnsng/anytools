@@ -1,6 +1,6 @@
 # Anytools - All-in-One Developer Utilities Suite
 
-Anytools is an open-source, offline-first developer utility toolkit designed with a modern cyber terminal aesthetic. Built to increase productivity, every tool runs **100% client-side** inside your browser. No data is ever sent to a server, ensuring absolute privacy and security for your configuration files, tokens, and data payload.
+Anytools is an open-source, privacy-first developer utility toolkit designed with a modern cyber terminal aesthetic. Built to increase productivity, every tool runs **100% client-side** inside your browser. No data is ever sent to a server, ensuring absolute privacy and security for your configuration files, tokens, and data payload.
 
 ## 🛠️ Built-in Modules
 
@@ -49,7 +49,7 @@ The workspace is packed with multiple essential tools categorized for everyday d
 - **Routing:** TanStack Router (File-based SPA Routing)
 - **Styling:** Tailwind CSS v4, Lucide Icons
 - **UI Primitives:** Radix UI components (Shadcn UI presets)
-- **Code Quality:** Biome (Lightning-fast formatter, linter, and code check)
+- **Toolchain & Code Quality:** Vite+ (`vp`) with Oxlint and Oxfmt
 - **Environment:** pnpm workspaces
 
 ---
@@ -58,7 +58,7 @@ The workspace is packed with multiple essential tools categorized for everyday d
 
 ### Prerequisites
 
-Ensure you have [Node.js](https://nodejs.org/) (v18+) and [pnpm](https://pnpm.io/) installed on your machine.
+Ensure you have [Node.js](https://nodejs.org/) (v22.18+ or v24.11+, required by Vite+) and [pnpm](https://pnpm.io/) installed on your machine.
 
 ### Installation
 
@@ -86,7 +86,7 @@ pnpm build
 
 ### Static Analysis & Lints
 
-Validate and keep the codebase tidy using Biome:
+Validate and keep the codebase tidy using Vite+ (Oxlint + Oxfmt):
 
 ```bash
 # Auto-format files
@@ -115,6 +115,6 @@ This project includes a native `vercel.json` rewrite schema suited for Single Pa
 
 ```json
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
+	"rewrites": [{ "source": "/(.*)", "destination": "/" }]
 }
 ```
