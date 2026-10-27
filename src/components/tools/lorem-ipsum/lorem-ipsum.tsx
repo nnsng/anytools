@@ -47,8 +47,8 @@ export default function LoremIpsum() {
 		setOptions((current) => ({ ...current, count: clampCount(current.unit, count) }))
 
 	return (
-		<div className="flex flex-col gap-6 lg:flex-row lg:items-stretch">
-			<Pane title="Lorem Ipsum Settings" className="lg:flex-5">
+		<div className="flex flex-col gap-6 lg:flex-row lg:items-start">
+			<Pane title="Lorem Ipsum Settings" className="lg:flex-1">
 				<div className="flex flex-col gap-6 p-6">
 					<div className="space-y-4 text-xs">
 						<div className="space-y-2">
@@ -139,7 +139,7 @@ export default function LoremIpsum() {
 				readOnly={true}
 				allowDownload={true}
 				downloadFileName="lorem-ipsum.txt"
-				className="min-h-96 lg:flex-7"
+				className="min-h-96 lg:flex-2 lg:self-stretch"
 			/>
 		</div>
 	)
