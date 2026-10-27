@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { EditorPane } from '@/components/tools/shared/editor-pane'
 import { Pane } from '@/components/tools/shared/pane'
@@ -8,109 +8,46 @@ import { Input } from '@/components/ui/input'
 import { Slider } from '@/components/ui/slider'
 import { cn } from '@/lib/utils'
 
-type Strength = {
-	label: string
-	color: string
-	percentage: number
+import {
+	calculateStrength,
+	clampLength,
+	generatePassword,
+	MAX_LENGTH,
+	MIN_LENGTH,
+	type PasswordOptions,
+} from './utils'
+
+const DEFAULT_OPTIONS: PasswordOptions = {
+	length: 16,
+	uppercase: true,
+	lowercase: true,
+	digits: true,
+	symbols: true,
+	avoidAmbiguous: true,
 }
 
-function generatePassword(
-	length: number,
-	useUpper: boolean,
-	useLower: boolean,
-	useDigits: boolean,
-	useSymbols: boolean,
-	avoidAmbiguous: boolean,
-): string {
-	let chars = ''
-	let upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-	let lower = 'abcdefghijklmnopqrstuvwxyz'
-	let digits = '0123456789'
-	let symbols = '!@#$%^&*()_+~`|}{[]:;?><,./-='
-
-	if (avoidAmbiguous) {
-		upper = upper.replace(/[IO]/g, '')
-		lower = lower.replace(/[lo]/g, '')
-		digits = digits.replace(/[01]/g, '')
-		symbols = symbols.replace(/[|]/g, '')
-	}
-
-	if (useUpper) chars += upper
-	if (useLower) chars += lower
-	if (useDigits) chars += digits
-	if (useSymbols) chars += symbols
-
-	if (!chars) return ''
-
-	// Reject values from the biased tail so every character is equally likely
-	const maxUnbiased = Math.floor(0x100000000 / chars.length) * chars.length
-	const buffer = new Uint32Array(1)
-	let password = ''
-	while (password.length < length) {
-		crypto.getRandomValues(buffer)
-		const value = buffer[0] ?? maxUnbiased
-		if (value < maxUnbiased) password += chars.charAt(value % chars.length)
-	}
-	return password
-}
-
-function calculateStrength(
-	pass: string,
-	useUpper: boolean,
-	useLower: boolean,
-	useDigits: boolean,
-	useSymbols: boolean,
-): Strength {
-	if (!pass) return { label: 'Empty', color: 'bg-slate-700', percentage: 0 }
-
-	let score = 0
-	if (pass.length >= 8) score += 1
-	if (pass.length >= 12) score += 1
-	if (pass.length >= 16) score += 1
-
-	let categories = 0
-	if (useUpper && /[A-Z]/.test(pass)) categories++
-	if (useLower && /[a-z]/.test(pass)) categories++
-	if (useDigits && /[0-9]/.test(pass)) categories++
-	if (useSymbols && /[^A-Za-z0-9]/.test(pass)) categories++
-
-	score += categories
-
-	if (score <= 3) {
-		return { label: 'Weak', color: 'bg-red-500', percentage: 25 }
-	}
-	if (score <= 5) {
-		return { label: 'Fair', color: 'bg-yellow-500', percentage: 50 }
-	}
-	if (score <= 6) {
-		return { label: 'Strong', color: 'bg-blue-500', percentage: 75 }
-	}
-	return { label: 'Secure', color: 'bg-matrix', percentage: 100 }
-}
+const TOGGLES: Array<{ key: Exclude<keyof PasswordOptions, 'length'>; label: string }> = [
+	{ key: 'uppercase', label: 'UPPERCASE (A-Z)' },
+	{ key: 'lowercase', label: 'LOWERCASE (a-z)' },
+	{ key: 'digits', label: 'NUMBERS (0-9)' },
+	{ key: 'symbols', label: 'SYMBOLS (!@#$...)' },
+]
 
 export default function PasswordGenerator() {
-	const [length, setLength] = useState<number>(16)
-	const [uppercase, setUppercase] = useState<boolean>(true)
-	const [lowercase, setLowercase] = useState<boolean>(true)
-	const [digits, setDigits] = useState<boolean>(true)
-	const [symbols, setSymbols] = useState<boolean>(true)
-	const [avoidAmbiguous, setAvoidAmbiguous] = useState<boolean>(true)
-	const [password, setPassword] = useState<string>('')
-	const [strength, setStrength] = useState<Strength>({
-		label: 'Empty',
-		color: 'bg-slate-700',
-		percentage: 0,
-	})
+	const [options, setOptions] = useState<PasswordOptions>(DEFAULT_OPTIONS)
+	// Bumped by the Generate button to draw a fresh password with the same options
+	const [generation, setGeneration] = useState<number>(0)
 
-	const handleGenerate = useCallback(() => {
-		const pass = generatePassword(length, uppercase, lowercase, digits, symbols, avoidAmbiguous)
-		setPassword(pass)
-		setStrength(calculateStrength(pass, uppercase, lowercase, digits, symbols))
-	}, [length, uppercase, lowercase, digits, symbols, avoidAmbiguous])
+	const password = useMemo(() => {
+		void generation
+		return generatePassword(options)
+	}, [options, generation])
+	const strength = useMemo(() => calculateStrength(password, options), [password, options])
 
-	useEffect(() => {
-		handleGenerate()
-	}, [handleGenerate])
+	const updateOption = <K extends keyof PasswordOptions>(key: K, value: PasswordOptions[K]) =>
+		setOptions((current) => ({ ...current, [key]: value }))
+	const setLength = (length: number) => updateOption('length', clampLength(length))
+	const handleGenerate = () => setGeneration((value) => value + 1)
 
 	return (
 		<div className="flex flex-col gap-6 lg:flex-row lg:items-start">
@@ -123,11 +60,11 @@ export default function PasswordGenerator() {
 							<span className="block font-bold text-slate-500 uppercase">Password Length</span>
 							<div className="flex items-center gap-4">
 								<Slider
-									min={6}
-									max={64}
+									min={MIN_LENGTH}
+									max={MAX_LENGTH}
 									step={1}
-									value={[length]}
-									onValueChange={(val) => setLength(val[0] ?? length)}
+									value={[options.length]}
+									onValueChange={(val) => setLength(val[0] ?? options.length)}
 									className="flex-1"
 								/>
 								<div className="flex items-center">
@@ -135,25 +72,23 @@ export default function PasswordGenerator() {
 										type="button"
 										variant="outline"
 										className="border-terminal-border hover:bg-terminal-border/20 hover:text-foreground h-7 w-7 rounded-r-none border-r-0 p-0 text-slate-400"
-										onClick={() => setLength((l) => Math.max(6, l - 1))}
+										onClick={() => setLength(options.length - 1)}
 									>
 										-
 									</Button>
 									<Input
 										type="number"
-										min={6}
-										max={64}
-										value={length}
-										onChange={(e) =>
-											setLength(Math.min(64, Math.max(6, parseInt(e.target.value, 10) || 6)))
-										}
+										min={MIN_LENGTH}
+										max={MAX_LENGTH}
+										value={options.length}
+										onChange={(e) => setLength(parseInt(e.target.value, 10) || MIN_LENGTH)}
 										className="border-terminal-border text-foreground h-7 w-12 [appearance:textfield] rounded-none p-0 text-center font-mono text-xs [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
 									/>
 									<Button
 										type="button"
 										variant="outline"
 										className="border-terminal-border hover:bg-terminal-border/20 hover:text-foreground h-7 w-7 rounded-l-none border-l-0 p-0 text-slate-400"
-										onClick={() => setLength((l) => Math.min(64, l + 1))}
+										onClick={() => setLength(options.length + 1)}
 									>
 										+
 									</Button>
@@ -163,67 +98,27 @@ export default function PasswordGenerator() {
 
 						{/* Toggles */}
 						<div className="border-terminal-border space-y-3 border-t pt-4">
-							<div className="flex items-center gap-2.5">
-								<Checkbox
-									id="uppercase"
-									checked={uppercase}
-									onCheckedChange={(checked) => setUppercase(checked === true)}
-								/>
-								<label
-									htmlFor="uppercase"
-									className="hover:text-foreground cursor-pointer font-semibold text-slate-300 select-none"
-								>
-									UPPERCASE (A-Z)
-								</label>
-							</div>
-
-							<div className="flex items-center gap-2.5">
-								<Checkbox
-									id="lowercase"
-									checked={lowercase}
-									onCheckedChange={(checked) => setLowercase(checked === true)}
-								/>
-								<label
-									htmlFor="lowercase"
-									className="hover:text-foreground cursor-pointer font-semibold text-slate-300 select-none"
-								>
-									LOWERCASE (a-z)
-								</label>
-							</div>
-
-							<div className="flex items-center gap-2.5">
-								<Checkbox
-									id="digits"
-									checked={digits}
-									onCheckedChange={(checked) => setDigits(checked === true)}
-								/>
-								<label
-									htmlFor="digits"
-									className="hover:text-foreground cursor-pointer font-semibold text-slate-300 select-none"
-								>
-									NUMBERS (0-9)
-								</label>
-							</div>
-
-							<div className="flex items-center gap-2.5">
-								<Checkbox
-									id="symbols"
-									checked={symbols}
-									onCheckedChange={(checked) => setSymbols(checked === true)}
-								/>
-								<label
-									htmlFor="symbols"
-									className="hover:text-foreground cursor-pointer font-semibold text-slate-300 select-none"
-								>
-									SYMBOLS (!@#$...)
-								</label>
-							</div>
+							{TOGGLES.map(({ key, label }) => (
+								<div key={key} className="flex items-center gap-2.5">
+									<Checkbox
+										id={key}
+										checked={options[key]}
+										onCheckedChange={(checked) => updateOption(key, checked === true)}
+									/>
+									<label
+										htmlFor={key}
+										className="hover:text-foreground cursor-pointer font-semibold text-slate-300 select-none"
+									>
+										{label}
+									</label>
+								</div>
+							))}
 
 							<div className="border-terminal-border flex items-center gap-2.5 border-t pt-3">
 								<Checkbox
 									id="avoidAmbiguous"
-									checked={avoidAmbiguous}
-									onCheckedChange={(checked) => setAvoidAmbiguous(checked === true)}
+									checked={options.avoidAmbiguous}
+									onCheckedChange={(checked) => updateOption('avoidAmbiguous', checked === true)}
 								/>
 								<label
 									htmlFor="avoidAmbiguous"
