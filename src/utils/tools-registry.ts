@@ -1,4 +1,5 @@
 import {
+	ArrowLeftRight,
 	Binary,
 	Braces,
 	CalendarRange,
@@ -108,6 +109,14 @@ export const TOOLS: ToolMetadata[] = [
 		category: 'Converters & Encoders',
 		icon: Table,
 		tags: ['json', 'csv', 'converter', 'table', 'spreadsheet', 'excel'],
+	},
+	{
+		id: 'json-yaml',
+		name: 'JSON ⇄ YAML',
+		description: 'Convert between JSON and YAML, with error positions for invalid YAML.',
+		category: 'Converters & Encoders',
+		icon: ArrowLeftRight,
+		tags: ['json', 'yaml', 'yml', 'converter', 'config'],
 	},
 
 	// ==========================================
