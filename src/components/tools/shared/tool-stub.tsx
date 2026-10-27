@@ -3,7 +3,7 @@ type StubProps = {
 	name: string
 }
 
-export default function ToolStub({ toolId, name }: StubProps) {
+export function ToolStub({ toolId, name }: StubProps) {
 	return (
 		<div className="border-terminal-border bg-terminal-card/50 h-fit rounded border border-dashed p-8">
 			<h2 className="text-matrix mb-2 font-mono text-xl font-bold">{name}</h2>

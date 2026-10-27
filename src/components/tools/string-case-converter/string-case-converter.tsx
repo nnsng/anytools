@@ -19,7 +19,7 @@ import {
 	toSnakeCase,
 	toTitleCase,
 	toUpperCase,
-} from './converter'
+} from './utils'
 
 type Case =
 	| 'lower'

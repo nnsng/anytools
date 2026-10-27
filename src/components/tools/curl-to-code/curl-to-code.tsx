@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/select'
 import { APP_NAME } from '@/constants/app'
 
-import { generateAxios, generateFetch, parseCurl } from './curl-parsers'
+import { generateAxios, generateFetch, parseCurl } from './utils'
 
 type TabType = 'fetch' | 'axios'
 

@@ -13,7 +13,7 @@ import {
 	SelectValue,
 } from '@/components/ui/select'
 
-import { generateV1Uuid, generateV4Uuid } from './helpers'
+import { generateV1Uuid, generateV4Uuid } from './utils'
 
 type Version = 'v4' | 'v1'
 

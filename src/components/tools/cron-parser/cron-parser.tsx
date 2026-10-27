@@ -4,7 +4,7 @@ import { useMemo, useState } from 'react'
 import { CronBreakdown } from './cron-breakdown'
 import { CronInput } from './cron-input'
 import { CronSchedule } from './cron-schedule'
-import { describeCronPart } from './cron-utils'
+import { describeCronPart } from './utils'
 
 type CronExplanation = {
 	minute: string

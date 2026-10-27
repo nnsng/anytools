@@ -14,12 +14,12 @@ import {
 } from '@/components/ui/select'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
-import { base64urlDecode, base64urlEncode, signJwt } from './helpers'
+import { base64urlDecode, base64urlEncode, signJwt } from './utils'
 
 type TabType = 'decode' | 'encode'
 type EncodeAlg = 'HS256' | 'HS384' | 'HS512' | 'none'
 
-export default function JwtCodec() {
+export default function JwtDebugger() {
 	const [activeTab, setActiveTab] = useState<TabType>('decode')
 
 	// Decoder State

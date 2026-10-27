@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard'
 
-import { cmykToRgb, hexToRgb, hslToRgb, parseCmyk, parseHsl, parseRgb } from './color-utils'
+import { cmykToRgb, hexToRgb, hslToRgb, parseCmyk, parseHsl, parseRgb } from './utils'
 
 type ColorFieldsProps = {
 	hex: string

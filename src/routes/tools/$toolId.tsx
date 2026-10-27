@@ -2,65 +2,10 @@ import { createFileRoute, type ErrorComponentProps } from '@tanstack/react-route
 import { Loader2 } from 'lucide-react'
 import React, { useEffect } from 'react'
 
+import { ToolStub } from '@/components/tools/shared/tool-stub'
 import { APP_NAME } from '@/constants/app'
+import { getToolComponent } from '@/utils/tool-components'
 import { TOOLS } from '@/utils/tools-registry'
-
-const Base64Image = React.lazy(() => import('@/components/tools/base64-image'))
-const Base64Text = React.lazy(() => import('@/components/tools/base64-text'))
-const ColorConverter = React.lazy(() => import('@/components/tools/color-converter'))
-const CronParser = React.lazy(() => import('@/components/tools/cron-parser'))
-const CurlToCode = React.lazy(() => import('@/components/tools/curl-to-code'))
-const DiffChecker = React.lazy(() => import('@/components/tools/diff-checker'))
-const HtmlEntityEncoder = React.lazy(() => import('@/components/tools/html-entity-encoder'))
-const HtmlSandbox = React.lazy(() => import('@/components/tools/html-sandbox'))
-const JsonFormatter = React.lazy(() => import('@/components/tools/json-formatter'))
-const JsonToCode = React.lazy(() => import('@/components/tools/json-to-code'))
-const MarkdownPreview = React.lazy(() => import('@/components/tools/markdown-preview'))
-const MockDataGenerator = React.lazy(() => import('@/components/tools/mock-data-generator'))
-const RegexTester = React.lazy(() => import('@/components/tools/regex-tester'))
-const ToolStub = React.lazy(() => import('@/components/tools/stub'))
-const TimestampConverter = React.lazy(() => import('@/components/tools/timestamp-converter'))
-const UrlEncoder = React.lazy(() => import('@/components/tools/url-encoder'))
-const JsFormatter = React.lazy(() => import('@/components/tools/js-formatter'))
-const UuidGenerator = React.lazy(() => import('@/components/tools/uuid-generator'))
-const PasswordGenerator = React.lazy(() => import('@/components/tools/password-generator'))
-const QrCodeStudio = React.lazy(() => import('@/components/tools/qr-code-studio'))
-const FaviconGenerator = React.lazy(() => import('@/components/tools/favicon-generator'))
-const JwtDebugger = React.lazy(() => import('@/components/tools/jwt-debugger'))
-const TextAnalyzer = React.lazy(() => import('@/components/tools/text-analyzer'))
-const CssFormatter = React.lazy(() => import('@/components/tools/css-formatter'))
-const HtmlFormatter = React.lazy(() => import('@/components/tools/html-formatter'))
-const StringCaseConverter = React.lazy(() => import('@/components/tools/string-case-converter'))
-const Dedupe = React.lazy(() => import('@/components/tools/dedupe'))
-
-const TOOL_COMPONENTS: Record<string, React.ComponentType> = {
-	'timestamp-converter': TimestampConverter,
-	'json-formatter': JsonFormatter,
-	'base64-text': Base64Text,
-	'base64-image': Base64Image,
-	'regex-tester': RegexTester,
-	'url-encoder': UrlEncoder,
-	'html-entity-encoder': HtmlEntityEncoder,
-	'html-sandbox': HtmlSandbox,
-	'markdown-preview': MarkdownPreview,
-	'diff-checker': DiffChecker,
-	'cron-parser': CronParser,
-	'color-converter': ColorConverter,
-	'curl-to-code': CurlToCode,
-	'json-to-code': JsonToCode,
-	'mock-data-generator': MockDataGenerator,
-	'js-formatter': JsFormatter,
-	'uuid-generator': UuidGenerator,
-	'password-generator': PasswordGenerator,
-	'qr-code-studio': QrCodeStudio,
-	'favicon-generator': FaviconGenerator,
-	'jwt-debugger': JwtDebugger,
-	'text-analyzer': TextAnalyzer,
-	'css-formatter': CssFormatter,
-	'html-formatter': HtmlFormatter,
-	'string-case-converter': StringCaseConverter,
-	dedupe: Dedupe,
-}
 
 function ToolError({ error, reset }: ErrorComponentProps) {
 	return (
@@ -123,7 +68,7 @@ function ToolContainer() {
 		)
 	}
 
-	const Component = TOOL_COMPONENTS[tool.id]
+	const Component = getToolComponent(tool.id)
 
 	return (
 		<div className="animate-fade-in mx-auto flex w-full max-w-7xl flex-1 flex-col gap-4 p-4 md:p-6 lg:h-full lg:min-h-0 lg:p-8">

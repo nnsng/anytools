@@ -4,7 +4,7 @@ import { CodeBlock, EditorPane } from '@/components/tools/shared'
 import { Input } from '@/components/ui/input'
 import { runConversion } from '@/lib/convert'
 
-import { generateTsInterfaces } from './ts-generator'
+import { generateTsInterfaces } from './utils'
 
 export default function JsonToCode() {
 	const [jsonInput, setJsonInput] = useState<string>(

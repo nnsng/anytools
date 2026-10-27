@@ -31,7 +31,7 @@ type TabType = 'generate' | 'scan'
 type SizeType = '128' | '256' | '384' | '512'
 type ErrorLevelType = 'L' | 'M' | 'Q' | 'H'
 
-export default function QrCodeTool() {
+export default function QrCodeStudio() {
 	const [activeTab, setActiveTab] = useState<TabType>('generate')
 
 	// Generator State

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
 import { ColorFields } from './color-fields'
-import { hexToRgb, rgbToCmyk, rgbToHex, rgbToHsl } from './color-utils'
+import { hexToRgb, rgbToCmyk, rgbToHex, rgbToHsl } from './utils'
 
 type ColorHistoryItem = {
 	hex: string
