@@ -27,8 +27,10 @@ export default function MockDataGenerator() {
 
 	const handleFieldChange = (idx: number, key: keyof MockField, val: string) => {
 		setFields((prev) => {
+			const current = prev[idx]
+			if (!current) return prev
 			const copy = [...prev]
-			copy[idx] = { ...copy[idx], [key]: val }
+			copy[idx] = { ...current, [key]: val }
 			return copy
 		})
 	}

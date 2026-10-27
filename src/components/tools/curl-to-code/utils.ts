@@ -18,7 +18,7 @@ export function parseCurl(curl: string): ParsedCurl {
 
 	const methodMatch = cleanCurl.match(/(?:-X|--request)\s+([A-Z]+)/)
 	if (methodMatch) {
-		method = methodMatch[1]
+		method = methodMatch[1] ?? method
 	} else if (
 		cleanCurl.includes('-d ') ||
 		cleanCurl.includes('--data') ||

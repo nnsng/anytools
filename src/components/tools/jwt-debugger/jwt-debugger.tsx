@@ -81,9 +81,9 @@ export default function JwtDebugger() {
 		}
 
 		try {
-			const headerStr = base64urlDecode(parts[0])
-			const payloadStr = base64urlDecode(parts[1])
-			setSignaturePart(parts[2])
+			const headerStr = base64urlDecode(parts[0] ?? '')
+			const payloadStr = base64urlDecode(parts[1] ?? '')
+			setSignaturePart(parts[2] ?? '')
 
 			// Validate JSON format
 			const parsedHeader = JSON.parse(headerStr)
@@ -143,7 +143,7 @@ export default function JwtDebugger() {
 
 		let alg = ''
 		try {
-			const headerStr = base64urlDecode(parts[0])
+			const headerStr = base64urlDecode(parts[0] ?? '')
 			const parsedHeader = JSON.parse(headerStr)
 			alg = parsedHeader.alg || ''
 		} catch {
@@ -156,10 +156,10 @@ export default function JwtDebugger() {
 			return
 		}
 
-		const headerAndPayload = `${parts[0]}.${parts[1]}`
+		const headerAndPayload = `${parts[0] ?? ''}.${parts[1] ?? ''}`
 		signJwt(headerAndPayload, decodeSecret, alg)
 			.then((expectedSig) => {
-				if (expectedSig === parts[2]) {
+				if (expectedSig === (parts[2] ?? '')) {
 					setSignatureStatus('valid')
 				} else {
 					setSignatureStatus('invalid')

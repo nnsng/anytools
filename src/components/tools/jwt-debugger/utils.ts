@@ -6,7 +6,7 @@ export function base64urlEncode(source: string | ArrayBuffer): string {
 	} else {
 		const bytes = new Uint8Array(source)
 		for (let i = 0; i < bytes.byteLength; i++) {
-			binary += String.fromCharCode(bytes[i])
+			binary += String.fromCharCode(bytes[i] ?? 0)
 		}
 		binary = btoa(binary)
 	}

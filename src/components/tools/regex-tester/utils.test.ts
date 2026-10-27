@@ -19,7 +19,7 @@ describe('findMatches', () => {
 
 	it('reports capture groups and names', () => {
 		const [match] = findMatches('(?<word>\\w+)\\s(\\d+)', 'g', 'hello 123').matches
-		expect(match.groups).toEqual([
+		expect(match?.groups).toEqual([
 			{ index: 1, content: 'hello', name: 'word' },
 			{ index: 2, content: '123', name: undefined },
 		])
@@ -27,7 +27,7 @@ describe('findMatches', () => {
 
 	it('ignores parentheses in character classes and non-capturing groups', () => {
 		const [match] = findMatches('(?:a)[(](?<n>b)', '', 'a(b').matches
-		expect(match.groups).toEqual([{ index: 1, content: 'b', name: 'n' }])
+		expect(match?.groups).toEqual([{ index: 1, content: 'b', name: 'n' }])
 	})
 
 	it('returns an error for invalid patterns', () => {

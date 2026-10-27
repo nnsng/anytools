@@ -42,18 +42,14 @@ function generatePassword(
 
 	if (!chars) return ''
 
+	// Reject values from the biased tail so every character is equally likely
+	const maxUnbiased = Math.floor(0x100000000 / chars.length) * chars.length
+	const buffer = new Uint32Array(1)
 	let password = ''
-	const cryptoObj = typeof window !== 'undefined' ? window.crypto : null
-	if (cryptoObj && typeof cryptoObj.getRandomValues === 'function') {
-		const array = new Uint32Array(length)
-		cryptoObj.getRandomValues(array)
-		for (let i = 0; i < length; i++) {
-			password += chars[array[i] % chars.length]
-		}
-	} else {
-		for (let i = 0; i < length; i++) {
-			password += chars[Math.floor(Math.random() * chars.length)]
-		}
+	while (password.length < length) {
+		crypto.getRandomValues(buffer)
+		const value = buffer[0] ?? maxUnbiased
+		if (value < maxUnbiased) password += chars.charAt(value % chars.length)
 	}
 	return password
 }
@@ -131,7 +127,7 @@ export default function PasswordGenerator() {
 									max={64}
 									step={1}
 									value={[length]}
-									onValueChange={(val) => setLength(val[0])}
+									onValueChange={(val) => setLength(val[0] ?? length)}
 									className="flex-1"
 								/>
 								<div className="flex items-center">

@@ -50,7 +50,7 @@ export function DecodeTab({ className }: DecodeTabProps) {
 		const link = document.createElement('a')
 		link.href = decodedSrc
 		const mime = decodedSrc.match(/data:(image\/[a-zA-Z+]+);base64,/)
-		const ext = mime ? mime[1].split('/')[1] : 'png'
+		const ext = mime?.[1]?.split('/')[1] ?? 'png'
 		link.download = `decoded-image.${ext}`
 		link.click()
 	}

@@ -34,11 +34,11 @@ function parseCron(expression: string): CronResult {
 		const explanation =
 			parts.length >= 5
 				? {
-						minute: describeCronPart(parts[0], 'minute'),
-						hour: describeCronPart(parts[1], 'hour'),
-						dayOfMonth: describeCronPart(parts[2], 'day of month'),
-						month: describeCronPart(parts[3], 'month'),
-						dayOfWeek: describeCronPart(parts[4], 'day of week'),
+						minute: describeCronPart(parts[0] ?? '*', 'minute'),
+						hour: describeCronPart(parts[1] ?? '*', 'hour'),
+						dayOfMonth: describeCronPart(parts[2] ?? '*', 'day of month'),
+						month: describeCronPart(parts[3] ?? '*', 'month'),
+						dayOfWeek: describeCronPart(parts[4] ?? '*', 'day of week'),
 					}
 				: null
 

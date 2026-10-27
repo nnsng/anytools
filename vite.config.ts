@@ -48,6 +48,7 @@ const config = defineConfig({
 					if (/node_modules\/@tanstack\/(react-router|router-core|history)\//.test(id)) {
 						return 'router-vendor'
 					}
+					return undefined
 				},
 			},
 		},

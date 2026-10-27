@@ -55,7 +55,7 @@ function getGroupNames(pattern: string): Map<number, string> {
 			const named = /^\(\?<([A-Za-z_$][\w$]*)>/.exec(pattern.slice(i))
 			if (named) {
 				groupIndex++
-				names.set(groupIndex, named[1])
+				names.set(groupIndex, named[1] ?? '')
 			}
 		}
 	}
