@@ -35,6 +35,9 @@ export function ThemeProvider({ children }: PropsWithChildren) {
 
 	useEffect(() => {
 		document.documentElement.classList.toggle('dark', theme === 'dark')
+		document
+			.getElementById('favicon')
+			?.setAttribute('href', theme === 'dark' ? '/favicon.svg' : '/favicon-light.svg')
 		try {
 			localStorage.setItem(THEME_STORAGE_KEY, theme)
 		} catch {
