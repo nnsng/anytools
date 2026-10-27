@@ -1,9 +1,11 @@
 import { Check, Copy, Download, Trash2, Upload } from 'lucide-react'
 import type React from 'react'
 import { useRef, useState } from 'react'
+
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
+
 import { CodeBlock } from './code-block'
 import { Pane } from './pane'
 
@@ -116,7 +118,7 @@ export function EditorPane(props: EditorPaneProps) {
 					title="Copy to clipboard"
 				>
 					{copied ? (
-						<Check className="h-3.5 w-3.5 text-matrix" />
+						<Check className="text-matrix h-3.5 w-3.5" />
 					) : (
 						<Copy className="h-3.5 w-3.5" />
 					)}
@@ -157,7 +159,7 @@ export function EditorPane(props: EditorPaneProps) {
 			className={className}
 			dotClassName={readOnly ? 'bg-blue-500' : ''}
 			footer={
-				<div className="flex select-none items-center justify-between px-4 py-1.5 font-mono text-slate-500 text-xs">
+				<div className="flex items-center justify-between px-4 py-1.5 font-mono text-xs text-slate-500 select-none">
 					<span>LINES: {lineCount}</span>
 					<span>CHARS: {characterCount}</span>
 				</div>
@@ -174,7 +176,7 @@ export function EditorPane(props: EditorPaneProps) {
 						placeholder={placeholder}
 						readOnly={readOnly}
 						className={cn(
-							'scrollbar-thin w-full flex-1 resize-none bg-transparent p-4 font-mono text-foreground text-sm placeholder:text-muted-foreground focus:outline-none',
+							'text-foreground placeholder:text-muted-foreground w-full flex-1 resize-none scrollbar-thin bg-transparent p-4 font-mono text-sm focus:outline-none',
 							error && 'border border-red-500/20 focus:border-red-500/40',
 						)}
 					/>
@@ -183,7 +185,7 @@ export function EditorPane(props: EditorPaneProps) {
 				{error && (
 					<CodeBlock
 						value={error}
-						className="absolute right-0 bottom-0 left-0 overflow-y-auto border-red-500/20 border-t bg-red-950/40 p-3 text-red-400 text-xs"
+						className="absolute right-0 bottom-0 left-0 overflow-y-auto border-t border-red-500/20 bg-red-950/40 p-3 text-xs text-red-400"
 					/>
 				)}
 			</div>

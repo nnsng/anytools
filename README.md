@@ -49,7 +49,7 @@ The workspace is packed with multiple essential tools categorized for everyday d
 - **Routing:** TanStack Router (File-based SPA Routing)
 - **Styling:** Tailwind CSS v4, Lucide Icons
 - **UI Primitives:** Radix UI components (Shadcn UI presets)
-- **Code Quality:** Biome (Lightning-fast formatter, linter, and code check)
+- **Toolchain & Code Quality:** Vite+ (`vp`) with Oxlint and Oxfmt
 - **Environment:** pnpm workspaces
 
 ---
@@ -86,7 +86,7 @@ pnpm build
 
 ### Static Analysis & Lints
 
-Validate and keep the codebase tidy using Biome:
+Validate and keep the codebase tidy using Vite+ (Oxlint + Oxfmt):
 
 ```bash
 # Auto-format files
@@ -115,6 +115,6 @@ This project includes a native `vercel.json` rewrite schema suited for Single Pa
 
 ```json
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
+	"rewrites": [{ "source": "/(.*)", "destination": "/" }]
 }
 ```

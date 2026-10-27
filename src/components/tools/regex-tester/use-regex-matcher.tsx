@@ -83,7 +83,7 @@ export function useRegexMatcher(
 					parts.push(
 						<span
 							key={matchIndex}
-							className="rounded-xs border-matrix border-b bg-matrix/30 px-0.5 font-bold text-matrix-glow"
+							className="border-matrix bg-matrix/30 text-matrix-glow rounded-xs border-b px-0.5 font-bold"
 							title={`Match at index ${matchIndex}`}
 						>
 							{matchText}
@@ -109,7 +109,7 @@ export function useRegexMatcher(
 					parts.push(
 						<span
 							key={matchIndex}
-							className="rounded-xs border-matrix border-b bg-matrix/30 px-0.5 font-bold text-matrix-glow"
+							className="border-matrix bg-matrix/30 text-matrix-glow rounded-xs border-b px-0.5 font-bold"
 						>
 							{matchText}
 						</span>,

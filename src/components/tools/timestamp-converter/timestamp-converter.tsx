@@ -1,5 +1,6 @@
 import { formatDistanceToNow } from 'date-fns'
 import { useCallback, useEffect, useState } from 'react'
+
 import { DateToEpoch } from './date-to-epoch'
 import { EpochToDate } from './epoch-to-date'
 import { LiveClock } from './live-clock'
@@ -100,7 +101,7 @@ export default function UnixConverter() {
 	}, [])
 
 	// Run initial conversions on load
-	// biome-ignore lint/correctness/useExhaustiveDependencies: intentionally runs only on mount with initial values
+	// oxlint-disable-next-line react-hooks/exhaustive-deps -- intentionally runs only on mount with initial values
 	useEffect(() => {
 		handleConvertEpoch(inputEpoch)
 		handleConvertDate(inputDate)

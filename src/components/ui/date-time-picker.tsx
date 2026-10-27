@@ -1,6 +1,7 @@
 import { format } from 'date-fns'
 import { Calendar as CalendarIcon, Clock } from 'lucide-react'
 import type * as React from 'react'
+
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Input } from '@/components/ui/input'
@@ -78,7 +79,7 @@ export function DateTimePicker({ value, onChange, disabled, className }: DateTim
 					type="time"
 					step="1"
 					disabled={disabled || !date || Number.isNaN(date.getTime())}
-					className="block w-32.5 appearance-none bg-background pl-9 [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
+					className="bg-background block w-32.5 appearance-none pl-9 [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
 					value={date && !Number.isNaN(date.getTime()) ? format(date, 'HH:mm:ss') : ''}
 					onChange={handleTimeChange}
 				/>

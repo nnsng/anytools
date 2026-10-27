@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
+
 import { CodeBlock, EditorPane } from '@/components/tools/shared'
 import { Input } from '@/components/ui/input'
+
 import { generateTsInterfaces } from './ts-generator'
 
 export default function JsonToCode() {
@@ -51,12 +53,12 @@ export default function JsonToCode() {
 				downloadFileName={`${interfaceName || 'models'}.ts`}
 				actions={
 					<div className="flex items-center gap-2 font-mono">
-						<span className="font-bold text-slate-500 text-xs uppercase">Root:</span>
+						<span className="text-xs font-bold text-slate-500 uppercase">Root:</span>
 						<Input
 							type="text"
 							value={interfaceName}
 							onChange={(e) => setInterfaceName(e.target.value)}
-							className="h-8 w-32 border-terminal-border font-mono text-foreground text-xs"
+							className="border-terminal-border text-foreground h-8 w-32 font-mono text-xs"
 						/>
 					</div>
 				}

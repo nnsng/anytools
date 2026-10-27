@@ -1,4 +1,5 @@
 import { Plus, Trash2 } from 'lucide-react'
+
 import { Pane } from '@/components/tools/shared'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -115,12 +116,12 @@ export function SchemaBuilder(props: SchemaBuilderProps) {
 				<div className="flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between">
 					<div className="flex gap-3">
 						<div className="flex items-center gap-3">
-							<span className="font-bold text-slate-500 text-xs uppercase">Rows:</span>
+							<span className="text-xs font-bold text-slate-500 uppercase">Rows:</span>
 							<div className="flex items-center">
 								<Button
 									variant="outline"
 									size="sm"
-									className="h-8 rounded-r-none border-r-0 px-2.5 text-slate-400 hover:text-foreground"
+									className="hover:text-foreground h-8 rounded-r-none border-r-0 px-2.5 text-slate-400"
 									onClick={() => onCountChange(Math.max(1, count - 1))}
 								>
 									-
@@ -133,12 +134,12 @@ export function SchemaBuilder(props: SchemaBuilderProps) {
 									onChange={(e) =>
 										onCountChange(Math.min(500, Math.max(1, parseInt(e.target.value, 10) || 1)))
 									}
-									className="h-8 w-16 rounded-none border-terminal-border text-center font-mono text-xs [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+									className="border-terminal-border h-8 w-16 [appearance:textfield] rounded-none text-center font-mono text-xs [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
 								/>
 								<Button
 									variant="outline"
 									size="sm"
-									className="h-8 rounded-l-none border-l-0 px-2.5 text-slate-400 hover:text-foreground"
+									className="hover:text-foreground h-8 rounded-l-none border-l-0 px-2.5 text-slate-400"
 									onClick={() => onCountChange(Math.min(500, count + 1))}
 								>
 									+
@@ -166,16 +167,16 @@ export function SchemaBuilder(props: SchemaBuilderProps) {
 				</div>
 			}
 		>
-			<div className="scrollbar-thin flex-1 space-y-3 overflow-y-auto p-4">
+			<div className="flex-1 scrollbar-thin space-y-3 overflow-y-auto p-4">
 				{fields.length === 0 ? (
-					<div className="py-8 text-center text-slate-600 text-xs">
+					<div className="py-8 text-center text-xs text-slate-600">
 						No fields defined. Add one above.
 					</div>
 				) : (
 					fields.map((field, idx) => (
 						<div
 							key={idx}
-							className="flex items-center gap-2 rounded-xs border border-terminal-border bg-terminal-bg/50 p-2"
+							className="border-terminal-border bg-terminal-bg/50 flex items-center gap-2 rounded-xs border p-2"
 						>
 							<div className="w-[45%]">
 								<Input
@@ -191,10 +192,10 @@ export function SchemaBuilder(props: SchemaBuilderProps) {
 									<SelectTrigger className="h-8 w-full text-xs">
 										<SelectValue />
 									</SelectTrigger>
-									<SelectContent className="max-h-60 border-terminal-border bg-terminal-card font-mono text-xs">
+									<SelectContent className="border-terminal-border bg-terminal-card max-h-60 font-mono text-xs">
 										{MOCK_FIELD_GROUPS.map((group) => (
 											<SelectGroup key={group.label}>
-												<SelectLabel className="font-bold text-slate-500 text-xs uppercase">
+												<SelectLabel className="text-xs font-bold text-slate-500 uppercase">
 													{group.label}
 												</SelectLabel>
 												{group.types.map((opt) => (

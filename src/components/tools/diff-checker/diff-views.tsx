@@ -1,4 +1,5 @@
 import type React from 'react'
+
 import { BorderBox } from '@/components/tools/shared'
 import { cn } from '@/lib/utils'
 
@@ -15,7 +16,7 @@ export function InlineDiffView({ diffs, className }: DiffViewProps) {
 	return (
 		<pre
 			className={cn(
-				'min-h-75 select-text whitespace-pre-wrap break-all rounded border border-terminal-border bg-muted/50 p-4 text-slate-300 text-sm',
+				'border-terminal-border bg-muted/50 min-h-75 rounded border p-4 text-sm break-all whitespace-pre-wrap text-slate-300 select-text',
 				className,
 			)}
 		>
@@ -34,7 +35,7 @@ export function InlineDiffView({ diffs, className }: DiffViewProps) {
 				return (
 					<span
 						key={`${idx}-ins`}
-						className="border border-matrix/20 bg-green-950 px-0.5 font-bold text-matrix-glow"
+						className="border-matrix/20 text-matrix-glow border bg-green-950 px-0.5 font-bold"
 					>
 						{text}
 					</span>
@@ -65,7 +66,7 @@ export function SideBySideView({ diffs, className }: DiffViewProps) {
 			rightPane.push(
 				<span
 					key={`r-${idx}-ins`}
-					className="block border border-matrix/20 bg-green-950 px-0.5 font-bold text-matrix-glow md:inline"
+					className="border-matrix/20 text-matrix-glow block border bg-green-950 px-0.5 font-bold md:inline"
 				>
 					{text}
 				</span>,
@@ -75,24 +76,24 @@ export function SideBySideView({ diffs, className }: DiffViewProps) {
 
 	return (
 		<div className={cn('flex min-h-75 flex-col gap-6 lg:flex-row', className)}>
-			<BorderBox className="h flex flex-1 flex-col bg-terminal-card/40 p-0">
-				<div className="border-terminal-border border-b bg-terminal-bg/40 px-4 py-2">
-					<span className="font-bold font-mono text-slate-300 text-xs uppercase tracking-wider">
+			<BorderBox className="h bg-terminal-card/40 flex flex-1 flex-col p-0">
+				<div className="border-terminal-border bg-terminal-bg/40 border-b px-4 py-2">
+					<span className="font-mono text-xs font-bold tracking-wider text-slate-300 uppercase">
 						Original (Text A)
 					</span>
 				</div>
-				<pre className="scrollbar-thin max-h-100 grow select-text overflow-y-auto whitespace-pre-wrap break-all bg-muted/50 p-4 font-mono text-slate-400 text-sm">
+				<pre className="bg-muted/50 max-h-100 grow scrollbar-thin overflow-y-auto p-4 font-mono text-sm break-all whitespace-pre-wrap text-slate-400 select-text">
 					{leftPane}
 				</pre>
 			</BorderBox>
 
-			<BorderBox className="h flex flex-1 flex-col bg-terminal-card/40 p-0">
-				<div className="border-terminal-border border-b bg-terminal-bg/40 px-4 py-2">
-					<span className="font-bold font-mono text-slate-300 text-xs uppercase tracking-wider">
+			<BorderBox className="h bg-terminal-card/40 flex flex-1 flex-col p-0">
+				<div className="border-terminal-border bg-terminal-bg/40 border-b px-4 py-2">
+					<span className="font-mono text-xs font-bold tracking-wider text-slate-300 uppercase">
 						Modified (Text B)
 					</span>
 				</div>
-				<pre className="scrollbar-thin max-h-100 grow select-text overflow-y-auto whitespace-pre-wrap break-all bg-muted/50 p-4 font-mono text-slate-200 text-sm">
+				<pre className="bg-muted/50 max-h-100 grow scrollbar-thin overflow-y-auto p-4 font-mono text-sm break-all whitespace-pre-wrap text-slate-200 select-text">
 					{rightPane}
 				</pre>
 			</BorderBox>

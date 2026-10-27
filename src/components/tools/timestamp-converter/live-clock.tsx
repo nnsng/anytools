@@ -1,4 +1,5 @@
 import { Pause, Play, RefreshCw } from 'lucide-react'
+
 import { BorderBox } from '@/components/tools/shared'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -19,8 +20,8 @@ export function LiveClock(props: LiveClockProps) {
 			className={cn('flex flex-col items-center justify-between gap-2 lg:flex-row', className)}
 		>
 			<div className="flex items-center gap-4">
-				<div className="text-slate-500 text-xs uppercase tracking-wider">LIVE EPOCH CLOCK:</div>
-				<div className="font-bold text-matrix text-xl tabular-nums">{liveEpoch}</div>
+				<div className="text-xs tracking-wider text-slate-500 uppercase">LIVE EPOCH CLOCK:</div>
+				<div className="text-matrix text-xl font-bold tabular-nums">{liveEpoch}</div>
 			</div>
 			<div className="flex items-center gap-2">
 				<Button

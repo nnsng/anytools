@@ -1,5 +1,6 @@
 import { css_beautify as beautifyCss } from 'js-beautify'
 import { useEffect, useState } from 'react'
+
 import { CodeBlock, EditorPane } from '@/components/tools/shared'
 import {
 	Select,
@@ -78,7 +79,7 @@ export default function CssFormatter() {
 				downloadFileName={indent === 'minify' ? 'minified.css' : 'formatted.css'}
 				actions={
 					<Select value={indent} onValueChange={setIndent}>
-						<SelectTrigger className="h-8 border-terminal-border font-mono text-xs">
+						<SelectTrigger className="border-terminal-border h-8 font-mono text-xs">
 							<SelectValue />
 						</SelectTrigger>
 						<SelectContent className="border-terminal-border bg-terminal-card font-mono text-xs">

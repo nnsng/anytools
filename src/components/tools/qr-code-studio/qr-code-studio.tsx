@@ -2,6 +2,7 @@ import jsQR from 'jsqr'
 import { Check, Copy, Download, Upload } from 'lucide-react'
 import QRCode from 'qrcode'
 import { useEffect, useRef, useState } from 'react'
+
 import { Pane } from '@/components/tools/shared/pane'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -153,7 +154,7 @@ export default function QrCodeTool() {
 										value={text}
 										onChange={(e) => setText(e.target.value)}
 										placeholder="Enter text or URL to encode..."
-										className="scrollbar-thin min-h-20 w-full resize-none rounded-sm border border-terminal-border bg-terminal-bg/50 p-2 font-mono text-foreground text-xs placeholder:text-muted-foreground focus:outline-none"
+										className="border-terminal-border bg-terminal-bg/50 text-foreground placeholder:text-muted-foreground min-h-20 w-full resize-none scrollbar-thin rounded-sm border p-2 font-mono text-xs focus:outline-none"
 									/>
 								</div>
 
@@ -166,7 +167,7 @@ export default function QrCodeTool() {
 										<Select value={size} onValueChange={setSize}>
 											<SelectTrigger
 												id="qr-size"
-												className="h-8 w-full border-terminal-border font-mono text-xs"
+												className="border-terminal-border h-8 w-full font-mono text-xs"
 											>
 												<SelectValue />
 											</SelectTrigger>
@@ -186,7 +187,7 @@ export default function QrCodeTool() {
 										<Select value={errorLevel} onValueChange={setErrorLevel}>
 											<SelectTrigger
 												id="qr-error"
-												className="h-8 w-full border-terminal-border font-mono text-xs"
+												className="border-terminal-border h-8 w-full font-mono text-xs"
 											>
 												<SelectValue />
 											</SelectTrigger>
@@ -212,13 +213,13 @@ export default function QrCodeTool() {
 												type="color"
 												value={fgColor}
 												onChange={(e) => setFgColor(e.target.value)}
-												className="h-7 w-7 cursor-pointer rounded border border-terminal-border bg-transparent p-0"
+												className="border-terminal-border h-7 w-7 cursor-pointer rounded border bg-transparent p-0"
 											/>
 											<Input
 												type="text"
 												value={fgColor}
 												onChange={(e) => setFgColor(e.target.value)}
-												className="h-7 border-terminal-border font-mono text-foreground text-xs"
+												className="border-terminal-border text-foreground h-7 font-mono text-xs"
 											/>
 										</div>
 									</div>
@@ -233,13 +234,13 @@ export default function QrCodeTool() {
 												type="color"
 												value={bgColor}
 												onChange={(e) => setBgColor(e.target.value)}
-												className="h-7 w-7 cursor-pointer rounded border border-terminal-border bg-transparent p-0"
+												className="border-terminal-border h-7 w-7 cursor-pointer rounded border bg-transparent p-0"
 											/>
 											<Input
 												type="text"
 												value={bgColor}
 												onChange={(e) => setBgColor(e.target.value)}
-												className="h-7 border-terminal-border font-mono text-foreground text-xs"
+												className="border-terminal-border text-foreground h-7 font-mono text-xs"
 											/>
 										</div>
 									</div>
@@ -267,13 +268,13 @@ export default function QrCodeTool() {
 						className="lg:flex-2"
 					>
 						<div className="flex flex-col items-center justify-center p-6">
-							<div className="relative flex flex-1 items-center justify-center rounded border border-terminal-border bg-terminal-bg/30 p-8">
+							<div className="border-terminal-border bg-terminal-bg/30 relative flex flex-1 items-center justify-center rounded border p-8">
 								{genError ? (
-									<div className="text-center text-red-400 text-xs">{genError}</div>
+									<div className="text-center text-xs text-red-400">{genError}</div>
 								) : (
 									<canvas
 										ref={setCanvasElement}
-										className="rounded border border-terminal-border shadow-lg shadow-matrix/10"
+										className="border-terminal-border shadow-matrix/10 rounded border shadow-lg"
 									/>
 								)}
 							</div>
@@ -299,24 +300,24 @@ export default function QrCodeTool() {
 							<button
 								type="button"
 								onClick={() => fileInputRef.current?.click()}
-								className="flex w-full flex-1 cursor-pointer flex-col items-center justify-center border border-terminal-border border-dashed bg-terminal-bg/20 p-8 hover:bg-terminal-bg/40 focus:outline-none focus:ring-1 focus:ring-matrix/50"
+								className="border-terminal-border bg-terminal-bg/20 hover:bg-terminal-bg/40 focus:ring-matrix/50 flex w-full flex-1 cursor-pointer flex-col items-center justify-center border border-dashed p-8 focus:ring-1 focus:outline-none"
 							>
 								{scannedImageSrc ? (
 									<div className="flex flex-col items-center gap-4">
 										<img
 											src={scannedImageSrc}
 											alt="Uploaded QR Code Preview"
-											className="max-h-55 rounded border border-terminal-border"
+											className="border-terminal-border max-h-55 rounded border"
 										/>
-										<span className="text-slate-500 text-xs uppercase">
+										<span className="text-xs text-slate-500 uppercase">
 											Click or drag to replace image
 										</span>
 									</div>
 								) : (
 									<>
 										<Upload className="mb-3 h-8 w-8 text-slate-500" />
-										<span className="text-slate-400 text-xs">Click to upload file</span>
-										<span className="mt-1 text-slate-500 text-xs uppercase">
+										<span className="text-xs text-slate-400">Click to upload file</span>
+										<span className="mt-1 text-xs text-slate-500 uppercase">
 											PNG, JPG, JPEG, WEBP
 										</span>
 									</>
@@ -334,7 +335,7 @@ export default function QrCodeTool() {
 										readOnly
 										value={scanResult}
 										placeholder="Upload a QR code to read its content..."
-										className="scrollbar-thin min-h-40 w-full flex-1 resize-none rounded-sm border border-terminal-border bg-terminal-bg/50 p-4 font-mono text-foreground text-xs placeholder:text-muted-foreground focus:outline-none"
+										className="border-terminal-border bg-terminal-bg/50 text-foreground placeholder:text-muted-foreground min-h-40 w-full flex-1 resize-none scrollbar-thin rounded-sm border p-4 font-mono text-xs focus:outline-none"
 									/>
 									{scanResult && (
 										<Button
@@ -344,7 +345,7 @@ export default function QrCodeTool() {
 											className="absolute top-2 right-2 h-7 w-7 p-0"
 										>
 											{scanCopied ? (
-												<Check className="h-3.5 w-3.5 text-matrix" />
+												<Check className="text-matrix h-3.5 w-3.5" />
 											) : (
 												<Copy className="h-3.5 w-3.5" />
 											)}
@@ -353,7 +354,7 @@ export default function QrCodeTool() {
 								</div>
 
 								{scanError && (
-									<div className="rounded border border-red-500/20 bg-red-950/20 p-3 text-red-400 text-xs">
+									<div className="rounded border border-red-500/20 bg-red-950/20 p-3 text-xs text-red-400">
 										{scanError}
 									</div>
 								)}
@@ -367,7 +368,7 @@ export default function QrCodeTool() {
 										if (fileInputRef.current) fileInputRef.current.value = ''
 									}}
 									disabled={!scannedImageSrc}
-									className="w-full font-bold text-xs"
+									className="w-full text-xs font-bold"
 								>
 									CLEAR SCANNER
 								</Button>

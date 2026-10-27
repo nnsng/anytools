@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+
 import { CodeBlock, EditorPane } from '@/components/tools/shared'
 import {
 	Select,
@@ -8,6 +9,7 @@ import {
 	SelectValue,
 } from '@/components/ui/select'
 import { APP_NAME } from '@/constants/app'
+
 import { generateAxios, generateFetch, parseCurl } from './curl-parsers'
 
 type TabType = 'fetch' | 'axios'
@@ -67,7 +69,7 @@ export default function CurlToCode() {
 				downloadFileName="request.js"
 				actions={
 					<Select value={activeTab} onValueChange={setActiveTab}>
-						<SelectTrigger className="h-8 border-terminal-border font-mono text-xs">
+						<SelectTrigger className="border-terminal-border h-8 font-mono text-xs">
 							<SelectValue />
 						</SelectTrigger>
 						<SelectContent className="border-terminal-border bg-terminal-card font-mono text-xs">

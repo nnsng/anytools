@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+
 import { Pane } from '@/components/tools/shared/pane'
 import { Textarea } from '@/components/ui/textarea'
 import { cn } from '@/lib/utils'
@@ -29,7 +30,7 @@ export function RegexPanel(props: RegexPanelProps) {
 			{/* Live highlighting visualization */}
 			<Pane title="Live Highlighter Output" dotClassName="bg-blue-500">
 				<div className="flex flex-col">
-					<div className="max-h-75 min-h-37.5 overflow-y-auto whitespace-pre-wrap break-all bg-terminal-bg/50 p-4 font-mono text-slate-300 text-sm">
+					<div className="bg-terminal-bg/50 max-h-75 min-h-37.5 overflow-y-auto p-4 font-mono text-sm break-all whitespace-pre-wrap text-slate-300">
 						{highlightedNode}
 					</div>
 				</div>

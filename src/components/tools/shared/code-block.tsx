@@ -13,7 +13,7 @@ export function CodeBlock(props: CodeBlockProps) {
 	if (!value) {
 		return (
 			<div
-				className="flex grow select-none items-center justify-center font-mono text-slate-600 text-xs"
+				className="flex grow items-center justify-center font-mono text-xs text-slate-600 select-none"
 				{...rest}
 			>
 				{placeholder}

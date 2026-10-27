@@ -1,5 +1,6 @@
 import { Download, FileImage } from 'lucide-react'
 import { useEffect, useState } from 'react'
+
 import { EditorPane } from '@/components/tools/shared/editor-pane'
 import { Pane } from '@/components/tools/shared/pane'
 import { Button } from '@/components/ui/button'
@@ -86,9 +87,9 @@ export function DecodeTab({ className }: DecodeTabProps) {
 				className="lg:flex-1"
 			>
 				<div className="flex h-full flex-col justify-between p-6">
-					<div className="flex min-h-50 flex-1 items-center justify-center rounded border border-terminal-border bg-terminal-bg/40 p-4">
+					<div className="border-terminal-border bg-terminal-bg/40 flex min-h-50 flex-1 items-center justify-center rounded border p-4">
 						{decodedSrc ? (
-							<div className="relative max-h-75 max-w-full overflow-hidden rounded border border-terminal-border bg-checkered bg-size-[16px_16px]">
+							<div className="border-terminal-border bg-checkered relative max-h-75 max-w-full overflow-hidden rounded border bg-size-[16px_16px]">
 								<img src={decodedSrc} alt="Decoded preview" className="max-h-70 object-contain" />
 							</div>
 						) : (

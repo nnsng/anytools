@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+
 import { CodeBlock, EditorPane } from '@/components/tools/shared'
 import {
 	Select,
@@ -7,6 +8,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select'
+
 import {
 	toCamelCase,
 	toConstantCase,
@@ -78,9 +80,9 @@ export default function StringCaseConverter() {
 				downloadFileName="converted-text.txt"
 				actions={
 					<div className="flex items-center gap-2 font-mono">
-						<span className="font-bold text-slate-500 text-xs uppercase">Case:</span>
+						<span className="text-xs font-bold text-slate-500 uppercase">Case:</span>
 						<Select value={casingType} onValueChange={setCasingType}>
-							<SelectTrigger className="h-8 w-40 border-terminal-border bg-terminal-bg font-mono text-xs">
+							<SelectTrigger className="border-terminal-border bg-terminal-bg h-8 w-40 font-mono text-xs">
 								<SelectValue />
 							</SelectTrigger>
 							<SelectContent className="border-terminal-border bg-terminal-card font-mono text-xs">

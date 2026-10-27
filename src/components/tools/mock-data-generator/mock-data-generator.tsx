@@ -1,6 +1,8 @@
 import { faker } from '@faker-js/faker'
 import { useCallback, useEffect, useState } from 'react'
+
 import { CodeBlock, EditorPane } from '@/components/tools/shared'
+
 import { type MockField, SchemaBuilder } from './schema-builder'
 
 export default function MockGenerator() {

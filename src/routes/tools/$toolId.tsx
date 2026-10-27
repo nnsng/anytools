@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Loader2 } from 'lucide-react'
 import React, { useEffect } from 'react'
+
 import { APP_NAME } from '@/constants/app'
 import { TOOLS } from '@/utils/tools-registry'
 
@@ -78,13 +79,13 @@ function ToolContainer() {
 	if (!tool) {
 		return (
 			<div className="mx-auto my-12 max-w-2xl rounded border border-red-500/30 bg-red-950/20 p-8 text-center font-mono">
-				<h2 className="mb-4 font-bold text-red-500 text-xl">ERROR 404: MODULE_NOT_FOUND</h2>
-				<p className="mb-6 text-slate-400 text-sm">
+				<h2 className="mb-4 text-xl font-bold text-red-500">ERROR 404: MODULE_NOT_FOUND</h2>
+				<p className="mb-6 text-sm text-slate-400">
 					The requested system utility{' '}
 					<code className="rounded bg-red-900/30 px-1 py-0.5 text-red-300">{toolId}</code> is not
 					registered in the system index.
 				</p>
-				<div className="inline-block rounded border border-red-500/50 bg-red-900/20 px-4 py-2 text-red-400 text-xs">
+				<div className="inline-block rounded border border-red-500/50 bg-red-900/20 px-4 py-2 text-xs text-red-400">
 					$ cd /bin && ./run {toolId} --verbose
 				</div>
 			</div>
@@ -95,28 +96,28 @@ function ToolContainer() {
 		TOOL_COMPONENTS[tool.id] || (() => <ToolStub toolId={tool.id} name={tool.name} />)
 
 	return (
-		<div className="mx-auto flex w-full max-w-7xl flex-1 animate-fade-in flex-col gap-4 p-4 md:p-6 lg:h-full lg:min-h-0 lg:p-8">
-			<div className="flex flex-col justify-between gap-4 border-terminal-border border-b pb-4 md:flex-row md:items-center">
+		<div className="animate-fade-in mx-auto flex w-full max-w-7xl flex-1 flex-col gap-4 p-4 md:p-6 lg:h-full lg:min-h-0 lg:p-8">
+			<div className="border-terminal-border flex flex-col justify-between gap-4 border-b pb-4 md:flex-row md:items-center">
 				<div className="flex flex-col gap-2">
-					<div className="mb-1 flex items-center gap-2 font-mono text-matrix text-xs">
+					<div className="text-matrix mb-1 flex items-center gap-2 font-mono text-xs">
 						<span>[ SYSTEM_BIN ]</span>
 						<span>/</span>
 						<span>{tool.category.toLowerCase().replace(/\s+/g, '-')}</span>
 					</div>
-					<h1 className="flex items-center gap-3 font-bold font-mono text-2xl text-foreground tracking-tight md:text-3xl">
+					<h1 className="text-foreground flex items-center gap-3 font-mono text-2xl font-bold tracking-tight md:text-3xl">
 						{React.createElement(tool.icon, {
 							className: 'w-7 h-7 text-matrix text-glow',
 						})}
 						<span className="cursor-blink">{tool.name}</span>
 					</h1>
-					<p className="mt-1 font-mono text-slate-400 text-sm">{tool.description}</p>
+					<p className="mt-1 font-mono text-sm text-slate-400">{tool.description}</p>
 				</div>
 			</div>
 
 			<div className="flex min-h-0 flex-1 [&>div]:w-full">
 				<React.Suspense
 					fallback={
-						<div className="flex h-full flex-col items-center justify-center gap-3 font-mono text-matrix">
+						<div className="text-matrix flex h-full flex-col items-center justify-center gap-3 font-mono">
 							<Loader2 className="h-8 w-8 animate-spin" />
 							<span className="text-xs tracking-widest opacity-60">LOADING MODULE...</span>
 						</div>

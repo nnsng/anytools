@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+
 import { EditorPane } from '@/components/tools/shared/editor-pane'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { APP_NAME } from '@/constants/app'
@@ -16,7 +17,7 @@ const utf8Atob = (str: string): string => {
 		atob(str)
 			.split('')
 			.map((c) => {
-				return `%${(`00${c.charCodeAt(0).toString(16)}`).slice(-2)}`
+				return `%${`00${c.charCodeAt(0).toString(16)}`.slice(-2)}`
 			})
 			.join(''),
 	)

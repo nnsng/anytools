@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+
 import { EditorPane } from '@/components/tools/shared/editor-pane'
 import { Pane } from '@/components/tools/shared/pane'
 import { Button } from '@/components/ui/button'
@@ -137,7 +138,7 @@ export default function PasswordGenerator() {
 									<Button
 										type="button"
 										variant="outline"
-										className="h-7 w-7 rounded-r-none border-terminal-border border-r-0 p-0 text-slate-400 hover:bg-terminal-border/20 hover:text-foreground"
+										className="border-terminal-border hover:bg-terminal-border/20 hover:text-foreground h-7 w-7 rounded-r-none border-r-0 p-0 text-slate-400"
 										onClick={() => setLength((l) => Math.max(6, l - 1))}
 									>
 										-
@@ -150,12 +151,12 @@ export default function PasswordGenerator() {
 										onChange={(e) =>
 											setLength(Math.min(64, Math.max(6, parseInt(e.target.value, 10) || 6)))
 										}
-										className="h-7 w-12 rounded-none border-terminal-border p-0 text-center font-mono text-foreground text-xs [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+										className="border-terminal-border text-foreground h-7 w-12 [appearance:textfield] rounded-none p-0 text-center font-mono text-xs [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
 									/>
 									<Button
 										type="button"
 										variant="outline"
-										className="h-7 w-7 rounded-l-none border-terminal-border border-l-0 p-0 text-slate-400 hover:bg-terminal-border/20 hover:text-foreground"
+										className="border-terminal-border hover:bg-terminal-border/20 hover:text-foreground h-7 w-7 rounded-l-none border-l-0 p-0 text-slate-400"
 										onClick={() => setLength((l) => Math.min(64, l + 1))}
 									>
 										+
@@ -165,7 +166,7 @@ export default function PasswordGenerator() {
 						</div>
 
 						{/* Toggles */}
-						<div className="space-y-3 border-terminal-border border-t pt-4">
+						<div className="border-terminal-border space-y-3 border-t pt-4">
 							<div className="flex items-center gap-2.5">
 								<Checkbox
 									id="uppercase"
@@ -174,7 +175,7 @@ export default function PasswordGenerator() {
 								/>
 								<label
 									htmlFor="uppercase"
-									className="cursor-pointer select-none font-semibold text-slate-300 hover:text-foreground"
+									className="hover:text-foreground cursor-pointer font-semibold text-slate-300 select-none"
 								>
 									UPPERCASE (A-Z)
 								</label>
@@ -188,7 +189,7 @@ export default function PasswordGenerator() {
 								/>
 								<label
 									htmlFor="lowercase"
-									className="cursor-pointer select-none font-semibold text-slate-300 hover:text-foreground"
+									className="hover:text-foreground cursor-pointer font-semibold text-slate-300 select-none"
 								>
 									LOWERCASE (a-z)
 								</label>
@@ -202,7 +203,7 @@ export default function PasswordGenerator() {
 								/>
 								<label
 									htmlFor="digits"
-									className="cursor-pointer select-none font-semibold text-slate-300 hover:text-foreground"
+									className="hover:text-foreground cursor-pointer font-semibold text-slate-300 select-none"
 								>
 									NUMBERS (0-9)
 								</label>
@@ -216,13 +217,13 @@ export default function PasswordGenerator() {
 								/>
 								<label
 									htmlFor="symbols"
-									className="cursor-pointer select-none font-semibold text-slate-300 hover:text-foreground"
+									className="hover:text-foreground cursor-pointer font-semibold text-slate-300 select-none"
 								>
 									SYMBOLS (!@#$...)
 								</label>
 							</div>
 
-							<div className="flex items-center gap-2.5 border-terminal-border border-t pt-3">
+							<div className="border-terminal-border flex items-center gap-2.5 border-t pt-3">
 								<Checkbox
 									id="avoidAmbiguous"
 									checked={avoidAmbiguous}
@@ -230,7 +231,7 @@ export default function PasswordGenerator() {
 								/>
 								<label
 									htmlFor="avoidAmbiguous"
-									className="cursor-pointer select-none font-semibold text-slate-300 hover:text-foreground"
+									className="hover:text-foreground cursor-pointer font-semibold text-slate-300 select-none"
 								>
 									AVOID AMBIGUOUS CHARACTERS (e.g. l, 1, I)
 								</label>
@@ -254,12 +255,12 @@ export default function PasswordGenerator() {
 				/>
 
 				{/* Strength indicator */}
-				<div className="flex flex-col gap-3 rounded-sm border border-terminal-border bg-terminal-card/60 p-6">
-					<div className="flex items-center justify-between font-bold text-slate-300 text-xs uppercase tracking-wider">
+				<div className="border-terminal-border bg-terminal-card/60 flex flex-col gap-3 rounded-sm border p-6">
+					<div className="flex items-center justify-between text-xs font-bold tracking-wider text-slate-300 uppercase">
 						<span>Password Strength:</span>
 						<span
 							className={cn(
-								'rounded px-2 py-0.5 font-bold text-primary-foreground text-xs',
+								'text-primary-foreground rounded px-2 py-0.5 text-xs font-bold',
 								strength.label === 'Weak' && 'bg-red-500',
 								strength.label === 'Fair' && 'bg-yellow-500',
 								strength.label === 'Strong' && 'bg-blue-500',
@@ -271,7 +272,7 @@ export default function PasswordGenerator() {
 						</span>
 					</div>
 
-					<div className="h-2 w-full overflow-hidden rounded-full border border-terminal-border bg-terminal-bg">
+					<div className="border-terminal-border bg-terminal-bg h-2 w-full overflow-hidden rounded-full border">
 						<div
 							className={cn('h-full transition-all duration-300', strength.color)}
 							style={{ width: `${strength.percentage}%` }}

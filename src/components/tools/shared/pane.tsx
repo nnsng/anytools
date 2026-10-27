@@ -1,5 +1,7 @@
 import type React from 'react'
+
 import { cn } from '@/lib/utils'
+
 import { BorderBox } from './border-box'
 
 type PaneProps = {
@@ -28,9 +30,9 @@ export function Pane(props: PaneProps) {
 	return (
 		<BorderBox className={cn('flex flex-col p-0', className)}>
 			{/* Pane Header */}
-			<div className="flex h-12.5 shrink-0 items-center justify-between border-terminal-border border-b bg-terminal-bg/40 px-4">
-				<span className="flex items-center gap-2 font-bold font-mono text-slate-300 text-xs uppercase tracking-wider">
-					<span className={cn('h-1.5 w-1.5 rounded-full bg-matrix', dotClassName)} />
+			<div className="border-terminal-border bg-terminal-bg/40 flex h-12.5 shrink-0 items-center justify-between border-b px-4">
+				<span className="flex items-center gap-2 font-mono text-xs font-bold tracking-wider text-slate-300 uppercase">
+					<span className={cn('bg-matrix h-1.5 w-1.5 rounded-full', dotClassName)} />
 					{title}
 				</span>
 
@@ -50,7 +52,7 @@ export function Pane(props: PaneProps) {
 
 			{/* Pane Footer */}
 			{footer && (
-				<div className="shrink-0 border-terminal-border border-t bg-terminal-bg/20">{footer}</div>
+				<div className="border-terminal-border bg-terminal-bg/20 shrink-0 border-t">{footer}</div>
 			)}
 		</BorderBox>
 	)

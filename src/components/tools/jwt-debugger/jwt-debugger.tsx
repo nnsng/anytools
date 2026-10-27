@@ -1,5 +1,6 @@
 import { Key, ShieldAlert, ShieldCheck } from 'lucide-react'
 import { useEffect, useState } from 'react'
+
 import { BorderBox } from '@/components/tools/shared'
 import { EditorPane } from '@/components/tools/shared/editor-pane'
 import { Button } from '@/components/ui/button'
@@ -12,6 +13,7 @@ import {
 	SelectValue,
 } from '@/components/ui/select'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+
 import { base64urlDecode, base64urlEncode, signJwt } from './helpers'
 
 type TabType = 'decode' | 'encode'
@@ -231,7 +233,7 @@ export default function JwtCodec() {
 
 						{tokenStatus && (
 							<BorderBox className="space-y-3 p-4 text-xs">
-								<div className="flex items-center gap-2 font-bold uppercase tracking-wider">
+								<div className="flex items-center gap-2 font-bold tracking-wider uppercase">
 									{tokenStatus.expired ? (
 										<>
 											<ShieldAlert className="h-4 w-4 text-red-500" />
@@ -239,12 +241,12 @@ export default function JwtCodec() {
 										</>
 									) : (
 										<>
-											<ShieldCheck className="h-4 w-4 text-matrix" />
+											<ShieldCheck className="text-matrix h-4 w-4" />
 											<span className="text-matrix">ACTIVE / WELL-FORMED</span>
 										</>
 									)}
 								</div>
-								<div className="grid grid-cols-2 gap-2 border-terminal-border border-t pt-2 text-slate-400 text-xs">
+								<div className="border-terminal-border grid grid-cols-2 gap-2 border-t pt-2 text-xs text-slate-400">
 									<div>
 										<span className="font-bold text-slate-500">ALGORITHM:</span> {tokenStatus.alg}
 									</div>
@@ -266,13 +268,13 @@ export default function JwtCodec() {
 
 						{tokenStatus && (
 							<BorderBox className="space-y-3 p-4 text-xs">
-								<span className="block font-bold text-slate-300 uppercase tracking-wider">
+								<span className="block font-bold tracking-wider text-slate-300 uppercase">
 									Verify Signature
 								</span>
 								<div className="space-y-1">
 									<label
 										htmlFor="dec-secret"
-										className="font-bold text-slate-500 text-xs uppercase"
+										className="text-xs font-bold text-slate-500 uppercase"
 									>
 										Verification Key / Secret
 									</label>
@@ -282,13 +284,13 @@ export default function JwtCodec() {
 										value={decodeSecret}
 										onChange={(e) => setDecodeSecret(e.target.value)}
 										placeholder="Enter secret to verify signature..."
-										className="h-8 border-terminal-border font-mono text-foreground text-xs"
+										className="border-terminal-border text-foreground h-8 font-mono text-xs"
 									/>
 								</div>
-								<div className="flex items-center gap-2 border-terminal-border border-t pt-2 font-bold text-xs">
+								<div className="border-terminal-border flex items-center gap-2 border-t pt-2 text-xs font-bold">
 									{signatureStatus === 'valid' && (
 										<>
-											<ShieldCheck className="h-4 w-4 text-matrix" />
+											<ShieldCheck className="text-matrix h-4 w-4" />
 											<span className="text-matrix uppercase">Signature Verified</span>
 										</>
 									)}
@@ -338,10 +340,10 @@ export default function JwtCodec() {
 
 						{signaturePart && (
 							<BorderBox className="p-4">
-								<span className="mb-2 block font-bold text-slate-300 text-xs uppercase tracking-wider">
+								<span className="mb-2 block text-xs font-bold tracking-wider text-slate-300 uppercase">
 									Signature Block (Base64URL)
 								</span>
-								<div className="break-all rounded border border-terminal-border bg-terminal-bg/40 p-2 font-mono text-slate-500 text-xs">
+								<div className="border-terminal-border bg-terminal-bg/40 rounded border p-2 font-mono text-xs break-all text-slate-500">
 									{signaturePart}
 								</div>
 							</BorderBox>
@@ -376,8 +378,8 @@ export default function JwtCodec() {
 
 						{/* Signing Options */}
 						<BorderBox className="space-y-4 p-4 text-xs">
-							<span className="flex items-center gap-2 font-bold text-slate-300 uppercase tracking-wider">
-								<Key className="h-4 w-4 text-matrix" />
+							<span className="flex items-center gap-2 font-bold tracking-wider text-slate-300 uppercase">
+								<Key className="text-matrix h-4 w-4" />
 								Signing Credentials
 							</span>
 
@@ -389,7 +391,7 @@ export default function JwtCodec() {
 									<Select value={encodeAlg} onValueChange={setEncodeAlg}>
 										<SelectTrigger
 											id="sig-alg"
-											className="h-8 border-terminal-border font-mono text-xs"
+											className="border-terminal-border h-8 font-mono text-xs"
 										>
 											<SelectValue />
 										</SelectTrigger>
@@ -413,13 +415,13 @@ export default function JwtCodec() {
 											value={encodeSecret}
 											onChange={(e) => setEncodeSecret(e.target.value)}
 											placeholder="Secret key..."
-											className="h-8 border-terminal-border font-mono text-foreground text-xs"
+											className="border-terminal-border text-foreground h-8 font-mono text-xs"
 										/>
 									</div>
 								)}
 							</div>
 
-							<Button onClick={handleEncode} className="h-9 w-full font-bold text-xs">
+							<Button onClick={handleEncode} className="h-9 w-full text-xs font-bold">
 								ENCODE AND SIGN TOKEN
 							</Button>
 						</BorderBox>

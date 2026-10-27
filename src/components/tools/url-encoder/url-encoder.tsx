@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+
 import { EditorPane } from '@/components/tools/shared/editor-pane'
 import {
 	Select,
@@ -88,7 +89,7 @@ export default function UrlEncoder() {
 					actions={
 						<div className="min-w-48">
 							<Select value={encodeMode} onValueChange={setEncodeMode}>
-								<SelectTrigger className="h-8 border-terminal-border font-mono text-xs">
+								<SelectTrigger className="border-terminal-border h-8 font-mono text-xs">
 									<SelectValue />
 								</SelectTrigger>
 								<SelectContent className="border-terminal-border bg-terminal-card font-mono text-xs">

@@ -1,5 +1,6 @@
 import { diff_match_patch as DiffMatchPatch } from 'diff-match-patch'
 import { useEffect, useState } from 'react'
+
 import { Pane } from '@/components/tools/shared'
 import { EditorPane } from '@/components/tools/shared/editor-pane'
 import {
@@ -9,6 +10,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select'
+
 import { InlineDiffView, SideBySideView } from './diff-views'
 
 const viewOptions = [
@@ -64,9 +66,9 @@ export default function DiffChecker() {
 				dotClassName="bg-blue-500"
 				actions={
 					<div className="flex items-center gap-2 font-mono">
-						<span className="font-bold text-slate-500 text-xs uppercase">View:</span>
+						<span className="text-xs font-bold text-slate-500 uppercase">View:</span>
 						<Select value={diffMode} onValueChange={setDiffMode}>
-							<SelectTrigger className="h-8 w-36 border-terminal-border bg-terminal-bg font-mono text-xs">
+							<SelectTrigger className="border-terminal-border bg-terminal-bg h-8 w-36 font-mono text-xs">
 								<SelectValue />
 							</SelectTrigger>
 							<SelectContent className="border-terminal-border bg-terminal-card font-mono text-xs">

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+
 import { CodeBlock, EditorPane, Pane } from '@/components/tools/shared'
 import { Checkbox } from '@/components/ui/checkbox'
 import {
@@ -101,7 +102,7 @@ export default function Dedupe() {
 						/>
 						<label
 							htmlFor="case-sensitive"
-							className="cursor-pointer select-none font-semibold text-slate-300 hover:text-foreground"
+							className="hover:text-foreground cursor-pointer font-semibold text-slate-300 select-none"
 						>
 							Case Sensitive
 						</label>
@@ -115,7 +116,7 @@ export default function Dedupe() {
 						/>
 						<label
 							htmlFor="trim-whitespace"
-							className="cursor-pointer select-none font-semibold text-slate-300 hover:text-foreground"
+							className="hover:text-foreground cursor-pointer font-semibold text-slate-300 select-none"
 						>
 							Trim Whitespace
 						</label>
@@ -129,19 +130,19 @@ export default function Dedupe() {
 						/>
 						<label
 							htmlFor="remove-empty"
-							className="cursor-pointer select-none font-semibold text-slate-300 hover:text-foreground"
+							className="hover:text-foreground cursor-pointer font-semibold text-slate-300 select-none"
 						>
 							Remove Empty Lines
 						</label>
 					</div>
 
 					<div className="flex items-center gap-2 lg:ml-auto">
-						<span className="font-bold text-slate-500 text-xs uppercase">Separator:</span>
+						<span className="text-xs font-bold text-slate-500 uppercase">Separator:</span>
 						<Select value={separator} onValueChange={setSeparator}>
-							<SelectTrigger className="h-8 w-32 border-terminal-border bg-terminal-bg font-mono text-foreground text-xs">
+							<SelectTrigger className="border-terminal-border bg-terminal-bg text-foreground h-8 w-32 font-mono text-xs">
 								<SelectValue />
 							</SelectTrigger>
-							<SelectContent className="border-terminal-border bg-terminal-card font-mono text-foreground text-xs">
+							<SelectContent className="border-terminal-border bg-terminal-card text-foreground font-mono text-xs">
 								<SelectItem value="newline">New Line</SelectItem>
 								<SelectItem value="comma">Comma (,)</SelectItem>
 								<SelectItem value="semicolon">Semicolon (;)</SelectItem>
@@ -150,12 +151,12 @@ export default function Dedupe() {
 					</div>
 
 					<div className="flex items-center gap-2">
-						<span className="font-bold text-slate-500 text-xs uppercase">Sort:</span>
+						<span className="text-xs font-bold text-slate-500 uppercase">Sort:</span>
 						<Select value={sortOrder} onValueChange={setSortOrder}>
-							<SelectTrigger className="h-8 w-32 border-terminal-border bg-terminal-bg font-mono text-foreground text-xs">
+							<SelectTrigger className="border-terminal-border bg-terminal-bg text-foreground h-8 w-32 font-mono text-xs">
 								<SelectValue />
 							</SelectTrigger>
-							<SelectContent className="border-terminal-border bg-terminal-card font-mono text-foreground text-xs">
+							<SelectContent className="border-terminal-border bg-terminal-card text-foreground font-mono text-xs">
 								<SelectItem value="none">None</SelectItem>
 								<SelectItem value="asc">Ascending</SelectItem>
 								<SelectItem value="desc">Descending</SelectItem>

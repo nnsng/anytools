@@ -1,4 +1,5 @@
 import { useState } from 'react'
+
 import { EditorPane } from '@/components/tools/shared/editor-pane'
 import { Pane } from '@/components/tools/shared/pane'
 import { Button } from '@/components/ui/button'
@@ -11,6 +12,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select'
+
 import { generateV1Uuid, generateV4Uuid } from './helpers'
 
 type Version = 'v4' | 'v1'
@@ -55,7 +57,7 @@ export default function UuidGenerator() {
 							<Select value={version} onValueChange={setVersion}>
 								<SelectTrigger
 									id="select-version"
-									className="h-8 w-full border-terminal-border font-mono text-xs"
+									className="border-terminal-border h-8 w-full font-mono text-xs"
 								>
 									<SelectValue />
 								</SelectTrigger>
@@ -75,7 +77,7 @@ export default function UuidGenerator() {
 								<Button
 									type="button"
 									variant="outline"
-									className="h-8 w-8 rounded-r-none border-terminal-border border-r-0 text-slate-400 hover:bg-terminal-border/20 hover:text-foreground"
+									className="border-terminal-border hover:bg-terminal-border/20 hover:text-foreground h-8 w-8 rounded-r-none border-r-0 text-slate-400"
 									onClick={() => setQuantity((q) => Math.max(1, q - 1))}
 								>
 									-
@@ -89,12 +91,12 @@ export default function UuidGenerator() {
 									onChange={(e) =>
 										setQuantity(Math.min(100, Math.max(1, parseInt(e.target.value, 10) || 1)))
 									}
-									className="h-8 w-full rounded-none border-terminal-border text-center font-mono text-foreground text-xs [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+									className="border-terminal-border text-foreground h-8 w-full [appearance:textfield] rounded-none text-center font-mono text-xs [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
 								/>
 								<Button
 									type="button"
 									variant="outline"
-									className="h-8 w-8 rounded-l-none border-terminal-border border-l-0 text-slate-400 hover:bg-terminal-border/20 hover:text-foreground"
+									className="border-terminal-border hover:bg-terminal-border/20 hover:text-foreground h-8 w-8 rounded-l-none border-l-0 text-slate-400"
 									onClick={() => setQuantity((q) => Math.min(100, q + 1))}
 								>
 									+
@@ -103,7 +105,7 @@ export default function UuidGenerator() {
 						</div>
 
 						{/* Toggles */}
-						<div className="space-y-3 border-terminal-border border-t pt-4">
+						<div className="border-terminal-border space-y-3 border-t pt-4">
 							<div className="flex items-center gap-2.5">
 								<Checkbox
 									id="uppercase"
@@ -112,7 +114,7 @@ export default function UuidGenerator() {
 								/>
 								<label
 									htmlFor="uppercase"
-									className="cursor-pointer select-none font-semibold text-slate-300 hover:text-foreground"
+									className="hover:text-foreground cursor-pointer font-semibold text-slate-300 select-none"
 								>
 									UPPERCASE
 								</label>
@@ -126,7 +128,7 @@ export default function UuidGenerator() {
 								/>
 								<label
 									htmlFor="braces"
-									className="cursor-pointer select-none font-semibold text-slate-300 hover:text-foreground"
+									className="hover:text-foreground cursor-pointer font-semibold text-slate-300 select-none"
 								>
 									WRAP IN BRACES {'{}'}
 								</label>
@@ -140,7 +142,7 @@ export default function UuidGenerator() {
 								/>
 								<label
 									htmlFor="hyphens"
-									className="cursor-pointer select-none font-semibold text-slate-300 hover:text-foreground"
+									className="hover:text-foreground cursor-pointer font-semibold text-slate-300 select-none"
 								>
 									INCLUDE HYPHENS
 								</label>

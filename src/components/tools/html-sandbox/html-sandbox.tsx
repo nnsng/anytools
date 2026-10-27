@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+
 import { Pane } from '@/components/tools/shared'
 import { EditorPane } from '@/components/tools/shared/editor-pane'
 import { APP_NAME } from '@/constants/app'
@@ -107,7 +108,7 @@ export default function HtmlPreview() {
 			/>
 
 			<Pane title="Live Preview (Sandboxed Frame)" dotClassName="bg-blue-500" className="flex-1">
-				<div className="relative min-h-50 flex-1 bg-background">
+				<div className="bg-background relative min-h-50 flex-1">
 					{blobUrl ? (
 						<iframe
 							ref={iframeRef}
@@ -117,7 +118,7 @@ export default function HtmlPreview() {
 							className="h-full w-full border-none bg-transparent"
 						/>
 					) : (
-						<div className="absolute inset-0 flex select-none items-center justify-center bg-terminal-bg font-mono text-slate-600 text-xs">
+						<div className="bg-terminal-bg absolute inset-0 flex items-center justify-center font-mono text-xs text-slate-600 select-none">
 							Waiting for HTML source input...
 						</div>
 					)}
