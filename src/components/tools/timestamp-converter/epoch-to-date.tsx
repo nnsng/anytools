@@ -43,7 +43,7 @@ export function EpochToDate({
 							Now
 						</Button>
 					</div>
-					{epochError && <p className="text-xs text-red-400">{epochError}</p>}
+					{epochError && <p className="text-xs text-red-700 dark:text-red-400">{epochError}</p>}
 				</div>
 
 				{epochResults && (

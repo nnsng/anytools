@@ -41,7 +41,8 @@ function Home() {
 						type="text"
 						value={searchQuery}
 						onChange={(e) => setSearchQuery(e.target.value)}
-						placeholder="Filter utility modules instantly by name, feature, or keyword..."
+						aria-label="Filter modules on this page"
+						placeholder="Filter the modules below by name, feature, or keyword..."
 						className="border-terminal-border bg-terminal-card text-foreground placeholder:text-muted-foreground focus:border-matrix/80 focus:ring-matrix/80 w-full rounded border py-3 pr-4 pl-12 text-sm transition-all duration-150 focus:shadow-[0_0_12px_rgba(34,197,94,0.05)] focus:ring-1 focus:outline-none"
 					/>
 				</div>

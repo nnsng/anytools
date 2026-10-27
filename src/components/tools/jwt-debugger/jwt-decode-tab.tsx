@@ -18,7 +18,7 @@ const SIGNATURE_VIEW: Record<SignatureStatus, { label: string; className: string
 		},
 		unsupported: {
 			label: 'Unsupported Alg (HMAC only)',
-			className: 'text-yellow-500',
+			className: 'text-yellow-700 dark:text-yellow-500',
 			isOk: false,
 		},
 		error: { label: 'Verification Failed', className: 'text-red-500', isOk: false },

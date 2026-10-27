@@ -128,6 +128,7 @@ export function SchemaBuilder(props: SchemaBuilderProps) {
 								</Button>
 								<Input
 									type="number"
+									aria-label="Number of records"
 									min="1"
 									max="500"
 									value={count}
@@ -180,6 +181,7 @@ export function SchemaBuilder(props: SchemaBuilderProps) {
 						>
 							<div className="w-[45%]">
 								<Input
+									aria-label={`Field ${idx + 1} name`}
 									value={field.name}
 									onChange={(e) => onFieldChange(idx, 'name', e.target.value)}
 									placeholder="Field Name"

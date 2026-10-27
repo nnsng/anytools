@@ -19,6 +19,7 @@ export function RegexPanel(props: RegexPanelProps) {
 			<Pane title="Subject Text">
 				<div className="flex flex-col">
 					<Textarea
+						aria-label="Subject text"
 						value={subjectText}
 						onChange={(e) => setSubjectText(e.target.value)}
 						placeholder="Type subject text to match against here..."

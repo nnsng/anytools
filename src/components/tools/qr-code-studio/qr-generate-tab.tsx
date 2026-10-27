@@ -12,11 +12,18 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select'
+import { useThemeContext } from '@/contexts/theme-context'
 import { downloadBlob } from '@/lib/file'
 
 import { QR_ERROR_LEVELS, QR_SIZES, type QrErrorLevel, type QrSize } from './utils'
 
 const QR_MARGIN = 2
+
+// Dark modules on a light background scan most reliably, so light theme inverts the dark defaults
+const DEFAULT_COLORS = {
+	dark: { fg: '#00ff66', bg: '#000000' },
+	light: { fg: '#15803d', bg: '#ffffff' },
+} as const
 
 function isQrSize(value: string): value is QrSize {
 	return QR_SIZES.some((option) => option.value === value)
@@ -30,8 +37,12 @@ export function QrGenerateTab() {
 	const [text, setText] = useState<string>(() => window.location.origin)
 	const [size, setSize] = useState<QrSize>('256')
 	const [errorLevel, setErrorLevel] = useState<QrErrorLevel>('M')
-	const [fgColor, setFgColor] = useState<string>('#00ff66')
-	const [bgColor, setBgColor] = useState<string>('#000000')
+	const { theme } = useThemeContext()
+	// null means "not customised": the color follows the current theme
+	const [fgOverride, setFgOverride] = useState<string | null>(null)
+	const [bgOverride, setBgOverride] = useState<string | null>(null)
+	const fgColor = fgOverride ?? DEFAULT_COLORS[theme].fg
+	const bgColor = bgOverride ?? DEFAULT_COLORS[theme].bg
 	const [error, setError] = useState<string | null>(null)
 	const [canvas, setCanvas] = useState<HTMLCanvasElement | null>(null)
 
@@ -142,8 +153,8 @@ export function QrGenerateTab() {
 						</div>
 
 						<div className="grid grid-cols-2 gap-2">
-							<ColorField id="qr-fg" label="Foreground" value={fgColor} onChange={setFgColor} />
-							<ColorField id="qr-bg" label="Background" value={bgColor} onChange={setBgColor} />
+							<ColorField id="qr-fg" label="Foreground" value={fgColor} onChange={setFgOverride} />
+							<ColorField id="qr-bg" label="Background" value={bgColor} onChange={setBgOverride} />
 						</div>
 					</div>
 				</div>
@@ -170,7 +181,7 @@ export function QrGenerateTab() {
 				<div className="flex flex-col items-center justify-center p-6">
 					<div className="border-terminal-border bg-terminal-bg/30 relative flex flex-1 items-center justify-center rounded border p-8">
 						{error ? (
-							<div role="alert" className="text-center text-xs text-red-400">
+							<div role="alert" className="text-center text-xs text-red-700 dark:text-red-400">
 								{error}
 							</div>
 						) : (

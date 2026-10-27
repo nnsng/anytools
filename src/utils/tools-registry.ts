@@ -8,7 +8,6 @@ import {
 	Database,
 	Eye,
 	FileCode,
-	FileJson,
 	FileText,
 	GitCompare,
 	Hash,
@@ -19,7 +18,6 @@ import {
 	Palette,
 	QrCode,
 	Shield,
-	Terminal,
 	Type,
 } from 'lucide-react'
 
@@ -75,22 +73,6 @@ export const TOOLS: ToolMetadata[] = [
 		category: 'Converters & Encoders',
 		icon: FileCode,
 		tags: ['html', 'entities', 'encoder', 'encode', 'decode'],
-	},
-	{
-		id: 'json-to-code',
-		name: 'JSON to Code',
-		description: 'Generate TypeScript interfaces from JSON.',
-		category: 'Converters & Encoders',
-		icon: FileJson,
-		tags: ['json', 'typescript', 'interface', 'converter'],
-	},
-	{
-		id: 'curl-to-code',
-		name: 'cURL to Code',
-		description: 'Convert cURL commands to JavaScript Fetch or Axios requests.',
-		category: 'Converters & Encoders',
-		icon: Terminal,
-		tags: ['curl', 'code', 'converter', 'api', 'fetch', 'axios'],
 	},
 	{
 		id: 'string-case-converter',

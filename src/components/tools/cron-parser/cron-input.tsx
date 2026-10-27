@@ -1,6 +1,8 @@
 import { Pane } from '@/components/tools/shared/pane'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { ERROR_BOX_CLASS } from '@/lib/styles'
+import { cn } from '@/lib/utils'
 
 type CronInputProps = {
 	cronString: string
@@ -26,6 +28,7 @@ export function CronInput(props: CronInputProps) {
 				<div className="flex flex-col items-stretch gap-4 md:flex-row">
 					<div className="grow">
 						<Input
+							aria-label="Cron expression"
 							value={cronString}
 							onChange={(e) => setCronString(e.target.value)}
 							placeholder="e.g. * * * * *"
@@ -55,11 +58,7 @@ export function CronInput(props: CronInputProps) {
 							{cronString}
 						</span>
 					</div>
-					{error && (
-						<p className="rounded border border-red-500/20 bg-red-950/20 p-2 text-xs text-red-400">
-							Error: {error}
-						</p>
-					)}
+					{error && <p className={cn(ERROR_BOX_CLASS, 'p-2 text-xs')}>Error: {error}</p>}
 				</div>
 			</div>
 		</Pane>

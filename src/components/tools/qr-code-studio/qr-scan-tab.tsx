@@ -5,6 +5,8 @@ import { Pane } from '@/components/tools/shared/pane'
 import { Button } from '@/components/ui/button'
 import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard'
 import { readFileAsDataUrl } from '@/lib/file'
+import { ERROR_BOX_CLASS } from '@/lib/styles'
+import { cn } from '@/lib/utils'
 
 import { loadImage, scanQrFromImage } from './utils'
 
@@ -112,10 +114,7 @@ export function QrScanTab() {
 						</div>
 
 						{error && (
-							<div
-								role="alert"
-								className="rounded border border-red-500/20 bg-red-950/20 p-3 text-xs text-red-400"
-							>
+							<div role="alert" className={cn(ERROR_BOX_CLASS, 'p-3 text-xs')}>
 								{error}
 							</div>
 						)}
