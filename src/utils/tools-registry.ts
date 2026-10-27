@@ -255,7 +255,7 @@ export const TOOLS: ToolMetadata[] = [
 		id: 'css-generator',
 		name: 'CSS Generator',
 		description: 'Build box shadows, gradients and fluid clamp() sizes with a live preview.',
-		category: 'Dev Utilities',
+		category: 'Generators',
 		icon: Paintbrush,
 		tags: ['css', 'box-shadow', 'shadow', 'gradient', 'clamp', 'rem', 'px', 'fluid', 'generator'],
 	},

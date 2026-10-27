@@ -1,13 +1,11 @@
 import { CLASSIC_WORDS, LOREM_WORDS } from './constants'
 
 export type LoremUnit = 'paragraphs' | 'sentences' | 'words'
-export type LoremFormat = 'plain' | 'html'
 
 export type LoremOptions = {
 	unit: LoremUnit
 	count: number
 	startWithClassic: boolean
-	format: LoremFormat
 }
 
 type Random = () => number
@@ -72,7 +70,7 @@ function makeParagraph(random: Random, leadingWords: string[] = []): string {
 
 /** Generates placeholder text. `random` is injectable so output can be made deterministic. */
 export function generateLorem(options: LoremOptions, random: Random = Math.random): string {
-	const { unit, startWithClassic, format } = options
+	const { unit, startWithClassic } = options
 	const count = clampCount(unit, options.count)
 	const leading = startWithClassic ? CLASSIC_WORDS : []
 
@@ -82,7 +80,7 @@ export function generateLorem(options: LoremOptions, random: Random = Math.rando
 			...randomWords(Math.max(0, count - leading.length), random),
 		]
 		const text = words.join(' ')
-		return format === 'html' ? `<p>${text}</p>` : text
+		return text
 	}
 
 	if (unit === 'sentences') {
@@ -90,13 +88,11 @@ export function generateLorem(options: LoremOptions, random: Random = Math.rando
 			makeSentence(random, i === 0 ? leading : []),
 		)
 		const text = sentences.join(' ')
-		return format === 'html' ? `<p>${text}</p>` : text
+		return text
 	}
 
 	const paragraphs = Array.from({ length: count }, (_, i) =>
 		makeParagraph(random, i === 0 ? leading : []),
 	)
-	return format === 'html'
-		? paragraphs.map((paragraph) => `<p>${paragraph}</p>`).join('\n')
-		: paragraphs.join('\n\n')
+	return paragraphs.join('\n\n')
 }

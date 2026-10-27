@@ -22,7 +22,11 @@ export function AlphaColorField({ id, label, value, onChange, className }: Alpha
 				value={value.hex}
 				onChange={(hex) => onChange({ ...value, hex })}
 			/>
-			<div className="mt-2 flex items-center gap-3">
+			<div className="mt-2 space-y-1">
+				<div className="flex items-center justify-between text-xs">
+					<span className="font-bold text-slate-500 uppercase">Opacity</span>
+					<span className="font-mono text-slate-500">{percent}%</span>
+				</div>
 				<Slider
 					min={0}
 					max={100}
@@ -30,9 +34,7 @@ export function AlphaColorField({ id, label, value, onChange, className }: Alpha
 					value={[percent]}
 					onValueChange={(next) => onChange({ ...value, alpha: (next[0] ?? percent) / 100 })}
 					aria-label={`${label} opacity`}
-					className="flex-1"
 				/>
-				<span className="w-10 text-right font-mono text-xs text-slate-500">{percent}%</span>
 			</div>
 		</div>
 	)

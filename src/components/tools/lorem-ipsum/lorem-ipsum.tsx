@@ -14,14 +14,7 @@ import {
 } from '@/components/ui/select'
 import { Slider } from '@/components/ui/slider'
 
-import {
-	clampCount,
-	generateLorem,
-	type LoremFormat,
-	type LoremOptions,
-	type LoremUnit,
-	UNIT_LIMITS,
-} from './utils'
+import { clampCount, generateLorem, type LoremOptions, type LoremUnit, UNIT_LIMITS } from './utils'
 
 const UNITS: Array<{ value: LoremUnit; label: string }> = [
 	{ value: 'paragraphs', label: 'Paragraphs' },
@@ -29,24 +22,14 @@ const UNITS: Array<{ value: LoremUnit; label: string }> = [
 	{ value: 'words', label: 'Words' },
 ]
 
-const FORMATS: Array<{ value: LoremFormat; label: string }> = [
-	{ value: 'plain', label: 'Plain text' },
-	{ value: 'html', label: 'HTML (<p> tags)' },
-]
-
 const DEFAULT_OPTIONS: LoremOptions = {
 	unit: 'paragraphs',
 	count: 3,
 	startWithClassic: true,
-	format: 'plain',
 }
 
 function isUnit(value: string): value is LoremUnit {
 	return UNITS.some((option) => option.value === value)
-}
-
-function isFormat(value: string): value is LoremFormat {
-	return FORMATS.some((option) => option.value === value)
 }
 
 export default function LoremIpsum() {
@@ -64,7 +47,7 @@ export default function LoremIpsum() {
 		setOptions((current) => ({ ...current, count: clampCount(current.unit, count) }))
 
 	return (
-		<div className="flex flex-col gap-6 lg:flex-row lg:items-start">
+		<div className="flex flex-col gap-6 lg:flex-row lg:items-stretch">
 			<Pane title="Lorem Ipsum Settings" className="lg:flex-5">
 				<div className="flex flex-col gap-6 p-6">
 					<div className="space-y-4 text-xs">
@@ -124,32 +107,6 @@ export default function LoremIpsum() {
 							</div>
 						</div>
 
-						<div className="space-y-2">
-							<label htmlFor="lorem-format" className="block font-bold text-slate-500 uppercase">
-								Format
-							</label>
-							<Select
-								value={options.format}
-								onValueChange={(format) => {
-									if (isFormat(format)) setOptions((current) => ({ ...current, format }))
-								}}
-							>
-								<SelectTrigger
-									id="lorem-format"
-									className="border-terminal-border h-8 w-full font-mono text-xs"
-								>
-									<SelectValue />
-								</SelectTrigger>
-								<SelectContent className="border-terminal-border bg-terminal-card font-mono text-xs">
-									{FORMATS.map((format) => (
-										<SelectItem key={format.value} value={format.value}>
-											{format.label}
-										</SelectItem>
-									))}
-								</SelectContent>
-							</Select>
-						</div>
-
 						<div className="border-terminal-border flex items-center gap-2.5 border-t pt-4">
 							<Checkbox
 								id="lorem-classic"
@@ -181,8 +138,8 @@ export default function LoremIpsum() {
 				value={text}
 				readOnly={true}
 				allowDownload={true}
-				downloadFileName={options.format === 'html' ? 'lorem-ipsum.html' : 'lorem-ipsum.txt'}
-				className="min-h-120 lg:flex-7"
+				downloadFileName="lorem-ipsum.txt"
+				className="min-h-96 lg:flex-7"
 			/>
 		</div>
 	)

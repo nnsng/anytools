@@ -32,7 +32,7 @@ export function BoxShadowTab() {
 
 	return (
 		<div className="flex flex-col gap-6 lg:flex-row lg:items-start">
-			<Pane title="Shadow Layers" className="lg:flex-1">
+			<Pane title={`Shadow Layers (${layers.length})`} className="lg:flex-1">
 				<div className="flex flex-col gap-4 p-6">
 					{layers.length === 0 && (
 						<p className="text-center text-xs text-slate-500">
@@ -62,7 +62,7 @@ export function BoxShadowTab() {
 				</div>
 			</Pane>
 
-			<div className="flex flex-col gap-6 lg:flex-1">
+			<div className="flex flex-col gap-6 lg:sticky lg:top-4 lg:flex-1 lg:self-start">
 				<CssPreview style={{ boxShadow: boxShadowValue(layers) }} />
 				<EditorPane
 					title="CSS"

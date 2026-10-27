@@ -11,7 +11,7 @@ function seeded(seed: number) {
 	}
 }
 
-const BASE: LoremOptions = { unit: 'words', count: 10, startWithClassic: false, format: 'plain' }
+const BASE: LoremOptions = { unit: 'words', count: 10, startWithClassic: false }
 
 describe('generateLorem', () => {
 	it('produces exactly the requested number of words', () => {
@@ -47,14 +47,6 @@ describe('generateLorem', () => {
 		}
 		const words = generateLorem({ ...BASE, count: 3, startWithClassic: true }, seeded(4))
 		expect(words).toBe('Lorem ipsum dolor')
-	})
-
-	it('wraps paragraphs in <p> tags for html output', () => {
-		const text = generateLorem({ ...BASE, unit: 'paragraphs', count: 3, format: 'html' }, seeded(5))
-		const lines = text.split('\n')
-		expect(lines).toHaveLength(3)
-		for (const line of lines) expect(line).toMatch(/^<p>.+<\/p>$/)
-		expect(generateLorem({ ...BASE, format: 'html' }, seeded(5))).toMatch(/^<p>.+<\/p>$/)
 	})
 
 	it('is deterministic for the same random source', () => {

@@ -125,15 +125,17 @@ export function GradientTab() {
 									onChange={(angle) => patch({ angle: Math.min(360, Math.max(0, angle)) })}
 									className="w-24"
 								/>
-								<Slider
-									min={0}
-									max={360}
-									step={1}
-									value={[config.angle]}
-									onValueChange={(value) => patch({ angle: value[0] ?? config.angle })}
-									aria-label="Angle"
-									className="mb-3 flex-1"
-								/>
+								<div className="mb-1 flex flex-1 flex-col gap-1">
+									<span className="text-xs font-bold text-slate-500 uppercase">Rotate</span>
+									<Slider
+										min={0}
+										max={360}
+										step={1}
+										value={[config.angle]}
+										onValueChange={(value) => patch({ angle: value[0] ?? config.angle })}
+										aria-label="Angle"
+									/>
+								</div>
 							</div>
 						)}
 					</div>
@@ -161,7 +163,7 @@ export function GradientTab() {
 				</div>
 			</Pane>
 
-			<div className="flex flex-col gap-6 lg:flex-1">
+			<div className="flex flex-col gap-6 lg:sticky lg:top-4 lg:flex-1 lg:self-start">
 				<CssPreview style={{ background: gradientValue(config) }} />
 				<EditorPane
 					title="CSS"

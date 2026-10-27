@@ -41,7 +41,7 @@ export default function NumberBaseConverter() {
 
 	const fields = [
 		...PRESET_FIELDS,
-		{ id: 'custom' as const, label: `Custom (${customBase})`, base: customBase },
+		{ id: 'custom' as const, label: 'Custom base', base: customBase },
 	]
 	const editedBase = fields.find((field) => field.id === edited.id)?.base ?? 10
 
@@ -67,12 +67,32 @@ export default function NumberBaseConverter() {
 						const text = displayText(field.id, field.base)
 						return (
 							<div key={field.id} className="grid grid-cols-1 items-center gap-2 md:grid-cols-12">
-								<label
-									htmlFor={`base-${field.id}`}
-									className="text-xs font-bold text-slate-400 md:col-span-3"
-								>
-									{field.label}
-								</label>
+								<div className="flex flex-col gap-1.5 md:col-span-3">
+									<label htmlFor={`base-${field.id}`} className="text-xs font-bold text-slate-400">
+										{field.label}
+									</label>
+									{field.id === 'custom' && (
+										<Select
+											value={String(customBase)}
+											onValueChange={(next) => setCustomBase(Number(next))}
+										>
+											<SelectTrigger
+												id="custom-base"
+												aria-label="Custom base"
+												className="border-terminal-border h-7 w-20 font-mono text-xs"
+											>
+												<SelectValue />
+											</SelectTrigger>
+											<SelectContent className="border-terminal-border bg-terminal-card font-mono text-xs">
+												{BASE_OPTIONS.map((base) => (
+													<SelectItem key={base} value={String(base)}>
+														{base}
+													</SelectItem>
+												))}
+											</SelectContent>
+										</Select>
+									)}
+								</div>
 								<div className="md:col-span-7">
 									<Input
 										id={`base-${field.id}`}
@@ -111,31 +131,7 @@ export default function NumberBaseConverter() {
 					</p>
 				)}
 
-				<div className="border-terminal-border flex flex-wrap items-center gap-6 border-t pt-4 text-xs">
-					<div className="flex items-center gap-2">
-						<label htmlFor="custom-base" className="font-bold text-slate-400">
-							CUSTOM BASE
-						</label>
-						<Select
-							value={String(customBase)}
-							onValueChange={(next) => setCustomBase(Number(next))}
-						>
-							<SelectTrigger
-								id="custom-base"
-								className="border-terminal-border h-8 w-20 font-mono text-xs"
-							>
-								<SelectValue />
-							</SelectTrigger>
-							<SelectContent className="border-terminal-border bg-terminal-card font-mono text-xs">
-								{BASE_OPTIONS.map((base) => (
-									<SelectItem key={base} value={String(base)}>
-										{base}
-									</SelectItem>
-								))}
-							</SelectContent>
-						</Select>
-					</div>
-
+				<div className="flex flex-wrap items-center gap-6 text-xs">
 					<div className="flex items-center gap-2.5">
 						<Checkbox
 							id="group-digits"
