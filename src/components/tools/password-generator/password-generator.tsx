@@ -60,6 +60,7 @@ export default function PasswordGenerator() {
 							<span className="block font-bold text-slate-500 uppercase">Password Length</span>
 							<div className="flex items-center gap-4">
 								<Slider
+									aria-label="Password length"
 									min={MIN_LENGTH}
 									max={MAX_LENGTH}
 									step={1}
