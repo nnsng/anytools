@@ -47,8 +47,11 @@ function ToolContainer() {
 	const tool = TOOLS.find((t) => t.id === toolId)
 
 	useEffect(() => {
-		if (tool) {
-			document.title = `${tool.name} - ${APP_NAME}`
+		if (!tool) return
+		const previousTitle = document.title
+		document.title = `${tool.name} - ${APP_NAME}`
+		return () => {
+			document.title = previousTitle
 		}
 	}, [tool])
 

@@ -20,7 +20,13 @@ const config = defineConfig({
 	lint: {
 		ignorePatterns: ['src/routeTree.gen.ts'],
 		jsPlugins: [{ name: 'vite-plus', specifier: 'vite-plus/oxlint-plugin' }],
-		rules: { 'vite-plus/prefer-vite-plus-imports': 'error' },
+		rules: {
+			'vite-plus/prefer-vite-plus-imports': 'error',
+			'unicorn/filename-case': [
+				'error',
+				{ case: 'kebabCase', ignore: ['^__root\\.tsx$', '^\\$toolId\\.tsx$'] },
+			],
+		},
 		options: { typeAware: true, typeCheck: true },
 	},
 	test: {
