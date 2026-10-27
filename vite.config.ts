@@ -13,16 +13,11 @@ const config = defineConfig({
 		singleQuote: true,
 		semi: false,
 		printWidth: 100,
-		ignorePatterns: ['src/routeTree.gen.ts', 'src/styles.css'],
+		ignorePatterns: ['src/routeTree.gen.ts'],
 		sortImports: {},
 		sortTailwindcss: { functions: ['clsx', 'cn'] },
-		// Non-code files keep the 2-space indent their tooling generates
-		overrides: [
-			{
-				files: ['*.json', '*.jsonc', '*.html', '*.md', '*.yaml', '*.yml'],
-				options: { useTabs: false, tabWidth: 2 },
-			},
-		],
+		// YAML forbids tab indentation
+		overrides: [{ files: ['*.yaml', '*.yml'], options: { useTabs: false, tabWidth: 2 } }],
 	},
 	lint: {
 		ignorePatterns: ['src/routeTree.gen.ts'],

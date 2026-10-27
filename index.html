@@ -1,38 +1,38 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="manifest" href="/manifest.json" />
-    <meta name="color-scheme" content="dark light" />
-    <meta name="theme-color" content="#08090c" />
-    <meta
-      name="description"
-      content="Anytools is a privacy-first developer utility suite. Format, encode, convert and generate, 100% client-side in your browser."
-    />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Anytools - Developer Utilities Suite" />
-    <meta
-      property="og:description"
-      content="Privacy-first developer tools that run entirely in your browser."
-    />
-    <script>
-      // Apply the saved theme before first paint to avoid a flash of the wrong theme
-      try {
-        var saved = localStorage.getItem('theme')
-        var isDark =
-          saved === 'dark' ||
-          (saved !== 'light' && !window.matchMedia('(prefers-color-scheme: light)').matches)
-        document.documentElement.classList.toggle('dark', isDark)
-      } catch (e) {
-        document.documentElement.classList.add('dark')
-      }
-    </script>
-    <title>Anytools - Developer Utilities Suite</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="manifest" href="/manifest.json" />
+		<meta name="color-scheme" content="dark light" />
+		<meta name="theme-color" content="#08090c" />
+		<meta
+			name="description"
+			content="Anytools is a privacy-first developer utility suite. Format, encode, convert and generate, 100% client-side in your browser."
+		/>
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="Anytools - Developer Utilities Suite" />
+		<meta
+			property="og:description"
+			content="Privacy-first developer tools that run entirely in your browser."
+		/>
+		<script>
+			// Apply the saved theme before first paint to avoid a flash of the wrong theme
+			try {
+				var saved = localStorage.getItem('theme')
+				var isDark =
+					saved === 'dark' ||
+					(saved !== 'light' && !window.matchMedia('(prefers-color-scheme: light)').matches)
+				document.documentElement.classList.toggle('dark', isDark)
+			} catch (e) {
+				document.documentElement.classList.add('dark')
+			}
+		</script>
+		<title>Anytools - Developer Utilities Suite</title>
+	</head>
+	<body>
+		<div id="app"></div>
+		<script type="module" src="/src/main.tsx"></script>
+	</body>
 </html>
