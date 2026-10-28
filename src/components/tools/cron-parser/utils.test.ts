@@ -4,14 +4,14 @@ import { describeCronPart } from './utils'
 
 describe('describeCronPart', () => {
 	it('names day-of-week ranges and lists', () => {
-		expect(describeCronPart('1-5', 'day of week')).toBe('Monday–Friday')
+		expect(describeCronPart('1-5', 'day of week')).toBe('From Monday to Friday')
 		expect(describeCronPart('MON,WED', 'day of week')).toBe('Specific days: Monday, Wednesday')
 		expect(describeCronPart('0', 'day of week')).toBe('On Sunday')
 		expect(describeCronPart('7', 'day of week')).toBe('On Sunday')
 	})
 
 	it('names months', () => {
-		expect(describeCronPart('1-3', 'month')).toBe('January–March')
+		expect(describeCronPart('1-3', 'month')).toBe('From January to March')
 		expect(describeCronPart('12', 'month')).toBe('On December')
 	})
 

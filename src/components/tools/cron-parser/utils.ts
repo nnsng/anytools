@@ -49,7 +49,7 @@ export function describeCronPart(part: string, unit: string): string {
 	if (part.includes('-')) {
 		const [start = '', end = ''] = part.split('-')
 		return hasNames(unit)
-			? `${toLabel(start, unit)}–${toLabel(end, unit)}`
+			? `From ${toLabel(start, unit)} to ${toLabel(end, unit)}`
 			: `From ${unit} ${start} to ${end}`
 	}
 	return hasNames(unit) ? `On ${toLabel(part, unit)}` : `At ${unit} ${part}`
