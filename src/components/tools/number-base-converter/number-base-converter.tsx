@@ -67,7 +67,7 @@ export default function NumberBaseConverter() {
 						const text = displayText(field.id, field.base)
 						return (
 							<div key={field.id} className="grid grid-cols-1 items-center gap-2 md:grid-cols-12">
-								<div className="flex flex-col gap-1.5 md:col-span-3">
+								<div className="flex flex-wrap items-center gap-2 md:col-span-3">
 									<label htmlFor={`base-${field.id}`} className="text-xs font-bold text-slate-400">
 										{field.label}
 									</label>
