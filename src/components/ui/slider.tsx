@@ -9,6 +9,7 @@ function Slider({
 	value,
 	min = 0,
 	max = 100,
+	'aria-label': ariaLabel,
 	...props
 }: React.ComponentProps<typeof SliderPrimitive.Root>) {
 	const _values = React.useMemo(
@@ -42,6 +43,8 @@ function Slider({
 				<SliderPrimitive.Thumb
 					data-slot="slider-thumb"
 					key={index}
+					// The thumb is the focusable role=slider element, so the accessible name belongs here
+					aria-label={ariaLabel}
 					className="border-ring ring-ring/50 relative block size-3 shrink-0 rounded-full border bg-white transition-[color,box-shadow] select-none after:absolute after:-inset-2 hover:ring-3 focus-visible:ring-3 focus-visible:outline-hidden active:ring-3 disabled:pointer-events-none disabled:opacity-50"
 				/>
 			))}

@@ -4,43 +4,54 @@ Anytools is an open-source, privacy-first developer utility toolkit designed wit
 
 ## 🛠️ Built-in Modules
 
-The workspace is packed with multiple essential tools categorized for everyday development:
+Tools are grouped in the sidebar and on the home page, in this order. Within each group they are sorted by name.
 
-### 📝 Text & Encoders
+### 🔁 Converters & Encoders
 
-- **Base64 Text/Image:** Seamlessly convert plain text or images directly to Base64 URI strings and vice versa.
-- **URL Encoder & Decoder:** Securely parse and format deep link query parameters.
-- **HTML Entity Encoder:** Safely escape special characters to avoid cross-site scripting issues.
-- **String Case Converter:** Instantly switch text cases between camelCase, snake_case, PascalCase, kebab-case, etc.
-- **Timestamp Converter:** Convert Unix epoch timestamps to readable dates and back, with a live epoch clock.
+- **Base64 Image:** Convert images to Base64 URI strings and back.
+- **Base64 Text:** Encode and decode Base64 text, with Unicode support.
 - **Color Converter:** Convert colors between HEX, RGB, HSL and CMYK with a picker and eyedropper.
-- **Text Analyzer:** Count characters, words, sentences, and run structural readability statistics on paragraphs.
+- **HTML Entity Encoder:** Escape and unescape HTML entities safely to avoid cross-site scripting issues.
+- **JSON ⇄ CSV:** Convert between JSON and CSV with delimiter, header, nested-object flattening and type inference options.
+- **JSON ⇄ YAML:** Convert between JSON and YAML, with line and column positions for YAML syntax errors.
+- **Number Base Converter:** Convert integers between binary, octal, decimal, hex and any base up to 36, with exact big-number support.
+- **Timestamp Converter:** Convert Unix epoch timestamps to readable dates and back, with a live epoch clock.
+- **URL Encoder:** Encode and decode URL components or full URIs.
 
-### 🧹 Code Formatters
+### 🧹 Formatters
 
-- **JSON Formatter & Minifier:** Format bulky payloads, prettify JSON, or minify scripts to reduce payload sizes.
-- **JS / CSS / HTML Formatters:** Clean up raw code snippets with tailored indentation and nesting rules.
+- **CSS Formatter:** Beautify or minify CSS.
+- **HTML Formatter:** Beautify or minify HTML.
+- **JS Formatter:** Beautify or minify JavaScript.
+- **JSON Formatter:** Prettify JSON or minify it to reduce payload size.
 
-### ⚙️ Development Utilities
+### ✏️ Text Tools
 
-- **Cron Parser:** Decode complex cron job expressions into clear, readable schedules with upcoming execution lists.
-- **JWT Debugger:** Decode token headers, payloads, signatures, and verify lifetime periods completely client-side.
-- **Diff Checker:** Compare two blocks of code or text files side-by-side with clear color-coded inline adjustments.
-- **Regex Tester:** Draft, debug, and test active regular expressions with syntax highlighting against matching content.
+- **Diff Checker:** Compare two blocks of code or text side by side or inline, with color-coded changes.
+- **List Deduplicator:** Remove duplicate lines or items from a text list.
+- **String Case Converter:** Switch text between camelCase, snake_case, PascalCase, kebab-case and more.
+- **Text Analyzer:** Count characters, words and sentences, and see readability statistics for paragraphs.
 
-### 🎨 Generators & Studios
+### ⚙️ Dev Utilities
 
-- **Mock Data Generator:** Rapidly craft mock schemas, JSON objects, and dummy database entities using Faker.js.
+- **Cron Parser:** Decode cron expressions into readable schedules with upcoming run times.
+- **JWT Debugger:** Decode token headers and payloads, verify signatures, and check lifetime periods, all client-side.
+- **Regex Tester:** Draft and test regular expressions with live highlighting and match details. Matching runs in a Web Worker with a timeout.
+
+### 🎨 Generators
+
+- **CSS Generator:** Build multi-layer box shadows, linear/radial/conic gradients and fluid `clamp()` sizes with a live preview.
+- **Favicon Generator:** Build multi-size web favicons and `.ico` bundles from an image or text.
+- **Lorem Ipsum Generator:** Generate placeholder paragraphs, sentences or words.
+- **Mock Data Generator:** Craft mock schemas and JSON records using Faker.js.
+- **Password Generator:** Create random passwords with unbiased sampling from `crypto.getRandomValues`.
+- **QR Code Studio:** Generate QR codes with custom colors, sizes and error correction, and scan QR codes from images.
 - **UUID Generator:** Generate v1 and v4 UUIDs in bulk.
-- **Secure Password Generator:** Create highly customized, cryptographic-grade password phrases.
-- **Favicon Generator:** Build optimized, multi-sized web favicons and standard `.ico` bundles from images.
-- **QR Code Studio:** Generate dynamic, high-resolution QR codes with customizable colors, sizing, and error-correction levels.
 
-### 🧪 Playgrounds & Lists
+### 🧪 Playgrounds
 
-- **HTML Sandbox:** Live preview playground to write and run CSS, HTML, and JS code snippets in an isolated environment.
-- **Markdown Previewer:** Instantly parse and preview Markdown syntax into fully stylized rich HTML.
-- **Deduplicate Tool:** Instantly filter out duplicate items from a custom text or coordinate array.
+- **HTML Sandbox:** Write and preview HTML, CSS and JavaScript in an isolated iframe without access to the app.
+- **Markdown Preview:** Render Markdown to HTML with a live preview. Output is sanitized with DOMPurify.
 
 ---
 

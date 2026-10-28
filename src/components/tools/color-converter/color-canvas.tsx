@@ -1,6 +1,5 @@
 import { Input } from '@/components/ui/input'
-
-import { hexToRgb } from './utils'
+import { hexToRgb } from '@/lib/color'
 
 type ColorCanvasProps = {
 	hex: string

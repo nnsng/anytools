@@ -72,5 +72,5 @@ src/components/tools/<tool-id>/
 ## Adding a tool
 
 1. Create the folder per the structure above (`index.ts` re-exporting the default component).
-2. Add an entry to `TOOLS` in `src/utils/tools-registry.ts`; the id must equal the folder name. `src/utils/tool-components.ts` finds the component automatically and `tools-registry.test.ts` fails if the folder is missing.
+2. Add an entry to `TOOLS` in `src/utils/tools-registry.ts`; the id must equal the folder name and `category` must be one of `CATEGORIES` (that list sets the sidebar order). Tools are sorted by name within their category automatically. `src/utils/tool-components.ts` finds the component automatically and `tools-registry.test.ts` fails if the folder is missing.
 3. Put pure logic in `utils.ts` with a `utils.test.ts` (`pnpm vp test run <file>`).

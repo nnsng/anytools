@@ -4,8 +4,9 @@ import { Pane } from '@/components/tools/shared/pane'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard'
+import { hexToRgb } from '@/lib/color'
 
-import { cmykToRgb, hexToRgb, hslToRgb, parseCmyk, parseHsl, parseRgb } from './utils'
+import { cmykToRgb, hslToRgb, parseCmyk, parseHsl, parseRgb } from './utils'
 
 type ColorFieldsProps = {
 	hex: string

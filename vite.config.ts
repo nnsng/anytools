@@ -37,6 +37,9 @@ const config = defineConfig({
 		// https://viteplus.dev/guide/vitest-v5#remove-unneeded-compatibility-settings
 		// https://vitest.dev/guide/migration/#clearmocks-is-enabled-by-default
 		clearMocks: false,
+		// import.meta.glob (tool discovery) depends on the file system, so a cached transform goes stale
+		// when a tool folder is added
+		fsModuleCache: false,
 	},
 	resolve: { tsconfigPaths: true },
 	plugins: lazyPlugins(() => [
